@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-17T09:42:33.758Z",
+  "generated": "2026-10-18T09:55:53.644Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -43,10 +43,6 @@
         {
           "id": "CoffeeManga",
           "why": "in the Stable repository"
-        },
-        {
-          "id": "Comix",
-          "why": "already here"
         },
         {
           "id": "DragonTea",
@@ -293,7 +289,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "153fb93d140fbc6747436d8dc503052439e2c8b9"
+      "commit": "5b9bf23b891364d3df57cb9e6f888f95c9dc6434"
     },
     {
       "repo": "karrot0/KakarotExtension",
@@ -592,6 +588,10 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "Marumaru",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
           "id": "Noveli",
           "why": "18+ (in the NSFW repository)"
         },
@@ -600,7 +600,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "1e7313f72aac658912b588f1e4f1a561495c3eeb"
+      "commit": "3a96265e18c8462a1834e653acb8c34ee1acbe2b"
     },
     {
       "repo": "feliivk/felii-extensions",
