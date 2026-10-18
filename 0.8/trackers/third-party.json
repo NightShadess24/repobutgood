@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-17T09:57:15.421Z",
+  "generated": "2026-10-18T10:10:30.987Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -1653,10 +1653,6 @@
           "why": "already from Netsky Generic"
         },
         {
-          "id": "Comix",
-          "why": "already from Ace"
-        },
-        {
           "id": "DragonTea",
           "why": "already from Netsky Generic"
         },
@@ -1905,7 +1901,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "153fb93d140fbc6747436d8dc503052439e2c8b9"
+      "commit": "5b9bf23b891364d3df57cb9e6f888f95c9dc6434"
     },
     {
       "repo": "karrot0/KakarotExtension",
@@ -2211,6 +2207,10 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "Marumaru",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
           "id": "Noveli",
           "why": "18+ (in the NSFW repository)"
         },
@@ -2219,7 +2219,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "1e7313f72aac658912b588f1e4f1a561495c3eeb"
+      "commit": "3a96265e18c8462a1834e653acb8c34ee1acbe2b"
     },
     {
       "repo": "feliivk/felii-extensions",
