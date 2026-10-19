@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-18T09:55:53.644Z",
+  "generated": "2026-10-19T11:07:42.905Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -289,7 +289,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "5b9bf23b891364d3df57cb9e6f888f95c9dc6434"
+      "commit": "88c0ceceef5ec7fe068bd394612cdfc88d6e4d71"
     },
     {
       "repo": "karrot0/KakarotExtension",
@@ -448,7 +448,7 @@
           "why": "not English (in the Languages repository)"
         }
       ],
-      "commit": "a7e4fa6464e67f3cf03ccf162d0a1d9a8e739ff0"
+      "commit": "90662d3aeaed1ad09c8c0253cf737d6349b071c6"
     },
     {
       "repo": "kittycatgit/kitty-extensions-0.9",
@@ -600,7 +600,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "3a96265e18c8462a1834e653acb8c34ee1acbe2b"
+      "commit": "d33ae570f7a27bdc852c6680dfdbaee294a0c1af"
     },
     {
       "repo": "feliivk/felii-extensions",
