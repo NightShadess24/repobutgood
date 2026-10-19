@@ -1,1 +1,0 @@
-{"name":"ChibiManga","description":"Extension that pulls manga from https://www.cmreader.info","version":"3.1.402","icon":"icon.png","language":"en","contentRating":"MATURE","capabilities":[1,64,4,16,32],"badges":[{"label":"0.8 port","textColor":"#ffffff","backgroundColor":"#6b7280"}],"developers":[{"name":"Netsky","website":"http://github.com/TheNetsky"}],"id":"ChibiManga"}
