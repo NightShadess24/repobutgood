@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-19T11:07:42.905Z",
+  "generated": "2026-10-20T10:23:35.646Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -289,7 +289,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "88c0ceceef5ec7fe068bd394612cdfc88d6e4d71"
+      "commit": "287471c937dd173b1d29ce50e8f376f00e4cea95"
     },
     {
       "repo": "karrot0/KakarotExtension",
@@ -600,7 +600,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "d33ae570f7a27bdc852c6680dfdbaee294a0c1af"
+      "commit": "1a3ea2bcca11b86edfb2f5c984dcad5b7f215ef5"
     },
     {
       "repo": "feliivk/felii-extensions",
