@@ -48,6 +48,13 @@ const DETAIL_FIELDS =
   "id,title,main_picture,alternative_titles,synopsis,mean,status,nsfw,media_type,num_chapters,num_volumes,genres,authors{first_name,last_name},my_list_status";
 const SEARCH_FIELDS = "id,title,main_picture,media_type,start_date";
 const PAGE_SIZE = 30;
+// Answers from MyAnimeList's server being busy or down, not from your list.
+const SERVER_DOWN = [502, 503, 504];
+
+const trouble = (status: number): string =>
+  SERVER_DOWN.includes(status)
+    ? `MyAnimeList's server is busy or down right now (${status}). It isn't your account; try again in a few minutes`
+    : `MyAnimeList answered ${status}`;
 
 const STATUS: Record<string, string> = {
   finished: "Completed",
@@ -142,12 +149,22 @@ export class MyAnimeListExtension implements ExtensionImpl<typeof MyAnimeListCon
       ...(token ? { authorization: `Bearer ${token}` } : { "x-mal-client-id": CLIENT_ID }),
     };
     if (init.body) headers["content-type"] = "application/x-www-form-urlencoded";
-    const [response, data] = await Application.scheduleRequest({
-      url: path.startsWith("http") ? path : `${API}${path}`,
-      method: init.method ?? "GET",
-      headers,
-      body: init.body ? formBody(init.body) : undefined,
-    });
+    // MyAnimeList's server sometimes answers 502–504 for a moment. Each of
+    // these calls is safe to repeat (a GET, or a PUT/DELETE that sets the same
+    // values), so try again after 3 s and then 6 s before giving up.
+    const send = () =>
+      Application.scheduleRequest({
+        url: path.startsWith("http") ? path : `${API}${path}`,
+        method: init.method ?? "GET",
+        headers,
+        body: init.body ? formBody(init.body) : undefined,
+      });
+    let [response, data] = await send();
+    for (const wait of [3, 6]) {
+      if (!SERVER_DOWN.includes(response.status)) break;
+      await Application.sleep(wait);
+      [response, data] = await send();
+    }
     const text = Application.arrayBufferToUTF8String(data);
     let json: unknown;
     try {
@@ -163,7 +180,7 @@ export class MyAnimeListExtension implements ExtensionImpl<typeof MyAnimeListCon
     if (!Number.isFinite(id)) return undefined;
     const { status, json } = await this.api(`/manga/${id}?fields=${encodeURIComponent(fields)}`);
     if (status === 404) return undefined;
-    if (status >= 400) throw new Error(`MyAnimeList answered ${status}`);
+    if (status >= 400) throw new Error(trouble(status));
     return json as MalManga;
   }
 
@@ -182,7 +199,7 @@ export class MyAnimeListExtension implements ExtensionImpl<typeof MyAnimeListCon
     const id = Number.parseInt(mangaId, 10);
     if (change.status === "remove") {
       const { status } = await this.api(`/manga/${id}/my_list_status`, { method: "DELETE" }, true);
-      if (status >= 400 && status !== 404) throw new Error(`MyAnimeList answered ${status}`);
+      if (status >= 400 && status !== 404) throw new Error(trouble(status));
       manual("removed from your list by hand");
       return;
     }
@@ -248,7 +265,7 @@ export class MyAnimeListExtension implements ExtensionImpl<typeof MyAnimeListCon
       {},
       onList,
     );
-    if (status >= 400) throw new Error(`MyAnimeList answered ${status}`);
+    if (status >= 400) throw new Error(trouble(status));
     const page = json as MalPage;
     return {
       items: (page?.data ?? []).map(({ node, list_status, ranking: rank }) => ({
@@ -280,7 +297,7 @@ export class MyAnimeListExtension implements ExtensionImpl<typeof MyAnimeListCon
     const { status, json } = await this.api(
       `/manga?q=${encodeURIComponent(title.slice(0, 64))}&limit=${PAGE_SIZE}&offset=${offset}&nsfw=true&fields=${encodeURIComponent(SEARCH_FIELDS)}`,
     );
-    if (status >= 400) throw new Error(`MyAnimeList answered ${status}`);
+    if (status >= 400) throw new Error(trouble(status));
     const page = json as MalPage;
     return {
       items: (page?.data ?? []).map(({ node }) => ({
@@ -499,7 +516,7 @@ export class MyAnimeListExtension implements ExtensionImpl<typeof MyAnimeListCon
           log("failed", `${name}: MyAnimeList didn't save chapter ${chapter} (${status})`);
           result.failedItems.push(...ids);
           report.failed++;
-          report.error = `MyAnimeList answered ${status}`;
+          report.error = trouble(status);
         }
       } catch (error) {
         log(

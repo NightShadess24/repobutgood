@@ -7,7 +7,7 @@ import { ContentRating, SourceIntents, type ExtensionInfo } from "@paperback/typ
 export default {
   name: "MyAnimeList",
   description: "Keeps your MyAnimeList manga list in sync as you read.",
-  version: "1.0.3",
+  version: "1.0.4",
   icon: "icon.png",
   language: "en",
   contentRating: ContentRating.EVERYONE,
