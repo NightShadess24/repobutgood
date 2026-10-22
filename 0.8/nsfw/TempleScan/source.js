@@ -1728,6 +1728,17 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     getSettingsSections() {
       return [];
     }
+    /**
+     * A chapter rebuilt from its ids alone, for one the app opens without the
+     * list having been fetched this session.
+     *
+     * Returning one spares refetching the whole chapter list, which a source
+     * can do when `getPages` needs nothing beyond the ids. `undefined`, the
+     * default, refetches the list.
+     */
+    chapterFromIds(_mangaId, _chapterId) {
+      return void 0;
+    }
     // ---------------------------------------------------------------------
     // What the app calls
     // ---------------------------------------------------------------------
@@ -1756,12 +1767,16 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
      * 0.8 asks for pages by ids alone. The chapter object is recovered from
      * the list fetched a moment ago; if the app skipped straight here — as it
      * does when opening a chapter from the reading queue after a restart — the
+     * source may rebuild it from the ids (`chapterFromIds`), and otherwise the
      * list is fetched again so the source still receives a complete chapter.
      */
     async getChapterDetails(mangaId, chapterId) {
       return this.guard(async () => {
         let chapter = this.lastChapters.get(chapterId);
         if (chapter === void 0 || chapter.sourceManga.mangaId !== mangaId) {
+          chapter = this.chapterFromIds(mangaId, chapterId);
+        }
+        if (chapter === void 0) {
           await this.getChapters(mangaId);
           chapter = this.lastChapters.get(chapterId);
         }

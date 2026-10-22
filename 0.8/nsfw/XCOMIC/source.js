@@ -1752,6 +1752,17 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     getSettingsSections() {
       return [];
     }
+    /**
+     * A chapter rebuilt from its ids alone, for one the app opens without the
+     * list having been fetched this session.
+     *
+     * Returning one spares refetching the whole chapter list, which a source
+     * can do when `getPages` needs nothing beyond the ids. `undefined`, the
+     * default, refetches the list.
+     */
+    chapterFromIds(_mangaId, _chapterId) {
+      return void 0;
+    }
     // ---------------------------------------------------------------------
     // What the app calls
     // ---------------------------------------------------------------------
@@ -1780,12 +1791,16 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
      * 0.8 asks for pages by ids alone. The chapter object is recovered from
      * the list fetched a moment ago; if the app skipped straight here — as it
      * does when opening a chapter from the reading queue after a restart — the
+     * source may rebuild it from the ids (`chapterFromIds`), and otherwise the
      * list is fetched again so the source still receives a complete chapter.
      */
     async getChapterDetails(mangaId, chapterId) {
       return this.guard(async () => {
         let chapter = this.lastChapters.get(chapterId);
         if (chapter === void 0 || chapter.sourceManga.mangaId !== mangaId) {
+          chapter = this.chapterFromIds(mangaId, chapterId);
+        }
+        if (chapter === void 0) {
           await this.getChapters(mangaId);
           chapter = this.lastChapters.get(chapterId);
         }
@@ -1931,32 +1946,21 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   var MIRROR_IDS = MIRRORS.map((mirror) => mirror.id);
   var DOMAIN = "https://xcomic.me";
   var PAGE_SIZE = 48;
+  var HOME_ROW_SIZE = 24;
   var MAX_LATEST_REQUESTS = 10;
   var CHAPTER_PAGE_SIZE = 1e3;
-  var RECENTLY_ADDED_SIZE = 50;
   var RANDOM_AMOUNT = 12;
-  var TITLE_BROWSE_PAGER_QUERY = `
-query get_title_browse_pager($select: Title_Browse_Select) {
-  get_title_browse_pager(select: $select) {
-    next
-  }
-}
-`;
   var TITLE_BROWSE_ITEMS_QUERY = `
 query get_title_browse_items($select: Title_Browse_Select) {
   get_title_browse_items(select: $select) {
     data {
       id
       name: title
-      altNames: alt_titles
-      nativeTitle: native_title
-      romanizedTitle: romanized_title
       originalLanguage: original_language
       contentRating: content_rating_id
       type: type_id
       genres: genre_ids
       tags: format_ids
-      description
       urlCover: cover_local_url
       remoteCoverUrl: cover_url
       urlPath
@@ -1981,15 +1985,11 @@ query get_title_randomList($select: Title_RandomList_Select) {
     data {
       id
       name: title
-      altNames: alt_titles
-      nativeTitle: native_title
-      romanizedTitle: romanized_title
       originalLanguage: original_language
       contentRating: content_rating_id
       type: type_id
       genres: genre_ids
       tags: format_ids
-      description
       urlCover: cover_local_url
       remoteCoverUrl: cover_url
       urlPath
@@ -2036,7 +2036,6 @@ query get_title_recentlyAdded($select: Title_RecentlyAdded_Select) {
       data {
         id
         name: title
-        altNames: alt_titles
         originalLanguage: original_language
         contentRating: content_rating_id
         type: type_id
@@ -2063,16 +2062,12 @@ query get_title_titleNode($id: ID!) {
     data {
       id
       name: title
-      altNames: alt_titles
-      nativeTitle: native_title
-      romanizedTitle: romanized_title
       originalLanguage: original_language
       contentRating: content_rating_id
       type: type_id
       genres: genre_ids
       tags: format_ids
       demographics: demographic_ids
-      description
       urlCover: cover_local_url
       remoteCoverUrl: cover_url
       urlPath
@@ -2642,21 +2637,27 @@ query get_chapterNode($id: ID!) {
     randomTitles() {
       return this.query(TITLE_RANDOM_QUERY, { select: { amount: RANDOM_AMOUNT } });
     }
+    /**
+     * One page of titles, and whether there is another.
+     *
+     * The site answers the second question with a query of its own and will
+     * not take it alongside the items, so asking costs a request per page. A
+     * full page stands in for it instead; at worst a list ending exactly on a
+     * page boundary costs one empty request at the end.
+     */
     async browse(select) {
-      const [items, pager] = await Promise.all([
-        this.query(TITLE_BROWSE_ITEMS_QUERY, { select }),
-        this.query(TITLE_BROWSE_PAGER_QUERY, { select })
-      ]);
-      return { ...items, ...pager };
+      const items = await this.query(TITLE_BROWSE_ITEMS_QUERY, { select });
+      const full = (items.get_title_browse_items?.length ?? 0) >= select.size;
+      return { ...items, get_title_browse_pager: { next: full ? select.page + 1 : null } };
     }
     latestUploads(before) {
       return this.query(LATEST_UPLOADS_QUERY, {
-        select: { first: 0, limit: PAGE_SIZE, ...before !== void 0 ? { before } : {} }
+        select: { first: 0, limit: HOME_ROW_SIZE, ...before !== void 0 ? { before } : {} }
       });
     }
     recentlyAdded(before) {
       return this.query(RECENTLY_ADDED_QUERY, {
-        select: { size: RECENTLY_ADDED_SIZE, ...before !== void 0 ? { before } : {} }
+        select: { size: HOME_ROW_SIZE, ...before !== void 0 ? { before } : {} }
       });
     }
     comic(id) {
@@ -2752,6 +2753,10 @@ query get_chapterNode($id: ID!) {
     pending: "Upcoming"
   };
   var hasCoverUrl = (url) => typeof url === "string" && url.trim().length > 0;
+  var tileCoverUrl = (comic) => {
+    const remote = comic.remoteCoverUrl?.trim();
+    return remote?.includes("/imgproxy/plain/x250@1/") ? remote.replace("/x250@1/", "/x250@2/") : void 0;
+  };
   var titleCase = (value) => value.replace(/_/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
   var formatCount = (value) => String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   var contentPreferenceRating = (comic) => {
@@ -2960,7 +2965,7 @@ query get_chapterNode($id: ID!) {
       return {
         mangaId: sanitizeId(node.data.id),
         title: this.displayTitle(node.data),
-        imageUrl: this.absoluteUrl(node.data.urlCover ?? node.data.remoteCoverUrl)
+        imageUrl: tileCoverUrl(node.data) ?? this.absoluteUrl(node.data.urlCover ?? node.data.remoteCoverUrl)
       };
     }
     searchResult(node) {
@@ -3137,7 +3142,7 @@ query get_chapterNode($id: ID!) {
   var XCOMICInfo = sourceInfo({
     name: "XCOMIC",
     description: "Extension that pulls content from xcomic.me.",
-    version: "1.1.0",
+    version: "1.1.1",
     icon: "icon.png",
     language: "English",
     websiteBaseURL: DOMAIN,
@@ -3149,7 +3154,9 @@ query get_chapterNode($id: ID!) {
       super(cheerio, {
         domain: DOMAIN,
         settingsKeys: SETTINGS_KEYS,
-        rateLimit: { numberOfRequests: 3, bufferInterval: 1, ignoreImages: true },
+        // The app's throttle counts page images too, so this also sets how
+        // fast a chapter's pages arrive; 3 a second left pages waiting.
+        rateLimit: { numberOfRequests: 5, bufferInterval: 1, ignoreImages: true },
         interceptor: new XComicInterceptor(mirrorSettingsOf(() => this))
       });
       this.client = new XComicClient(mirrorSettingsOf(() => this));
@@ -3400,6 +3407,14 @@ query get_chapterNode($id: ID!) {
       }
       return this.parser.chapterDetails(await this.client.chapterPages(id), chapter);
     }
+    /**
+     * getPages needs only the ids, so a chapter opened straight from history
+     * does not have to wait for the whole chapter list — thousands of
+     * chapters, for a long series — to be fetched again first.
+     */
+    chapterFromIds(mangaId, chapterId) {
+      return { chapterId, chapNum: 0, sourceManga: { mangaId } };
+    }
     // -----------------------------------------------------------------
     // Settings
     // -----------------------------------------------------------------
@@ -3479,7 +3494,9 @@ query get_chapterNode($id: ID!) {
     async rankedSection(metadata, sortBy, metric) {
       const page = metadata?.page ?? 1;
       const preferences = this.preferences;
-      const response = await this.client.browse(this.browseSelect(page, sortBy, "", void 0, preferences));
+      const response = await this.client.browse(
+        this.browseSelect(page, sortBy, "", void 0, preferences, HOME_ROW_SIZE)
+      );
       const nodes = (response.get_title_browse_items ?? []).flatMap((node) => {
         const source = toPreferredTitleSource(node, preferences.translatedLanguages);
         return source !== void 0 && isComicAllowed(source.data, preferences) ? [source] : [];
@@ -3564,7 +3581,7 @@ query get_chapterNode($id: ID!) {
         excludedFormats: [...preferences.excludedFormats, ...filters.excluded.get(FILTERS.FORMAT) ?? []]
       };
     }
-    browseSelect(page, sortBy, word, filters, preferences) {
+    browseSelect(page, sortBy, word, filters, preferences, size = PAGE_SIZE) {
       const chosen = (section) => filters?.included.get(section) ?? [];
       const { min, max } = yearRange(filters?.year);
       return {
@@ -3572,7 +3589,7 @@ query get_chapterNode($id: ID!) {
         // without one has nothing for it to do.
         where: word.length > 0 && this.letterMatching ? "letter" : "browse",
         page,
-        size: PAGE_SIZE,
+        size,
         sortby: sortBy,
         word,
         incOLangs: preferences.originalLanguages,
