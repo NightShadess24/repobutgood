@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-21T10:45:13.168Z",
+  "generated": "2026-10-22T10:53:56.380Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -128,11 +128,11 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "RokariComics",
+          "id": "RinkoComics",
           "why": "in the Stable repository"
         },
         {
-          "id": "RinkoComics",
+          "id": "RokariComics",
           "why": "in the Stable repository"
         },
         {
@@ -156,7 +156,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "cf3b39f726ceec981c54ec820aa08f67f56ac67e"
+      "commit": "8855def673287c1b2bc0a02addf298b68e5d8e08"
     },
     {
       "repo": "timkuel/PaperBackExtension",
@@ -2219,7 +2219,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "9ebca9eddfb1471c332797f971c50e5e75037e31"
+      "commit": "d1ff12a44e1ed2d0dfae7b675b64ea6cce8f9610"
     },
     {
       "repo": "feliivk/felii-extensions",
