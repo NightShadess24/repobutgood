@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-22T10:39:04.874Z",
+  "generated": "2026-10-23T10:24:55.678Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -600,7 +600,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "d1ff12a44e1ed2d0dfae7b675b64ea6cce8f9610"
+      "commit": "f39a955bb2178dfcfceb6c3abf3212e67d931cda"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -840,12 +840,12 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "GalaxyManga",
-          "why": "in the Stable repository"
-        },
-        {
           "id": "KaliScan",
           "why": "18+ (in the NSFW repository)"
+        },
+        {
+          "id": "GalaxyManga",
+          "why": "in the Stable repository"
         },
         {
           "id": "KingOfShojo",
@@ -868,10 +868,6 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "MangaTown",
-          "why": "in the Stable repository"
-        },
-        {
           "id": "Mangago",
           "why": "already here"
         },
@@ -884,6 +880,10 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "MangaTown",
+          "why": "in the Stable repository"
+        },
+        {
           "id": "ReiManga",
           "why": "18+ (in the NSFW repository)"
         },
@@ -892,11 +892,11 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "RokariComics",
+          "id": "StoneScape",
           "why": "in the Stable repository"
         },
         {
-          "id": "StoneScape",
+          "id": "RokariComics",
           "why": "in the Stable repository"
         },
         {
@@ -916,7 +916,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "8855def673287c1b2bc0a02addf298b68e5d8e08"
+      "commit": "0eca74b51a76f04754106da0caa94b1e41e93a41"
     },
     {
       "repo": "timkuel/PaperBackExtension",
@@ -970,15 +970,15 @@
           "why": "already here"
         },
         {
-          "id": "Elftoon",
-          "why": "already from Kakarot"
-        },
-        {
           "id": "BatCave",
           "why": "already from Kakarot"
         },
         {
           "id": "GodaComic",
+          "why": "already from Kakarot"
+        },
+        {
+          "id": "Elftoon",
           "why": "already from Kakarot"
         },
         {
@@ -990,11 +990,11 @@
           "why": "already from Kakarot"
         },
         {
-          "id": "Rawkuma",
+          "id": "Projectsuki",
           "why": "already from Kakarot"
         },
         {
-          "id": "Projectsuki",
+          "id": "Rawkuma",
           "why": "already from Kakarot"
         },
         {
@@ -1002,7 +1002,7 @@
           "why": "already from Kakarot"
         }
       ],
-      "commit": "c40fa4220861a6e7cae95d50acd72c2d89dd23ab"
+      "commit": "625945132b03f809cf82cb83a16ffd06056fa6fe"
     },
     {
       "repo": "naufaljct48/nopools-ext",
