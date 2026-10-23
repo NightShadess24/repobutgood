@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-22T10:53:56.380Z",
+  "generated": "2026-10-23T10:39:00.312Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -80,12 +80,12 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "GalaxyManga",
-          "why": "in the Stable repository"
-        },
-        {
           "id": "KaliScan",
           "why": "18+ (in the NSFW repository)"
+        },
+        {
+          "id": "GalaxyManga",
+          "why": "in the Stable repository"
         },
         {
           "id": "KingOfShojo",
@@ -108,10 +108,6 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "MangaTown",
-          "why": "in the Stable repository"
-        },
-        {
           "id": "Mangago",
           "why": "18+ (in the NSFW repository)"
         },
@@ -124,6 +120,10 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "MangaTown",
+          "why": "in the Stable repository"
+        },
+        {
           "id": "ReiManga",
           "why": "18+ (in the NSFW repository)"
         },
@@ -132,11 +132,11 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "RokariComics",
+          "id": "StoneScape",
           "why": "in the Stable repository"
         },
         {
-          "id": "StoneScape",
+          "id": "RokariComics",
           "why": "in the Stable repository"
         },
         {
@@ -156,7 +156,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "8855def673287c1b2bc0a02addf298b68e5d8e08"
+      "commit": "0eca74b51a76f04754106da0caa94b1e41e93a41"
     },
     {
       "repo": "timkuel/PaperBackExtension",
@@ -210,15 +210,15 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "Elftoon",
-          "why": "in the Stable repository"
-        },
-        {
           "id": "BatCave",
           "why": "in the Stable repository"
         },
         {
           "id": "GodaComic",
+          "why": "in the Stable repository"
+        },
+        {
+          "id": "Elftoon",
           "why": "in the Stable repository"
         },
         {
@@ -230,19 +230,19 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "Rawkuma",
-          "why": "not English (in the Languages repository)"
-        },
-        {
           "id": "Projectsuki",
           "why": "in the Stable repository"
+        },
+        {
+          "id": "Rawkuma",
+          "why": "not English (in the Languages repository)"
         },
         {
           "id": "ReadAllComics",
           "why": "in the Stable repository"
         }
       ],
-      "commit": "c40fa4220861a6e7cae95d50acd72c2d89dd23ab"
+      "commit": "625945132b03f809cf82cb83a16ffd06056fa6fe"
     },
     {
       "repo": "naufaljct48/nopools-ext",
@@ -2219,7 +2219,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "d1ff12a44e1ed2d0dfae7b675b64ea6cce8f9610"
+      "commit": "f39a955bb2178dfcfceb6c3abf3212e67d931cda"
     },
     {
       "repo": "feliivk/felii-extensions",
