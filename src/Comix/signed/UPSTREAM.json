@@ -1,11 +1,11 @@
 {
   "repository": "https://github.com/acepilot147/pb-extensions",
   "branch": "0.8",
-  "commit": "78f4fd52b2cf6d92c0066a30032b985e4b9ef1ed",
-  "date": "2026-10-14",
-  "subject": "v1.9.29: key rotation (kuh. -> pgr.) + cloud button opens the security check",
+  "commit": "41c20ce5da8d1724f37cb04409e2698ebf180e7d",
+  "date": "2026-10-23",
+  "subject": "v1.9.31: re-release v1.9.30's captcha auto-solve",
   "files": {
-    "ComixFastSigner": "e6e162c8d88fbd9ba3f523ffadd419a23d0d1e6e7f785ac57fb33f6803c995a4",
-    "ComixFastDecrypt": "6b671ff26ed406c1fe5f997a5eccd1f7d9ca95e58595d117f3c85e7e182df849"
+    "ComixFastSigner": "2215dc80d478390f1c9ba6c456a0feb791ef5ea7f02ceb599c217dc92e46bb69",
+    "ComixFastDecrypt": "f4647121763fa3345650851e97fe2aa560306bfa78cbf9dd6ad156c2f1eb1518"
   }
 }
