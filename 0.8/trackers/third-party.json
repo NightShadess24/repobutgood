@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-23T10:39:00.312Z",
+  "generated": "2026-10-24T10:04:24.522Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -24,7 +24,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "c2ce4d3373e4f46f937a864ca812d3da31bbe68f"
+      "commit": "c91e3943b95ccae4f0c1a94cc3dcb17d2124fa70"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -80,12 +80,16 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "KaliScan",
+          "id": "GalaxyManga",
+          "why": "in the Stable repository"
+        },
+        {
+          "id": "Kagane",
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "GalaxyManga",
-          "why": "in the Stable repository"
+          "id": "KaliScan",
+          "why": "18+ (in the NSFW repository)"
         },
         {
           "id": "KingOfShojo",
@@ -108,20 +112,20 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "Mangago",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
           "id": "MyReadingManga",
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "OManga",
+          "id": "Mangago",
           "why": "18+ (in the NSFW repository)"
         },
         {
           "id": "MangaTown",
           "why": "in the Stable repository"
+        },
+        {
+          "id": "OManga",
+          "why": "18+ (in the NSFW repository)"
         },
         {
           "id": "ReiManga",
@@ -136,15 +140,19 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "RokariComics",
-          "why": "in the Stable repository"
-        },
-        {
           "id": "TempleScan",
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "Toonkotsu",
+          "why": "in the Stable repository"
+        },
+        {
           "id": "ValirScans",
+          "why": "in the Stable repository"
+        },
+        {
+          "id": "RokariComics",
           "why": "in the Stable repository"
         },
         {
@@ -156,7 +164,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "0eca74b51a76f04754106da0caa94b1e41e93a41"
+      "commit": "de86f2e92cbb5b025b312560155397fe9d97761e"
     },
     {
       "repo": "timkuel/PaperBackExtension",
@@ -2192,7 +2200,7 @@
         },
         {
           "id": "Kagane",
-          "why": "in the Stable repository"
+          "why": "already from PoppingMango"
         },
         {
           "id": "MangaStash",
@@ -2219,7 +2227,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "f39a955bb2178dfcfceb6c3abf3212e67d931cda"
+      "commit": "de8fcb2fa59bb3e1e893b3c25d89f5470c1c7cad"
     },
     {
       "repo": "feliivk/felii-extensions",
