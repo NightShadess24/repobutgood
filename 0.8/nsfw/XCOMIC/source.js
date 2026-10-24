@@ -944,16 +944,30 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       if (body.text === (response.data ?? "") && body.raw === response.rawData && !contentTypeChanged) {
         return response;
       }
+      const mutable = response;
+      let written = false;
       try {
-        const mutable = response;
-        mutable.data = body.text;
-        mutable.rawData = body.raw;
+        if (body.raw !== response.rawData) {
+          mutable.rawData = body.raw;
+        }
+        if (body.text !== (response.data ?? "")) {
+          mutable.data = body.text;
+        }
+        written = true;
+      } catch {
+      }
+      if (written) {
         if (contentTypeChanged) {
-          mutable.mimeType = body.contentType;
-          setContentType(response.headers, body.contentType ?? "");
+          try {
+            mutable.mimeType = body.contentType;
+          } catch {
+          }
+          try {
+            setContentType(response.headers, body.contentType ?? "");
+          } catch {
+          }
         }
         return response;
-      } catch {
       }
       const rebuilt = {
         data: body.text,
