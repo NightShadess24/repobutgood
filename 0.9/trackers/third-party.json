@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-23T10:24:55.678Z",
+  "generated": "2026-10-24T09:50:20.717Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -600,7 +600,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "f39a955bb2178dfcfceb6c3abf3212e67d931cda"
+      "commit": "de8fcb2fa59bb3e1e893b3c25d89f5470c1c7cad"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -784,7 +784,7 @@
           "why": "already here"
         }
       ],
-      "commit": "c2ce4d3373e4f46f937a864ca812d3da31bbe68f"
+      "commit": "c91e3943b95ccae4f0c1a94cc3dcb17d2124fa70"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -840,12 +840,16 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "KaliScan",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
           "id": "GalaxyManga",
           "why": "in the Stable repository"
+        },
+        {
+          "id": "Kagane",
+          "why": "already from Pirate Vodka"
+        },
+        {
+          "id": "KaliScan",
+          "why": "18+ (in the NSFW repository)"
         },
         {
           "id": "KingOfShojo",
@@ -868,20 +872,20 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "Mangago",
-          "why": "already here"
-        },
-        {
           "id": "MyReadingManga",
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "OManga",
-          "why": "18+ (in the NSFW repository)"
+          "id": "Mangago",
+          "why": "already here"
         },
         {
           "id": "MangaTown",
           "why": "in the Stable repository"
+        },
+        {
+          "id": "OManga",
+          "why": "18+ (in the NSFW repository)"
         },
         {
           "id": "ReiManga",
@@ -896,15 +900,19 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "RokariComics",
-          "why": "in the Stable repository"
-        },
-        {
           "id": "TempleScan",
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "Toonkotsu",
+          "why": "in the Stable repository"
+        },
+        {
           "id": "ValirScans",
+          "why": "in the Stable repository"
+        },
+        {
+          "id": "RokariComics",
           "why": "in the Stable repository"
         },
         {
@@ -916,7 +924,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "0eca74b51a76f04754106da0caa94b1e41e93a41"
+      "commit": "de86f2e92cbb5b025b312560155397fe9d97761e"
     },
     {
       "repo": "timkuel/PaperBackExtension",
