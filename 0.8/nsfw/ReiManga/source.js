@@ -782,14 +782,118 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     year: 365 * 24 * 60 * 60 * 1e3
   };
 
-  // common/Info.ts
+  // common/Discover.ts
   var import_types = __toESM(require_lib());
+  function homeSectionType(type) {
+    switch (type) {
+      case "featured" /* featured */:
+        return import_types.HomeSectionType.featured;
+      case "prominentCarousel" /* prominentCarousel */:
+        return import_types.HomeSectionType.singleRowLarge;
+      case "simpleCarousel" /* simpleCarousel */:
+      case "chapterUpdates" /* chapterUpdates */:
+      case "genres" /* genres */:
+        return import_types.HomeSectionType.singleRowNormal;
+    }
+  }
+  function isRenderableSection(type) {
+    return type !== "genres" /* genres */;
+  }
+
+  // common/Convert.ts
+  function plainQuotes(text) {
+    return text.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g, "'").replace(/[\u201C\u201D\u201E\u201F\u2033\u2036]/g, '"');
+  }
+  function toSourceManga(manga) {
+    const info = manga.mangaInfo;
+    return App.createSourceManga({
+      id: manga.mangaId,
+      mangaInfo: App.createMangaInfo({
+        image: info.thumbnailUrl,
+        titles: [info.primaryTitle, ...info.secondaryTitles].filter(
+          (title2, index, all) => title2.length > 0 && all.indexOf(title2) === index
+        ),
+        desc: info.synopsis,
+        status: info.status,
+        hentai: info.contentRating === "ADULT" /* ADULT */,
+        author: info.author,
+        artist: info.artist,
+        banner: info.bannerUrl,
+        rating: info.rating,
+        tags: (info.tagGroups ?? []).map(toTagSection),
+        covers: [info.thumbnailUrl].filter((url) => url.length > 0),
+        additionalInfo: info.additionalInfo
+      })
+    });
+  }
+  function toTagSection(section) {
+    return App.createTagSection({
+      id: section.id,
+      label: section.title,
+      tags: section.tags.map((tag) => App.createTag({ id: tag.id, label: tag.title }))
+    });
+  }
+  function toChapter(chapter) {
+    return App.createChapter({
+      id: chapter.chapterId,
+      chapNum: chapter.chapNum,
+      name: chapter.title,
+      volume: chapter.volume,
+      group: chapter.group,
+      time: chapter.publishDate,
+      langCode: chapter.langCode ?? "\u{1F1EC}\u{1F1E7}",
+      sortingIndex: chapter.sortingIndex
+    });
+  }
+  function toChapterDetails(details) {
+    return App.createChapterDetails({
+      id: details.id,
+      mangaId: details.mangaId,
+      pages: details.pages
+    });
+  }
+  function toPartialFromSearch(item) {
+    return App.createPartialSourceManga({
+      mangaId: item.mangaId,
+      title: item.title,
+      image: item.imageUrl,
+      subtitle: item.subtitle
+    });
+  }
+  function toPartialFromDiscover(item) {
+    return App.createPartialSourceManga({
+      mangaId: item.mangaId,
+      title: item.title,
+      image: item.imageUrl,
+      subtitle: item.subtitle ?? item.chapterId
+    });
+  }
+  function toPagedResults(results, metadata) {
+    return App.createPagedResults({
+      results,
+      // A section with no follow-up page must report no metadata, otherwise
+      // the app keeps asking for more and repeats the last page forever.
+      metadata: metadata ?? void 0
+    });
+  }
+  function toHomeSection(section, items, containsMoreItems) {
+    return App.createHomeSection({
+      id: section.id,
+      title: section.title,
+      type: homeSectionType(section.type),
+      items,
+      containsMoreItems
+    });
+  }
+
+  // common/Info.ts
+  var import_types2 = __toESM(require_lib());
   var INTENT_FOR = {
-    ["chapters" /* CHAPTERS */]: import_types.SourceIntents.MANGA_CHAPTERS,
-    ["homePage" /* HOME_PAGE */]: import_types.SourceIntents.HOMEPAGE_SECTIONS,
-    ["cloudflare" /* CLOUDFLARE */]: import_types.SourceIntents.CLOUDFLARE_BYPASS_REQUIRED,
-    ["settings" /* SETTINGS */]: import_types.SourceIntents.SETTINGS_UI,
-    ["tracking" /* TRACKING */]: import_types.SourceIntents.MANGA_TRACKING
+    ["chapters" /* CHAPTERS */]: import_types2.SourceIntents.MANGA_CHAPTERS,
+    ["homePage" /* HOME_PAGE */]: import_types2.SourceIntents.HOMEPAGE_SECTIONS,
+    ["cloudflare" /* CLOUDFLARE */]: import_types2.SourceIntents.CLOUDFLARE_BYPASS_REQUIRED,
+    ["settings" /* SETTINGS */]: import_types2.SourceIntents.SETTINGS_UI,
+    ["tracking" /* TRACKING */]: import_types2.SourceIntents.MANGA_TRACKING
   };
   function sourceInfo(description) {
     const intents = description.capabilities.reduce(
@@ -798,10 +902,10 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     );
     const badges = [...description.badges ?? []];
     if (description.kind === "Novels" /* NOVEL */) {
-      badges.unshift({ text: "Novels" /* NOVEL */, type: import_types.BadgeColor.BLUE });
+      badges.unshift({ text: "Novels" /* NOVEL */, type: import_types2.BadgeColor.BLUE });
     }
     if (description.language !== void 0) {
-      badges.unshift({ text: description.language, type: import_types.BadgeColor.GREY });
+      badges.unshift({ text: description.language, type: import_types2.BadgeColor.GREY });
     }
     return {
       name: description.name,
@@ -820,11 +924,11 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   function runtimeRating(rating) {
     switch (rating) {
       case "ADULT" /* ADULT */:
-        return import_types.ContentRating.ADULT;
+        return import_types2.ContentRating.ADULT;
       case "MATURE" /* MATURE */:
-        return import_types.ContentRating.MATURE;
+        return import_types2.ContentRating.MATURE;
       case "EVERYONE" /* EVERYONE */:
-        return import_types.ContentRating.EVERYONE;
+        return import_types2.ContentRating.EVERYONE;
     }
   }
 
@@ -895,6 +999,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     constructor(options) {
       this.cookieStorage = options.cookieStorage;
       this.interceptor = options.interceptor;
+      this.sharedCookies = options.sharedCookies;
     }
     async interceptRequest(request) {
       let intercepted = {
@@ -902,6 +1007,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
         method: request.method,
         headers: { ...request.headers },
         cookies: {
+          ...this.borrowedCookies(request.url),
           ...await this.cookieStorage?.all(),
           ...cookiesToRecord(request.cookies)
         },
@@ -919,6 +1025,28 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
         data: intercepted.data,
         cookies: recordToCookies(intercepted.cookies, hostOf(intercepted.url))
       });
+    }
+    borrowedCookies(url) {
+      if (this.sharedCookies === void 0) {
+        return {};
+      }
+      let cookies;
+      try {
+        cookies = this.sharedCookies() ?? [];
+      } catch {
+        return {};
+      }
+      const host = hostOf(url);
+      const now = Date.now();
+      const borrowed = {};
+      for (const cookie of cookies) {
+        const domain = cookie.domain.replace(/^\./, "").toLowerCase();
+        const expired = cookie.expires !== void 0 && cookie.expires.getTime() <= now;
+        if (!expired && domain && (host === domain || host.endsWith(`.${domain}`))) {
+          borrowed[cookie.name] = cookie.value;
+        }
+      }
+      return borrowed;
     }
     async interceptResponse(response) {
       if (this.interceptor === void 0) {
@@ -1454,107 +1582,6 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   }
   var Application = new ApplicationRuntime();
 
-  // common/Discover.ts
-  var import_types2 = __toESM(require_lib());
-  function homeSectionType(type) {
-    switch (type) {
-      case "featured" /* featured */:
-        return import_types2.HomeSectionType.featured;
-      case "prominentCarousel" /* prominentCarousel */:
-        return import_types2.HomeSectionType.singleRowLarge;
-      case "simpleCarousel" /* simpleCarousel */:
-      case "chapterUpdates" /* chapterUpdates */:
-      case "genres" /* genres */:
-        return import_types2.HomeSectionType.singleRowNormal;
-    }
-  }
-  function isRenderableSection(type) {
-    return type !== "genres" /* genres */;
-  }
-
-  // common/Convert.ts
-  function toSourceManga(manga) {
-    const info = manga.mangaInfo;
-    return App.createSourceManga({
-      id: manga.mangaId,
-      mangaInfo: App.createMangaInfo({
-        image: info.thumbnailUrl,
-        titles: [info.primaryTitle, ...info.secondaryTitles].filter(
-          (title2, index, all) => title2.length > 0 && all.indexOf(title2) === index
-        ),
-        desc: info.synopsis,
-        status: info.status,
-        hentai: info.contentRating === "ADULT" /* ADULT */,
-        author: info.author,
-        artist: info.artist,
-        banner: info.bannerUrl,
-        rating: info.rating,
-        tags: (info.tagGroups ?? []).map(toTagSection),
-        covers: [info.thumbnailUrl].filter((url) => url.length > 0),
-        additionalInfo: info.additionalInfo
-      })
-    });
-  }
-  function toTagSection(section) {
-    return App.createTagSection({
-      id: section.id,
-      label: section.title,
-      tags: section.tags.map((tag) => App.createTag({ id: tag.id, label: tag.title }))
-    });
-  }
-  function toChapter(chapter) {
-    return App.createChapter({
-      id: chapter.chapterId,
-      chapNum: chapter.chapNum,
-      name: chapter.title,
-      volume: chapter.volume,
-      group: chapter.group,
-      time: chapter.publishDate,
-      langCode: chapter.langCode ?? "\u{1F1EC}\u{1F1E7}",
-      sortingIndex: chapter.sortingIndex
-    });
-  }
-  function toChapterDetails(details) {
-    return App.createChapterDetails({
-      id: details.id,
-      mangaId: details.mangaId,
-      pages: details.pages
-    });
-  }
-  function toPartialFromSearch(item) {
-    return App.createPartialSourceManga({
-      mangaId: item.mangaId,
-      title: item.title,
-      image: item.imageUrl,
-      subtitle: item.subtitle
-    });
-  }
-  function toPartialFromDiscover(item) {
-    return App.createPartialSourceManga({
-      mangaId: item.mangaId,
-      title: item.title,
-      image: item.imageUrl,
-      subtitle: item.subtitle ?? item.chapterId
-    });
-  }
-  function toPagedResults(results, metadata) {
-    return App.createPagedResults({
-      results,
-      // A section with no follow-up page must report no metadata, otherwise
-      // the app keeps asking for more and repeats the last page forever.
-      metadata: metadata ?? void 0
-    });
-  }
-  function toHomeSection(section, items, containsMoreItems) {
-    return App.createHomeSection({
-      id: section.id,
-      title: section.title,
-      type: homeSectionType(section.type),
-      items,
-      containsMoreItems
-    });
-  }
-
   // common/Menu.ts
   var RETAIN_LIMIT = 2e3;
   var retained = [];
@@ -1575,13 +1602,17 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
         label: options.label,
         value: binding(
           async () => options.get(),
-          async (value) => options.set(typeof value === "string" ? value : "")
+          async (value) => options.set(typeof value === "string" ? plainQuotes(value) : "")
         )
       })
     );
   }
   function labelRow(id, label, value) {
     return retain(App.createDUILabel({ id, label, value }));
+  }
+  function formRow(id, label, sections) {
+    const form = retain(App.createDUIForm({ sections: async () => retain((await sections()).map(toSection)) }));
+    return retain(App.createDUINavigationButton({ id, label, form }));
   }
   function toSection(section) {
     return retain(
@@ -1595,14 +1626,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     );
   }
   function settingsMenu(title2, sections) {
-    const form = retain(
-      App.createDUIForm({
-        // Built when the screen opens rather than up front, so a source whose
-        // settings depend on something fetched can wait for it here.
-        sections: async () => retain((await sections()).map(toSection))
-      })
-    );
-    const button = retain(App.createDUINavigationButton({ id: "settings_button", label: title2, form }));
+    const button = formRow("settings_button", title2, sections);
     return retain(
       App.createDUISection({
         id: "settings",
@@ -1616,6 +1640,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   var SettingsStore = class {
     constructor(stateManager, keys) {
       this.cache = /* @__PURE__ */ new Map();
+      this.writes = Promise.resolve();
       this.stateManager = stateManager;
       this.keys = keys;
     }
@@ -1628,18 +1653,17 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     load() {
       return this.hydration ??= this.hydrate();
     }
+    // One key at a time: parallel state-store calls race in the Swift bridge.
     async hydrate() {
-      await Promise.all(
-        this.keys.map(async (key) => {
-          try {
-            const value = await this.stateManager.retrieve(key);
-            if (value !== null && value !== void 0 && !this.cache.has(key)) {
-              this.cache.set(key, value);
-            }
-          } catch {
+      for (const key of this.keys) {
+        try {
+          const value = await this.stateManager.retrieve(key);
+          if (value !== null && value !== void 0 && !this.cache.has(key)) {
+            this.cache.set(key, value);
           }
-        })
-      );
+        } catch {
+        }
+      }
     }
     /** The raw stored value, or `undefined` when nothing is set. */
     get(key) {
@@ -1648,7 +1672,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     /** Stores a value, taking effect immediately and persisting behind. */
     set(key, value) {
       this.cache.set(key, value);
-      void this.persist(key, value);
+      this.writes = this.writes.then(() => this.persist(key, value));
     }
     async persist(key, value) {
       try {
@@ -1684,6 +1708,30 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       const value = this.get(key);
       return typeof value === "boolean" ? value : fallback;
     }
+    /**
+     * A site list kept across launches, such as genres for the filters, so
+     * opening search does not cost a request each time. A failed refresh
+     * falls back to the old copy. The key must be in `settingsKeys`.
+     */
+    async remembered(key, maxAgeMs, load) {
+      const stored = this.get(key);
+      const at = typeof stored?.at === "number" ? stored.at : void 0;
+      if (at !== void 0 && Date.now() - at < maxAgeMs) {
+        return stored.value;
+      }
+      try {
+        const value = await load();
+        if (!Array.isArray(value) || value.length > 0) {
+          this.set(key, { at: Date.now(), value });
+        }
+        return value;
+      } catch (error) {
+        if (at !== void 0) {
+          return stored.value;
+        }
+        throw error;
+      }
+    }
   };
   function normaliseUrlOverride(value) {
     const trimmed = value.trim().replace(/\/+$/, "");
@@ -1704,15 +1752,20 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       this.stateManager = App.createSourceStateManager();
       this.cookieStorage = new CookieStorageInterceptor(this.stateManager);
       this.settings = new SettingsStore(this.stateManager, options.settingsKeys ?? []);
-      this.requestManager = App.createRequestManager({
-        requestsPerSecond: options.rateLimit ? Math.max(1, Math.round(options.rateLimit.numberOfRequests / Math.max(1, options.rateLimit.bufferInterval))) : 4,
+      const manager = (limit, sharedCookies) => App.createRequestManager({
+        requestsPerSecond: limit ? Math.max(1, Math.round(limit.numberOfRequests / Math.max(1, limit.bufferInterval))) : 4,
         requestTimeout: (options.requestTimeout ?? 20) * 1e3,
         interceptor: new InterceptorChain({
           cookieStorage: this.cookieStorage,
-          interceptor: options.interceptor
+          interceptor: options.interceptor,
+          sharedCookies
         })
       });
-      Application.bind(this.requestManager, cheerio);
+      this.requestManager = manager(options.rateLimit);
+      Application.bind(
+        options.apiRateLimit ? manager(options.apiRateLimit, () => this.requestManager.cookieStore?.getAllCookies()) : this.requestManager,
+        cheerio
+      );
     }
     /**
      * Filters offered on the search screen.
@@ -1784,6 +1837,9 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
         const manga = this.lastManga?.mangaId === mangaId ? this.lastManga : await this.getMangaInfo(mangaId);
         this.lastManga = manga;
         const chapters = await this.getChapterList(manga);
+        if (chapters.length === 0) {
+          throw new Error("No chapters were found. Reading progress is kept; try again later.");
+        }
         this.lastChapters = new Map(chapters.map((chapter) => [chapter.chapterId, chapter]));
         return chapters.map(toChapter);
       });
@@ -1815,10 +1871,15 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       return this.guard(async () => {
         const page = await this.getSearchResultItems(
           {
-            title: query.title?.trim() === "" ? void 0 : query.title,
+            title: query.title?.trim() ? plainQuotes(query.title) : void 0,
             includedTags: query.includedTags.map((tag) => ({ id: tag.id, title: tag.label })),
             excludedTags: query.excludedTags.map((tag) => ({ id: tag.id, title: tag.label })),
-            parameters: query.parameters ?? {}
+            parameters: Object.fromEntries(
+              Object.entries(query.parameters ?? {}).map(([key, value]) => [
+                key,
+                typeof value === "string" ? plainQuotes(value) : value
+              ])
+            )
           },
           metadata
         );
@@ -2347,7 +2408,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   var ReiMangaInfo = sourceInfo({
     name: "ReiManga",
     description: "Extension that pulls content from reimanga.net.",
-    version: "1.0.2",
+    version: "1.0.3",
     icon: "icon.png",
     language: "English",
     websiteBaseURL: DOMAIN,
