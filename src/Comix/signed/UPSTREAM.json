@@ -1,11 +1,11 @@
 {
   "repository": "https://github.com/acepilot147/pb-extensions",
   "branch": "0.8",
-  "commit": "41c20ce5da8d1724f37cb04409e2698ebf180e7d",
-  "date": "2026-10-23",
-  "subject": "v1.9.31: re-release v1.9.30's captcha auto-solve",
+  "commit": "2883b012c47c2529732fa8baf63f9270d7a58b66",
+  "date": "2026-10-24",
+  "subject": "[verified] v1.9.33: remove key refresh cooldown and skip unrelated script origins",
   "files": {
-    "ComixFastSigner": "2215dc80d478390f1c9ba6c456a0feb791ef5ea7f02ceb599c217dc92e46bb69",
-    "ComixFastDecrypt": "f4647121763fa3345650851e97fe2aa560306bfa78cbf9dd6ad156c2f1eb1518"
+    "ComixFastSigner": "131330419bdd125ba27211651abca324bbc2f09f7f15f7d077f2baf232611142",
+    "ComixFastDecrypt": "b770302e9b7cbaee279578789a9aa120a3028c937b6f57be983fde58bb73ab0b"
   }
 }
