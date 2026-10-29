@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-28T11:39:43.582Z",
+  "generated": "2026-10-29T11:54:30.350Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -448,7 +448,7 @@
           "why": "not English (in the Languages repository)"
         }
       ],
-      "commit": "90662d3aeaed1ad09c8c0253cf737d6349b071c6"
+      "commit": "6aa605168289f0d2f24a0255b461b6949b68d4d1"
     },
     {
       "repo": "kittycatgit/kitty-extensions-0.9",
@@ -600,7 +600,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "0bee323c13eeaa07107b6f7ae06a189f8c16d89c"
+      "commit": "03d503375842b53e3771050c767f2ae730dc11bd"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -840,16 +840,16 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "Kagane",
+          "why": "already from Pirate Vodka"
+        },
+        {
           "id": "KingOfShojo",
           "why": "in the Stable repository"
         },
         {
           "id": "LikeManga",
           "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "Kagane",
-          "why": "already from Pirate Vodka"
         },
         {
           "id": "LuaComic",
@@ -884,11 +884,11 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "RokariComics",
+          "id": "RinkoComics",
           "why": "in the Stable repository"
         },
         {
-          "id": "RinkoComics",
+          "id": "RokariComics",
           "why": "in the Stable repository"
         },
         {
@@ -920,7 +920,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "1886c583c73837cb4ed103776a1df7e67edfd48b"
+      "commit": "7556c5f7cd02863ecd6508fbc07004e68973f55e"
     },
     {
       "repo": "timkuel/PaperBackExtension",
