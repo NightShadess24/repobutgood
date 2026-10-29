@@ -1710,10 +1710,10 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     );
   }
   function settingsMenu(title, sections) {
-    const button = formRow("settings_button", title, sections);
+    const button = formRow("content_settings", title, sections);
     return retain(
       App.createDUISection({
-        id: "settings",
+        id: "sourceMenu",
         isHidden: false,
         rows: async () => [button]
       })
@@ -2577,7 +2577,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   var ValirScansInfo = sourceInfo({
     name: "Valir Scans",
     description: "Extension that pulls comics from valirscans.org.",
-    version: "1.0.4",
+    version: "1.0.5",
     icon: "icon.png",
     language: "English",
     websiteBaseURL: DOMAIN,

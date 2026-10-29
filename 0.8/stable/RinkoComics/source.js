@@ -1695,10 +1695,10 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     );
   }
   function settingsMenu(title, sections) {
-    const button = formRow("settings_button", title, sections);
+    const button = formRow("content_settings", title, sections);
     return retain(
       App.createDUISection({
-        id: "settings",
+        id: "sourceMenu",
         isHidden: false,
         rows: async () => [button]
       })
@@ -2503,7 +2503,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   var RinkoComicsInfo = sourceInfo({
     name: "RinkoComics",
     description: "Extension that pulls comics from rinkocomics.com.",
-    version: "1.0.5",
+    version: "1.0.6",
     icon: "icon.png",
     language: "English",
     websiteBaseURL: DOMAIN,
