@@ -1680,10 +1680,10 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     );
   }
   function settingsMenu(title, sections) {
-    const button = formRow("settings_button", title, sections);
+    const button = formRow("content_settings", title, sections);
     return retain(
       App.createDUISection({
-        id: "settings",
+        id: "sourceMenu",
         isHidden: false,
         rows: async () => [button]
       })

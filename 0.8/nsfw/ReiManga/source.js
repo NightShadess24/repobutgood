@@ -1626,10 +1626,10 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     );
   }
   function settingsMenu(title2, sections) {
-    const button = formRow("settings_button", title2, sections);
+    const button = formRow("content_settings", title2, sections);
     return retain(
       App.createDUISection({
-        id: "settings",
+        id: "sourceMenu",
         isHidden: false,
         rows: async () => [button]
       })
@@ -2408,7 +2408,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   var ReiMangaInfo = sourceInfo({
     name: "ReiManga",
     description: "Extension that pulls content from reimanga.net.",
-    version: "1.0.3",
+    version: "1.0.4",
     icon: "icon.png",
     language: "English",
     websiteBaseURL: DOMAIN,

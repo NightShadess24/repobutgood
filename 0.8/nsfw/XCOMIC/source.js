@@ -1647,10 +1647,10 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     );
   }
   function settingsMenu(title, sections) {
-    const button = formRow("settings_button", title, sections);
+    const button = formRow("content_settings", title, sections);
     return retain(
       App.createDUISection({
-        id: "settings",
+        id: "sourceMenu",
         isHidden: false,
         rows: async () => [button]
       })
@@ -3217,7 +3217,7 @@ query get_chapterNode($id: ID!) {
   var XCOMICInfo = sourceInfo({
     name: "XCOMIC",
     description: "Extension that pulls content from xcomic.me.",
-    version: "1.1.2",
+    version: "1.1.3",
     icon: "icon.png",
     language: "English",
     websiteBaseURL: DOMAIN,
