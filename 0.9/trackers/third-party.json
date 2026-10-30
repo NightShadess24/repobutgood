@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-29T11:54:30.350Z",
+  "generated": "2026-10-30T11:40:43.303Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -600,7 +600,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "03d503375842b53e3771050c767f2ae730dc11bd"
+      "commit": "d23ee61bf52779aa356aff230648a116b647fc1e"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -868,6 +868,10 @@
           "why": "in the Stable repository"
         },
         {
+          "id": "MangaDot",
+          "why": "already here"
+        },
+        {
           "id": "Mangago",
           "why": "already here"
         },
@@ -920,7 +924,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "7556c5f7cd02863ecd6508fbc07004e68973f55e"
+      "commit": "42a27a19c482b85c6344e5e5f9686abac3e18111"
     },
     {
       "repo": "timkuel/PaperBackExtension",
