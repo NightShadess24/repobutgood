@@ -1,19 +1,2781 @@
-var _Sources = (function () {
-var __pbV9 = (function () {
-"use strict";var __pbV9=(()=>{var Mt=Object.defineProperty;var ur=Object.getOwnPropertyDescriptor;var fr=Object.getOwnPropertyNames;var hr=Object.prototype.hasOwnProperty;var lr=(t,e,n)=>e in t?Mt(t,e,{enumerable:!0,configurable:!0,writable:!0,value:n}):t[e]=n;var dr=(t,e)=>{for(var n in e)Mt(t,n,{get:e[n],enumerable:!0})},gr=(t,e,n,r)=>{if(e&&typeof e=="object"||typeof e=="function")for(let o of fr(e))!hr.call(t,o)&&o!==n&&Mt(t,o,{get:()=>e[o],enumerable:!(r=ur(e,o))||r.enumerable});return t};var pr=t=>gr(Mt({},"__esModule",{value:!0}),t);var y=(t,e,n)=>lr(t,typeof e!="symbol"?e+"":e,n);var Io={};dr(Io,{Application:()=>ae,globals:()=>Ge,makeSourceClass:()=>_o});function pe(t){return t instanceof Uint8Array||ArrayBuffer.isView(t)&&t.constructor.name==="Uint8Array"&&"BYTES_PER_ELEMENT"in t&&t.BYTES_PER_ELEMENT===1}var Ot=t=>t?`"${t}" `:"";function wr(t,e=""){if(typeof t!="boolean")throw new TypeError(Ot(e)+"expected boolean, got type="+typeof t);return t}function Wt(t,e=""){if(typeof t!="number")throw new TypeError(Ot(e)+"expected number, got "+typeof t);if(!Number.isSafeInteger(t)||t<0)throw new RangeError(Ot(e)+"expected integer >= 0, got "+t);return t}function k(t,e,n=""){if(pe(t)&&(e===void 0||t.length===e))return t;e!==void 0&&Wt(e,"length");let r=pe(t),o=e!==void 0?` of length ${e}`:"",s=r?`length=${t.length}`:`type=${typeof t}`,i=Ot(n)+"expected Uint8Array"+o+", got "+s;throw r?new RangeError(i):new TypeError(i)}function Kt(t,e=!0){if(t.destroyed)throw new Error("hash was destroyed");if(e&&t.finished)throw new Error("digest() was already called")}function br(t,e){k(t,void 0,"output");let n=e.outputLen;if(!(t.length>=n))throw new RangeError('"output" expected length >= '+n)}function we(t,e){if(br(t,e),!q(t))throw new Error("invalid output, must be aligned")}function be(t){return new Uint8Array(t.buffer,t.byteOffset,t.byteLength)}function N(t){return new Uint32Array(t.buffer,t.byteOffset,Math.floor(t.byteLength/4))}function M(...t){for(let e=0;e<t.length;e++)t[e].fill(0)}function xt(t){return new DataView(t.buffer,t.byteOffset,t.byteLength)}var Z=new Uint8Array(new Uint32Array([287454020]).buffer)[0]===68;function xe(t){return t<<24&4278190080|t<<8&16711680|t>>>8&65280|t>>>24&255}var L=Z?t=>t:t=>xe(t)>>>0;function xr(t){for(let e=0;e<t.length;e++)t[e]=xe(t[e]);return t}var X=Z?t=>t:xr;function $e(t,e){return!t.byteLength||!e.byteLength?!1:t.buffer===e.buffer&&t.byteOffset<e.byteOffset+e.byteLength&&e.byteOffset<t.byteOffset+t.byteLength}function Xt(t,e){if($e(t,e)&&t.byteOffset<e.byteOffset)throw new Error("complex overlap of input and output is not supported")}function tn(t,e){if(t=k(t),e=k(e),t.length!==e.length)return!1;let n=0;for(let r=0;r<t.length;r++)n|=t[r]^e[r];return n===0}function ye(t,e,n){let r=e,o=n||(()=>[]),s=(a,c)=>r(c,...o(a)).update(a).digest(),i=r(new Uint8Array(t),...o(new Uint8Array(0)));return s.outputLen=i.outputLen,s.blockLen=i.blockLen,s.create=(a,...c)=>r(a,...c),s}var zt=(t,e)=>{function n(r,...o){if(k(r,void 0,"key"),t.nonceLength!==void 0){let l=o[0];k(l,t.varSizeNonce?void 0:t.nonceLength,"nonce")}let s=t.tagLength,i=t.nonceLength!==void 0?1:0;if(!t.withAAD){for(let l=i;l<o.length;l++)if(pe(o[l]))throw new Error("AAD not supported")}t.withAAD&&o[i]!==void 0&&k(o[i],void 0,"AAD");let a=e(r,...o),c=(l,d)=>{if(d!==void 0){if(l!==2)throw new Error("cipher output not supported");k(d,void 0,"output")}},u=!1;return{encrypt(l,d){if(u)throw new Error("cannot encrypt() twice with same key + nonce");return u=!0,k(l,void 0,"data"),c(a.encrypt.length,d),a.encrypt(l,d)},decrypt(l,d){if(k(l,void 0,"data"),s&&l.length<s)throw new Error('"ciphertext" expected length >= tagLength='+s);return c(a.decrypt.length,d),a.decrypt(l,d)}}}return Object.assign(n,t),n};function Bt(t,e,n=!0){if(e===void 0)return new Uint8Array(t);if(k(e,t,"output"),n&&!q(e))throw new Error("invalid output, must be aligned");return e}function en(t,e,n){Wt(t),Wt(e),wr(n);let r=new Uint8Array(16),o=xt(r);return o.setBigUint64(0,BigInt(e),n),o.setBigUint64(8,BigInt(t),n),r}function q(t){return t.byteOffset%4===0}function z(t){return Uint8Array.from(k(t))}var ft=16,nn=new Uint8Array(16),Lt=N(nn),yr=225,Rr=(t,e,n,r)=>{let o=r&1;return{s3:n<<31|r>>>1,s2:e<<31|n>>>1,s1:t<<31|e>>>1,s0:t>>>1^yr<<24&-(o&1)}},qt=t=>(t>>>0&255)<<24|(t>>>8&255)<<16|(t>>>16&255)<<8|t>>>24&255|0;var mr=t=>t>64*1024?8:t>1024?4:2,Re=class{constructor(e,n){y(this,"blockLen",ft);y(this,"outputLen",ft);y(this,"s0",0);y(this,"s1",0);y(this,"s2",0);y(this,"s3",0);y(this,"finished",!1);y(this,"destroyed",!1);y(this,"t");y(this,"W");y(this,"windowSize");k(e,16,"key"),e=z(e);let r=xt(e),o=r.getUint32(0,!1),s=r.getUint32(4,!1),i=r.getUint32(8,!1),a=r.getUint32(12,!1),c=[];for(let p=0;p<128;p++)c.push({s0:qt(o),s1:qt(s),s2:qt(i),s3:qt(a)}),{s0:o,s1:s,s2:i,s3:a}=Rr(o,s,i,a);let u=mr(n||1024);if(![1,2,4,8].includes(u))throw new Error("ghash: invalid window size, expected 2, 4 or 8");this.W=u;let l=128/u,d=this.windowSize=2**u,g=[];for(let p=0;p<l;p++)for(let R=0;R<d;R++){let b=0,A=0,T=0,x=0;for(let h=0;h<u;h++){if(!(R>>>u-h-1&1))continue;let{s0:v,s1:E,s2:B,s3:m}=c[u*p+h];b^=v,A^=E,T^=B,x^=m}g.push({s0:b,s1:A,s2:T,s3:x})}this.t=g}_updateBlock(e,n,r,o){e^=this.s0,n^=this.s1,r^=this.s2,o^=this.s3;let{W:s,t:i,windowSize:a}=this,c=0,u=0,f=0,l=0,d=(1<<s)-1,g=0;for(let p of[e,n,r,o])for(let R=0;R<4;R++){let b=p>>>8*R&255;for(let A=8/s-1;A>=0;A--){let T=b>>>s*A&d,{s0:x,s1:h,s2:w,s3:v}=i[g*a+T];c^=x,u^=h,f^=w,l^=v,g+=1}}this.s0=c,this.s1=u,this.s2=f,this.s3=l}update(e){Kt(this),k(e),e=z(e);let n=N(e),r=Math.floor(e.length/ft),o=e.length%ft;for(let s=0;s<r;s++)this._updateBlock(L(n[s*4+0]),L(n[s*4+1]),L(n[s*4+2]),L(n[s*4+3]));return o&&(nn.set(e.subarray(r*ft)),this._updateBlock(L(Lt[0]),L(Lt[1]),L(Lt[2]),L(Lt[3])),M(Lt)),this}destroy(){this.destroyed=!0;let{t:e}=this;for(let n of e)n.s0=0,n.s1=0,n.s2=0,n.s3=0}digestInto(e){Kt(this),we(e,this),this.finished=!0;let{s0:n,s1:r,s2:o,s3:s}=this,i=N(e);i[0]=n,i[1]=r,i[2]=o,i[3]=s,Z||X(i.subarray(0,ft/4))}digest(){let e=new Uint8Array(ft);return this.digestInto(e),this.destroy(),e}};var me=ye(16,(t,e)=>new Re(t,e),t=>[t.length]);var K=16,rn=4,Ft=new Uint8Array(K);var Ar=283;function vr(t){if(![16,24,32].includes(t.length))throw new Error('"aes key" expected Uint8Array of length 16/24/32, got length='+t.length)}function Ee(t){return t<<1^Ar&-(t>>7)}function yt(t,e){let n=0;for(;e>0;e>>=1)n^=t&-(e&1),t=Ee(t);return n}var ve=(()=>{let t=new Uint8Array(256);for(let n=0,r=1;n<256;n++,r^=Ee(r))t[n]=r;let e=new Uint8Array(256);e[0]=99;for(let n=0;n<255;n++){let r=t[255-n];r|=r<<8,e[t[n]]=(r^r>>4^r>>5^r>>6^r>>7^99)&255}return M(t),e})(),Er=ve.map((t,e)=>ve.indexOf(e)),Tr=t=>t<<24|t>>>8,Ae=t=>t<<8|t>>>24;function on(t,e){if(t.length!==256)throw new Error("wrong sbox length");let n=new Uint32Array(256).map((u,f)=>e(t[f])),r=n.map(Ae),o=r.map(Ae),s=o.map(Ae),i=new Uint32Array(256*256),a=new Uint32Array(256*256),c=new Uint16Array(256*256);for(let u=0;u<256;u++)for(let f=0;f<256;f++){let l=u*256+f;i[l]=n[u]^r[f],a[l]=o[u]^s[f],c[l]=t[u]<<8|t[f]}return{sbox:t,sbox2:c,T0:n,T1:r,T2:o,T3:s,T01:i,T23:a}}var Te=on(ve,t=>yt(t,3)<<24|t<<16|t<<8|yt(t,2)),sn=on(Er,t=>yt(t,11)<<24|yt(t,13)<<16|yt(t,9)<<8|yt(t,14)),Sr=(()=>{let t=new Uint8Array(16);for(let e=0,n=1;e<16;e++,n=Ee(n))t[e]=n;return t})();function Yt(t){k(t);let e=t.length;vr(t);let{sbox2:n}=Te,r=[];(!Z||!q(t))&&r.push(t=z(t));let o=X(N(t)),s=o.length,i=c=>V(n,c,c,c,c),a=new Uint32Array(e+28);a.set(o);for(let c=s;c<a.length;c++){let u=a[c-1];c%s===0?u=i(Tr(u))^Sr[c/s-1]:s>6&&c%s===4&&(u=i(u)),a[c]=a[c-s]^u}return M(...r),a}function Br(t){let e=Yt(t),n=e.slice(),r=e.length,{sbox2:o}=Te,{T0:s,T1:i,T2:a,T3:c}=sn;for(let u=0;u<r;u+=4)for(let f=0;f<4;f++)n[u+f]=e[r-u-4+f];M(e);for(let u=4;u<r-4;u++){let f=n[u],l=V(o,f,f,f,f);n[u]=s[l&255]^i[l>>>8&255]^a[l>>>16&255]^c[l>>>24]}return n}function nt(t,e,n,r,o,s){return t[n<<8&65280|r>>>8&255]^e[o>>>8&65280|s>>>24&255]}function V(t,e,n,r,o){return t[e&255|n&65280]|t[r>>>16&255|o>>>16&65280]<<16}function Rt(t,e,n,r,o){let{sbox2:s,T01:i,T23:a}=Te,c=0;e^=t[c++],n^=t[c++],r^=t[c++],o^=t[c++];let u=t.length/4-2;for(let p=0;p<u;p++){let R=t[c++]^nt(i,a,e,n,r,o),b=t[c++]^nt(i,a,n,r,o,e),A=t[c++]^nt(i,a,r,o,e,n),T=t[c++]^nt(i,a,o,e,n,r);e=R,n=b,r=A,o=T}let f=t[c++]^V(s,e,n,r,o),l=t[c++]^V(s,n,r,o,e),d=t[c++]^V(s,r,o,e,n),g=t[c++]^V(s,o,e,n,r);return{s0:f,s1:l,s2:d,s3:g}}function Lr(t,e,n,r,o){let{sbox2:s,T01:i,T23:a}=sn,c=0;e^=t[c++],n^=t[c++],r^=t[c++],o^=t[c++];let u=t.length/4-2;for(let p=0;p<u;p++){let R=t[c++]^nt(i,a,e,o,r,n),b=t[c++]^nt(i,a,n,e,o,r),A=t[c++]^nt(i,a,r,n,e,o),T=t[c++]^nt(i,a,o,r,n,e);e=R,n=b,r=A,o=T}let f=t[c++]^V(s,e,o,r,n),l=t[c++]^V(s,n,e,o,r),d=t[c++]^V(s,r,n,e,o),g=t[c++]^V(s,o,r,n,e);return{s0:f,s1:l,s2:d,s3:g}}function Ur(t,e,n,r){k(e,K,"nonce"),k(n);let o=n.length;r=Bt(o,r),Xt(n,r);let s=e,i=N(s),a=N(n),c=N(r);for(let f=0;f+4<=a.length;f+=4){let{s0:l,s1:d,s2:g,s3:p}=Rt(t,L(i[0]),L(i[1]),L(i[2]),L(i[3]));c[f+0]=a[f+0]^L(l),c[f+1]=a[f+1]^L(d),c[f+2]=a[f+2]^L(g),c[f+3]=a[f+3]^L(p);for(let R=K-1,b=1;R>=0;R--)b=b+s[R]|0,s[R]=b&255,b>>>=8}let u=K*Math.floor(a.length/rn);if(u<o){let{s0:f,s1:l,s2:d,s3:g}=Rt(t,L(i[0]),L(i[1]),L(i[2]),L(i[3])),p=new Uint32Array([f,l,d,g]);X(p);let R=be(p);for(let b=u,A=0;b<o;b++,A++)r[b]=n[b]^R[A];M(p)}return r}function Pt(t,e,n,r,o){k(n,K,"nonce"),k(r),o=Bt(r.length,o);let s=n,i=N(s),a=xt(s),c=N(r),u=N(o),f=e?0:12,l=r.length,d=a.getUint32(f,e);for(let p=0;p+4<=c.length;p+=4){let{s0:R,s1:b,s2:A,s3:T}=Rt(t,L(i[0]),L(i[1]),L(i[2]),L(i[3]));u[p+0]=c[p+0]^L(R),u[p+1]=c[p+1]^L(b),u[p+2]=c[p+2]^L(A),u[p+3]=c[p+3]^L(T),d=d+1>>>0,a.setUint32(f,d,e)}let g=K*Math.floor(c.length/rn);if(g<l){let{s0:p,s1:R,s2:b,s3:A}=Rt(t,L(i[0]),L(i[1]),L(i[2]),L(i[3])),T=new Uint32Array([p,R,b,A]);X(T);let x=be(T);for(let h=g,w=0;h<l;h++,w++)o[h]=r[h]^x[w];M(T)}return o}var cn=zt({blockSize:16,nonceLength:16},function(e,n){function r(o,s){if(k(o),s!==void 0&&(k(s),!q(s)))throw new Error("unaligned destination");let i=Yt(e),a=z(n),c=[i,a];q(o)||c.push(o=z(o));let u=Ur(i,a,o,s);return M(...c),u}return{encrypt:(o,s)=>r(o,s),decrypt:(o,s)=>r(o,s)}});function Cr(t,e){if(k(t),t.length%K!==0)throw new Error("ciphertext must be multiple of "+K);e!==void 0&&(Bt(t.length,e),Xt(t,e))}function kr(t,e,n){k(t);let r=t.length,o=r%K;if(!e&&o!==0)throw new Error("plaintext must be multiple of "+K);if(e){let s=K-o;s||(s=K),r=r+s}return n!==void 0&&(Bt(r,n),Xt(t,n)),r}function jr(t,e,n){n===void 0&&(n=new Uint8Array(e)),(!Z||!q(t))&&(t=z(t));let r=N(n);return{b:t,o:r,out:n}}function _r(t,e){if(!e)return t;let n=t.length;if(n===0)throw new Error("pkcs7: empty ciphertext not allowed");let r=t[n-1],o=1;o&=r-1>>>31^1,o&=16-r>>>31^1;for(let s=0;s<16;s++){let i=s-r>>>31,a=(t[n-1-s]^r)===0?1:0;o&=a|i^1}if(!o)throw new Error("aes: bad decrypt");return t.subarray(0,n-r)}function Ir(t){let e=new Uint8Array(16),n=N(e);e.set(t);let r=K-t.length;for(let o=K-r;o<K;o++)e[o]=r;return n}var an=zt({blockSize:16,nonceLength:16},function(e,n,r={}){let o=!r.disablePadding;return{encrypt(s,i){let a=kr(s,o,i),c=Yt(e),{b:u,o:f,out:l}=jr(s,a,i),d=N(u);X(d);let g=n,p=[c];(!Z||!q(g))&&p.push(g=z(g));let R=N(g);X(R);let b=R[0],A=R[1],T=R[2],x=R[3],h=0;for(;h+4<=d.length;)b^=d[h+0],A^=d[h+1],T^=d[h+2],x^=d[h+3],{s0:b,s1:A,s2:T,s3:x}=Rt(c,b,A,T,x),f[h++]=b,f[h++]=A,f[h++]=T,f[h++]=x;if(o){let w=Ir(s.subarray(h*4));X(w),b^=w[0],A^=w[1],T^=w[2],x^=w[3],{s0:b,s1:A,s2:T,s3:x}=Rt(c,b,A,T,x),f[h++]=b,f[h++]=A,f[h++]=T,f[h++]=x,M(w)}return X(f),M(...p),u!==s&&M(u),l},decrypt(s,i){Cr(s,i);let a=Br(e);i===void 0&&(i=new Uint8Array(s.length));let c=n,u=[a];(!Z||!q(c))&&u.push(c=z(c));let f=N(c);X(f),(!Z||!q(s))&&u.push(s=z(s));let l=N(s),d=N(i);X(l);let g=f[0],p=f[1],R=f[2],b=f[3];for(let A=0;A+4<=l.length;){let T=g,x=p,h=R,w=b;g=l[A+0],p=l[A+1],R=l[A+2],b=l[A+3];let{s0:v,s1:E,s2:B,s3:m}=Lr(a,g,p,R,b);d[A++]=v^T,d[A++]=E^x,d[A++]=B^h,d[A++]=m^w}return X(d),M(...u),_r(i,o)}}});function Dr(t,e,n,r,o){let s=o?o.length:0,i=t.create(n,r.length+s);o&&i.update(o);let a=en(8*r.length,8*s,e);i.update(r),i.update(a);let c=i.digest();return M(a),c}var un=zt({blockSize:16,nonceLength:12,tagLength:16,withAAD:!0,varSizeNonce:!0},function(e,n,r){if(n.length<8)throw new Error("aes/gcm: invalid nonce length");let o=16;function s(a,c,u){let f=Dr(me,!1,a,u,r);for(let l=0;l<c.length;l++)f[l]^=c[l];return f}function i(){let a=Yt(e),c=Ft.slice(),u=Ft.slice();if(Pt(a,!1,u,u,c),n.length===12)u.set(n);else{let l=Ft.slice();xt(l).setBigUint64(8,BigInt(n.length*8),!1);let g=me.create(c).update(n).update(l);g.digestInto(u),g.destroy()}let f=Pt(a,!1,u,Ft);return{xk:a,authKey:c,counter:u,tagMask:f}}return{encrypt(a){let{xk:c,authKey:u,counter:f,tagMask:l}=i(),d=new Uint8Array(a.length+o),g=[c,u,f,l];q(a)||g.push(a=z(a)),Pt(c,!1,f,a,d.subarray(0,a.length));let p=s(u,l,d.subarray(0,d.length-o));return g.push(p),d.set(p,a.length),M(...g),d},decrypt(a){let{xk:c,authKey:u,counter:f,tagMask:l}=i(),d=[c,u,l,f];q(a)||d.push(a=z(a));let g=a.subarray(0,-o),p=a.subarray(-o),R=s(u,l,g);if(d.push(R),!tn(R,p))throw M(...d),new Error("aes-gcm: invalid tag");let b=Pt(c,!1,f,g);return M(...d),b}}});function fn(t){return t instanceof Uint8Array||ArrayBuffer.isView(t)&&t.constructor.name==="Uint8Array"&&"BYTES_PER_ELEMENT"in t&&t.BYTES_PER_ELEMENT===1}var Se=t=>t?`"${t}" `:"";function tt(t,e=""){if(typeof t!="number")throw new TypeError(Se(e)+"expected number, got "+typeof t);if(!Number.isSafeInteger(t)||t<0)throw new RangeError(Se(e)+"expected integer >= 0, got "+t);return t}function et(t,e,n=""){if(fn(t)&&(e===void 0||t.length===e))return t;e!==void 0&&tt(e,"length");let r=fn(t),o=e!==void 0?` of length ${e}`:"",s=r?`length=${t.length}`:`type=${typeof t}`,i=Se(n)+"expected Uint8Array"+o+", got "+s;throw r?new RangeError(i):new TypeError(i)}function ht(t){if(typeof t!="function"||typeof t.create!="function")throw new TypeError("expected hash wrapped by utils.createHasher");if(tt(t.outputLen),tt(t.blockLen),t.outputLen<1||t.blockLen<1)throw new Error("hash blockLen / outputLen must be >= 1")}var Jr=(t,e)=>{if(t===null||typeof t!="object"||Array.isArray(t))throw new TypeError((e==="object"?"":`"${e}" `)+"expected object, got type="+typeof t)},hn=(t,e)=>{Jr(t,e);let n=Object.getPrototypeOf(t);if(n!==Object.prototype&&n!==null)throw new TypeError(`"${e}" expected plain object`);if(Object.hasOwn(t,"__proto__"))throw new TypeError(`"${e}.__proto__" is not allowed`)};function mt(t,e=!0){if(t.destroyed)throw new Error("hash was destroyed");if(e&&t.finished)throw new Error("digest() was already called")}function Gt(t,e){et(t,void 0,"output");let n=e.outputLen;if(!(t.length>=n))throw new RangeError('"output" expected length >= '+n)}function I(...t){for(let e=0;e<t.length;e++)t[e].fill(0)}function At(t){return new DataView(t.buffer,t.byteOffset,t.byteLength)}function P(t,e){return t<<32-e|t>>>e}function Ut(t,e){return t<<e|t>>>32-e>>>0}function Nr(t){if(typeof t!="string")throw new TypeError("string expected");let e=new TextEncoder().encode(t);try{return new Uint8Array(e)}finally{I(e)}}function Be(t,e=""){return typeof t=="string"?Nr(t):et(t,void 0,e)}function Le(t,e,n="opts"){return hn(t,"defaults"),e!==void 0&&hn(e,n),Object.assign(Object.create(null),t,e)}function lt(t,e={}){if(typeof t!="function")throw new TypeError('"hashCons" expected function, got type='+typeof t);e=Le({},e,"info");let n=(o,s)=>t(s).update(o).digest(),r=t(void 0);return n.outputLen=r.outputLen,n.blockLen=r.blockLen,n.canXOF=r.canXOF,n.create=o=>t(o),Object.assign(n,e),Object.freeze(n)}var Zt=t=>({oid:Uint8Array.from([6,9,96,134,72,1,101,3,4,2,t])});var Vt=class{constructor(e,n){y(this,"oHash");y(this,"iHash");y(this,"blockLen");y(this,"outputLen");y(this,"canXOF",!1);y(this,"finished",!1);y(this,"destroyed",!1);if(ht(e),et(n,void 0,"key"),this.iHash=e.create(),typeof this.iHash.update!="function")throw new Error("expected Hash instance");this.blockLen=this.iHash.blockLen,this.outputLen=this.iHash.outputLen;let r=this.blockLen,o=new Uint8Array(r);o.set(n.length>r?e.create().update(n).digest():n);for(let s=0;s<o.length;s++)o[s]^=54;this.iHash.update(o),this.oHash=e.create();for(let s=0;s<o.length;s++)o[s]^=106;this.oHash.update(o),I(o)}update(e){return mt(this),this.iHash.update(e),this}digestInto(e){mt(this),Gt(e,this),this.finished=!0;let n=e.subarray(0,this.outputLen);this.iHash.digestInto(n),this.oHash.update(n),this.oHash.digestInto(n),this.destroy()}digest(){let e=new Uint8Array(this.oHash.outputLen);return this.digestInto(e),e}_cloneInto(e){e||(e=Object.create(Object.getPrototypeOf(this),{}));let{oHash:n,iHash:r,finished:o,destroyed:s,blockLen:i,outputLen:a,canXOF:c}=this;return e=e,e.finished=o,e.destroyed=s,e.blockLen=i,e.outputLen=a,e.canXOF=c,e.oHash=n._cloneInto(e.oHash),e.iHash=r._cloneInto(e.iHash),e}clone(){return this._cloneInto()}destroy(){this.destroyed=!0,this.oHash.destroy(),this.iHash.destroy()}},dt=(()=>{let t=((e,n,r)=>new Vt(e,n).update(r).digest());return t.create=(e,n)=>new Vt(e,n),t})();var Ct=Uint8Array.of(0),Hr=Uint8Array.of();function Mr(t,e,n,r=32,o){ht(t),tt(r,"length"),et(e,void 0,"prk");let s=t.outputLen;if(e.length<s)throw new Error('"prk" must be at least HashLen octets');if(r>255*s)throw new Error("Length must be <= 255*HashLen");let i=Math.ceil(r/s);if(n===void 0?n=Hr:et(n,void 0,"info"),!i)return o&&I(e),new Uint8Array;let a=o&&i===1?e:new Uint8Array(i*s),{iHash:c,oHash:u}=dt.create(t,e),f=o?e:new Uint8Array(s),l=i>1?o?.iHash||t.create():void 0;for(let g=0;g<i-1;g++){Ct[0]=g+1;let p=c._cloneInto(l);g&&p.update(f),p.update(n).update(Ct).digestInto(f),u._cloneInto(l).update(f).digestInto(f),a.set(f,s*g)}if(Ct[0]=i,i>1&&c.update(f),c.update(n).update(Ct).digestInto(f),u.update(f).digestInto(f),a.set(f,s*(i-1)),c.destroy(),u.destroy(),l?.destroy(),f!==a&&I(f),I(Ct),r===a.length)return a;let d=a.slice(0,r);return I(a),d}var ln=(t,e,n,r,o)=>{ht(t),n===void 0&&(n=new Uint8Array(t.outputLen));let s=dt.create(t,n).update(e);return Mr(t,s.digest(),r,o,s)};var Qt=BigInt(4294967295),dn=BigInt(32);function Or(t,e=!1){return e?{h:Number(t&Qt),l:Number(t>>dn&Qt)}:{h:Number(t>>dn&Qt)|0,l:Number(t&Qt)|0}}function gn(t,e=!1){let n=t.length,r=new Uint32Array(n),o=new Uint32Array(n);for(let s=0;s<n;s++){let{h:i,l:a}=Or(t[s],e);[r[s],o[s]]=[i,a]}return[r,o]}var Wr=t=>t/2**32|0,Kr=t=>t>>>0;function pn(t,e,n,r){let o=Wr(n),s=Kr(n);t.setUint32(e,r?s:o,r),t.setUint32(e+4,r?o:s,r)}var Ue=(t,e,n)=>t>>>n,Ce=(t,e,n)=>t<<32-n|e>>>n,gt=(t,e,n)=>t>>>n|e<<32-n,pt=(t,e,n)=>t<<32-n|e>>>n,kt=(t,e,n)=>t<<64-n|e>>>n-32,jt=(t,e,n)=>t>>>n-32|e<<64-n;function Q(t,e,n,r){let o=(e>>>0)+(r>>>0);return{h:t+n+(o/2**32|0)|0,l:o|0}}var wn=(t,e,n)=>(t>>>0)+(e>>>0)+(n>>>0),bn=(t,e,n,r)=>e+n+r+(t/2**32|0)|0,xn=(t,e,n,r)=>(t>>>0)+(e>>>0)+(n>>>0)+(r>>>0),yn=(t,e,n,r,o)=>e+n+r+o+(t/2**32|0)|0,Rn=(t,e,n,r,o)=>(t>>>0)+(e>>>0)+(n>>>0)+(r>>>0)+(o>>>0),mn=(t,e,n,r,o,s)=>e+n+r+o+s+(t/2**32|0)|0;function vt(t,e,n){return t&e^~t&n}function $t(t,e,n){return t&e^t&n^e&n}var rt=class{constructor(e,n,r,o){y(this,"blockLen");y(this,"outputLen");y(this,"canXOF",!1);y(this,"padOffset");y(this,"isLE");y(this,"buffer");y(this,"view");y(this,"finished",!1);y(this,"length",0);y(this,"pos",0);y(this,"destroyed",!1);this.blockLen=e,this.outputLen=n,this.padOffset=r,this.isLE=o,this.buffer=new Uint8Array(e),this.view=At(this.buffer)}update(e){mt(this),et(e);let{view:n,buffer:r,blockLen:o}=this,s=e.length,i=!1;for(let a=0;a<s;){let c=Math.min(o-this.pos,s-a);if(c===o){let u=At(e);for(;o<=s-a;a+=o)this.process(u,a);i=!0;continue}r.set(a===0&&c===s?e:e.subarray(a,a+c),this.pos),this.pos+=c,a+=c,this.pos===o&&(this.process(n,0),this.pos=0,i=!0)}return this.length+=e.length,i&&this.roundClean(),this}digestInto(e){mt(this),Gt(e,this),this.finished=!0;let{buffer:n,view:r,blockLen:o,isLE:s}=this,{pos:i}=this;n[i++]=128,n.fill(0,i),this.padOffset>o-i&&(this.process(r,0),n.fill(0)),pn(r,o-8,this.length*8,s),this.process(r,0),this.roundClean();let a=e===n?r:At(e),c=this.outputLen,u=c/4,f=this.get();if(c%4||u>f.length)throw new Error("invalid outputLen");for(let l=0;l<u;l++)a.setUint32(4*l,f[l],s)}digest(){let{buffer:e,outputLen:n}=this;this.digestInto(e);let r=e.slice(0,n);return this.destroy(),r}_cloneIntoMeta(e){let{buffer:n,length:r,finished:o,destroyed:s,pos:i}=this;return e.destroyed=s,e.finished=o,e.length=r,e.pos=i,i&&e.buffer.set(n),e}clone(){return this._cloneInto()}},An=Uint32Array.from([1779033703,3144134277,1013904242,2773480762,1359893119,2600822924,528734635,1541459225]);var vn=Uint32Array.from([3418070365,3238371032,1654270250,914150663,2438529370,812702999,355462360,4144912697,1731405415,4290775857,2394180231,1750603025,3675008525,1694076839,1203062813,3204075428]),En=Uint32Array.from([1779033703,4089235720,3144134277,2227873595,1013904242,4271175723,2773480762,1595750129,1359893119,2917565137,2600822924,725511199,528734635,4215389547,1541459225,327033209]);var Et=Uint32Array.from([1732584193,4023233417,2562383102,271733878,3285377520]),ot=new Uint32Array(80),je=class extends rt{constructor(){super(64,20,8,!1);y(this,"A",Et[0]|0);y(this,"B",Et[1]|0);y(this,"C",Et[2]|0);y(this,"D",Et[3]|0);y(this,"E",Et[4]|0)}get(){let{A:n,B:r,C:o,D:s,E:i}=this;return[n,r,o,s,i]}set(n,r,o,s,i){this.A=n|0,this.B=r|0,this.C=o|0,this.D=s|0,this.E=i|0}_cloneInto(n){return(n||(n=new this.constructor)).set(...this.get()),this._cloneIntoMeta(n)}process(n,r){for(let u=0;u<16;u++,r+=4)ot[u]=n.getUint32(r,!1);for(let u=16;u<80;u++)ot[u]=Ut(ot[u-3]^ot[u-8]^ot[u-14]^ot[u-16],1);let{A:o,B:s,C:i,D:a,E:c}=this;for(let u=0;u<80;u++){let f,l;u<20?(f=vt(s,i,a),l=1518500249):u<40?(f=s^i^a,l=1859775393):u<60?(f=$t(s,i,a),l=2400959708):(f=s^i^a,l=3395469782);let d=Ut(o,5)+f+c+l+ot[u]|0;c=a,a=i,i=Ut(s,30),s=o,o=d}o=o+this.A|0,s=s+this.B|0,i=i+this.C|0,a=a+this.D|0,c=c+this.E|0,this.set(o,s,i,a,c)}roundClean(){I(ot)}destroy(){this.destroyed=!0,this.set(0,0,0,0,0),I(this.buffer)}},Tn=lt(()=>new je),zr=Math.pow(2,32),qr=Array.from({length:64},(t,e)=>Math.floor(zr*Math.abs(Math.sin(e+1)))),te=Et.slice(0,4),ke=new Uint32Array(16),Fr=(()=>{let t=[[7,12,17,22],[5,9,14,20],[4,11,16,23],[6,10,15,21]];return Uint8Array.from({length:64},(e,n)=>t[Math.floor(n/16)][n%4])})(),_e=class extends rt{constructor(){super(64,16,8,!0);y(this,"A",te[0]|0);y(this,"B",te[1]|0);y(this,"C",te[2]|0);y(this,"D",te[3]|0)}get(){let{A:n,B:r,C:o,D:s}=this;return[n,r,o,s]}set(n,r,o,s){this.A=n|0,this.B=r|0,this.C=o|0,this.D=s|0}_cloneInto(n){return(n||(n=new this.constructor)).set(...this.get()),this._cloneIntoMeta(n)}process(n,r){for(let c=0;c<16;c++,r+=4)ke[c]=n.getUint32(r,!0);let{A:o,B:s,C:i,D:a}=this;for(let c=0;c<64;c++){let u,f;c<16?(u=vt(s,i,a),f=c):c<32?(u=vt(a,s,i),f=(5*c+1)%16):c<48?(u=s^i^a,f=(3*c+5)%16):(u=i^(s|~a),f=7*c%16),u=u+o+qr[c]+ke[f],o=a,a=i,i=s,s=s+Ut(u,Fr[c])}o=o+this.A|0,s=s+this.B|0,i=i+this.C|0,a=a+this.D|0,this.set(o,s,i,a)}roundClean(){I(ke)}destroy(){this.destroyed=!0,this.set(0,0,0,0),I(this.buffer)}},Ie=lt(()=>new _e);function Pr(t,e,n,r){ht(t);let o=Le({dkLen:32,asyncTick:10},r),{c:s,dkLen:i,asyncTick:a}=o;if(tt(s,"c"),tt(i,"dkLen"),tt(a,"asyncTick"),s<1)throw new Error('"c" (iterations) must be >= 1');if(i<1)throw new Error('"dkLen" must be >= 1');if(i>(2**32-1)*t.outputLen)throw new Error("derived key too long");let c=Be(e,"password");try{let u=Be(n,"salt");try{let f=new Uint8Array(i),{iHash:l,oHash:d,outputLen:g}=dt.create(t,c),p=new Uint8Array(g),R=Yr(l,d,u,p);return{c:s,dkLen:i,asyncTick:a,DK:f,outputLen:g,eng:R}}finally{typeof n=="string"&&I(u)}}finally{typeof e=="string"&&I(c)}}function Yr(t,e,n,r){let o=new Uint8Array(4),s=At(o),i=t._cloneInto().update(n),a=e._cloneInto(),c=t._cloneInto,u=e._cloneInto;return{u1:(f,l)=>{s.setInt32(0,f,!1),i._cloneInto(a).update(o).digestInto(r),e._cloneInto(a).update(r).digestInto(r),l.set(r.subarray(0,l.length))},rounds:(f,l)=>{for(let d=1;d<f;d++){c.call(t,a).update(r).digestInto(r),u.call(e,a).update(r).digestInto(r);for(let g=0;g<l.length;g++)l[g]^=r[g]}},output:f=>(t.destroy(),e.destroy(),i.destroy(),a.destroy(),I(r),f)}}function Sn(t,e,n,r){let{c:o,dkLen:s,DK:i,outputLen:a,eng:c}=Pr(t,e,n,r);for(let u=1,f=0;f<s;u++,f+=a){let l=i.subarray(f,f+a);c.u1(u,l),c.rounds(o,l)}return c.output(i)}var Gr=Uint32Array.from([1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,2177026350,2456956037,2730485921,2820302411,3259730800,3345764771,3516065817,3600352804,4094571909,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,2227730452,2361852424,2428436474,2756734187,3204031479,3329325298]),st=new Uint32Array(64),De=class extends rt{constructor(n,r){super(64,n,8,!1);y(this,"A",0);y(this,"B",0);y(this,"C",0);y(this,"D",0);y(this,"E",0);y(this,"F",0);y(this,"G",0);y(this,"H",0);this.A=r[0]|0,this.B=r[1]|0,this.C=r[2]|0,this.D=r[3]|0,this.E=r[4]|0,this.F=r[5]|0,this.G=r[6]|0,this.H=r[7]|0}get(){let{A:n,B:r,C:o,D:s,E:i,F:a,G:c,H:u}=this;return[n,r,o,s,i,a,c,u]}set(n,r,o,s,i,a,c,u){this.A=n|0,this.B=r|0,this.C=o|0,this.D=s|0,this.E=i|0,this.F=a|0,this.G=c|0,this.H=u|0}_cloneInto(n){return(n||(n=new this.constructor)).set(...this.get()),this._cloneIntoMeta(n)}process(n,r){for(let d=0;d<16;d++,r+=4)st[d]=n.getUint32(r,!1);for(let d=16;d<64;d++){let g=st[d-15],p=st[d-2],R=P(g,7)^P(g,18)^g>>>3,b=P(p,17)^P(p,19)^p>>>10;st[d]=b+st[d-7]+R+st[d-16]|0}let{A:o,B:s,C:i,D:a,E:c,F:u,G:f,H:l}=this;for(let d=0;d<64;d++){let g=P(c,6)^P(c,11)^P(c,25),p=l+g+vt(c,u,f)+Gr[d]+st[d]|0,b=(P(o,2)^P(o,13)^P(o,22))+$t(o,s,i)|0;l=f,f=u,u=c,c=a+p|0,a=i,i=s,s=o,o=p+b|0}o=o+this.A|0,s=s+this.B|0,i=i+this.C|0,a=a+this.D|0,c=c+this.E|0,u=u+this.F|0,f=f+this.G|0,l=l+this.H|0,this.set(o,s,i,a,c,u,f,l)}roundClean(){I(st)}destroy(){this.destroyed=!0,this.set(0,0,0,0,0,0,0,0),I(this.buffer)}},Je=class extends De{constructor(){super(32,An)}};var Bn=gn(["0x428a2f98d728ae22","0x7137449123ef65cd","0xb5c0fbcfec4d3b2f","0xe9b5dba58189dbbc","0x3956c25bf348b538","0x59f111f1b605d019","0x923f82a4af194f9b","0xab1c5ed5da6d8118","0xd807aa98a3030242","0x12835b0145706fbe","0x243185be4ee4b28c","0x550c7dc3d5ffb4e2","0x72be5d74f27b896f","0x80deb1fe3b1696b1","0x9bdc06a725c71235","0xc19bf174cf692694","0xe49b69c19ef14ad2","0xefbe4786384f25e3","0x0fc19dc68b8cd5b5","0x240ca1cc77ac9c65","0x2de92c6f592b0275","0x4a7484aa6ea6e483","0x5cb0a9dcbd41fbd4","0x76f988da831153b5","0x983e5152ee66dfab","0xa831c66d2db43210","0xb00327c898fb213f","0xbf597fc7beef0ee4","0xc6e00bf33da88fc2","0xd5a79147930aa725","0x06ca6351e003826f","0x142929670a0e6e70","0x27b70a8546d22ffc","0x2e1b21385c26c926","0x4d2c6dfc5ac42aed","0x53380d139d95b3df","0x650a73548baf63de","0x766a0abb3c77b2a8","0x81c2c92e47edaee6","0x92722c851482353b","0xa2bfe8a14cf10364","0xa81a664bbc423001","0xc24b8b70d0f89791","0xc76c51a30654be30","0xd192e819d6ef5218","0xd69906245565a910","0xf40e35855771202a","0x106aa07032bbd1b8","0x19a4c116b8d2d0c8","0x1e376c085141ab53","0x2748774cdf8eeb99","0x34b0bcb5e19b48a8","0x391c0cb3c5c95a63","0x4ed8aa4ae3418acb","0x5b9cca4f7763e373","0x682e6ff3d6b2b8a3","0x748f82ee5defb2fc","0x78a5636f43172f60","0x84c87814a1f0ab72","0x8cc702081a6439ec","0x90befffa23631e28","0xa4506cebde82bde9","0xbef9a3f7b2c67915","0xc67178f2e372532b","0xca273eceea26619c","0xd186b8c721c0c207","0xeada7dd6cde0eb1e","0xf57d4f7fee6ed178","0x06f067aa72176fba","0x0a637dc5a2c898a6","0x113f9804bef90dae","0x1b710b35131c471b","0x28db77f523047d84","0x32caab7b40c72493","0x3c9ebe0a15c9bebc","0x431d67c49c100d4c","0x4cc5d4becb3e42b6","0x597f299cfc657e2a","0x5fcb6fab3ad6faec","0x6c44198c4a475817"].map(t=>BigInt(t))),Zr=Bn[0],Vr=Bn[1],it=new Uint32Array(80),ct=new Uint32Array(80),ee=class extends rt{constructor(n,r){super(128,n,16,!1);y(this,"Ah",0);y(this,"Al",0);y(this,"Bh",0);y(this,"Bl",0);y(this,"Ch",0);y(this,"Cl",0);y(this,"Dh",0);y(this,"Dl",0);y(this,"Eh",0);y(this,"El",0);y(this,"Fh",0);y(this,"Fl",0);y(this,"Gh",0);y(this,"Gl",0);y(this,"Hh",0);y(this,"Hl",0);this.Ah=r[0]|0,this.Al=r[1]|0,this.Bh=r[2]|0,this.Bl=r[3]|0,this.Ch=r[4]|0,this.Cl=r[5]|0,this.Dh=r[6]|0,this.Dl=r[7]|0,this.Eh=r[8]|0,this.El=r[9]|0,this.Fh=r[10]|0,this.Fl=r[11]|0,this.Gh=r[12]|0,this.Gl=r[13]|0,this.Hh=r[14]|0,this.Hl=r[15]|0}get(){let{Ah:n,Al:r,Bh:o,Bl:s,Ch:i,Cl:a,Dh:c,Dl:u,Eh:f,El:l,Fh:d,Fl:g,Gh:p,Gl:R,Hh:b,Hl:A}=this;return[n,r,o,s,i,a,c,u,f,l,d,g,p,R,b,A]}set(n,r,o,s,i,a,c,u,f,l,d,g,p,R,b,A){this.Ah=n|0,this.Al=r|0,this.Bh=o|0,this.Bl=s|0,this.Ch=i|0,this.Cl=a|0,this.Dh=c|0,this.Dl=u|0,this.Eh=f|0,this.El=l|0,this.Fh=d|0,this.Fl=g|0,this.Gh=p|0,this.Gl=R|0,this.Hh=b|0,this.Hl=A|0}_cloneInto(n){return(n||(n=new this.constructor)).set(...this.get()),this._cloneIntoMeta(n)}process(n,r){for(let h=0;h<16;h++,r+=4)it[h]=n.getUint32(r),ct[h]=n.getUint32(r+=4);for(let h=16;h<80;h++){let w=it[h-15]|0,v=ct[h-15]|0,E=gt(w,v,1)^gt(w,v,8)^Ue(w,v,7),B=pt(w,v,1)^pt(w,v,8)^Ce(w,v,7),m=it[h-2]|0,S=ct[h-2]|0,U=gt(m,S,19)^kt(m,S,61)^Ue(m,S,6),_=pt(m,S,19)^jt(m,S,61)^Ce(m,S,6),H=xn(B,_,ct[h-7],ct[h-16]),W=yn(H,E,U,it[h-7],it[h-16]);it[h]=W|0,ct[h]=H|0}let{Ah:o,Al:s,Bh:i,Bl:a,Ch:c,Cl:u,Dh:f,Dl:l,Eh:d,El:g,Fh:p,Fl:R,Gh:b,Gl:A,Hh:T,Hl:x}=this;for(let h=0;h<80;h++){let w=gt(d,g,14)^gt(d,g,18)^kt(d,g,41),v=pt(d,g,14)^pt(d,g,18)^jt(d,g,41),E=d&p^~d&b,B=g&R^~g&A,m=Rn(x,v,B,Vr[h],ct[h]),S=mn(m,T,w,E,Zr[h],it[h]),U=m|0,_=gt(o,s,28)^kt(o,s,34)^kt(o,s,39),H=pt(o,s,28)^jt(o,s,34)^jt(o,s,39),W=o&i^o&c^i&c,C=s&a^s&u^a&u;T=b|0,x=A|0,b=p|0,A=R|0,p=d|0,R=g|0,{h:d,l:g}=Q(f|0,l|0,S|0,U|0),f=c|0,l=u|0,c=i|0,u=a|0,i=o|0,a=s|0;let at=wn(U,H,C);o=bn(at,S,_,W),s=at|0}({h:o,l:s}=Q(this.Ah|0,this.Al|0,o|0,s|0)),{h:i,l:a}=Q(this.Bh|0,this.Bl|0,i|0,a|0),{h:c,l:u}=Q(this.Ch|0,this.Cl|0,c|0,u|0),{h:f,l}=Q(this.Dh|0,this.Dl|0,f|0,l|0),{h:d,l:g}=Q(this.Eh|0,this.El|0,d|0,g|0),{h:p,l:R}=Q(this.Fh|0,this.Fl|0,p|0,R|0),{h:b,l:A}=Q(this.Gh|0,this.Gl|0,b|0,A|0),{h:T,l:x}=Q(this.Hh|0,this.Hl|0,T|0,x|0),this.set(o,s,i,a,c,u,f,l,d,g,p,R,b,A,T,x)}roundClean(){I(it,ct)}destroy(){this.destroyed=!0,I(this.buffer),this.set(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)}},Ne=class extends ee{constructor(){super(64,En)}},He=class extends ee{constructor(){super(48,vn)}};var Ln=lt(()=>new Je,Zt(1));var Un=lt(()=>new Ne,Zt(3)),Cn=lt(()=>new He,Zt(2));var Qr=[8364,0,8218,402,8222,8230,8224,8225,710,8240,352,8249,338,0,381,0,0,8216,8217,8220,8221,8226,8211,8212,732,8482,353,8250,339,0,382,376];function $r(t){return t===0||t>=55296&&t<=57343||t>1114111}function kn(t){return $r(t)?65533:t>=128&&t<=159&&Qr[t-128]||t}function jn(t){return t-1>>>0<127||t-160>>>0<55136?String.fromCharCode(t):String.fromCodePoint(kn(t))}var Y=(()=>{let t=new Uint8Array(127),e=0;for(let n=33;n<=126;n++)n!==34&&n!==36&&n!==92&&(t[n]=e++);return t})();function _n(t,e,n,r,o,s){let a=t.length,c=s*90,u=0,f=()=>{let m=Y[t.charCodeAt(u++)];return m<s?m:m*91-c+Y[t.charCodeAt(u++)]},l=n-r,d=n+o,g=new Int32Array(d);g.fill(-1,r,s),g.fill(-1,s+l,d);let p=new Int32Array(d),R=new Int32Array(d);function b(m,S){let U=0,_=S,H=S+m;for(;_<H;){let W=Y[t.charCodeAt(u++)];if(W<89)U+=W,g[_++]=U;else if(W===89){let C=Y[t.charCodeAt(u++)]+2;for(;C--;)g[_++]=++U}else{let C=Y[t.charCodeAt(u++)];U+=89+(C<90?C*91+Y[t.charCodeAt(u++)]:Y[t.charCodeAt(u++)]*8281+Y[t.charCodeAt(u++)]*91+Y[t.charCodeAt(u++)]),g[_++]=U}}}b(r,0),b(l,s);let A=new Int32Array(o*2),T=0,x=0;function h(m,S){for(let U=0;U<m;U++){let _=S+U,H=f(),W=f();A[x*2]=H,A[x*2+1]=W,x+=1,p[_]=T;let C=(g[H]<0?R[H]:1)+(g[W]<0?R[W]:1);R[_]=C,T+=C}}h(o-s+r,s+l),h(s-r,r);let w=new Uint16Array(T),v=0;for(let m=0;m<x;m++)for(let S=0;S<2;S++){let U=A[m*2+S],_=g[U];if(_<0){let H=p[U],W=H+R[U];for(;H<W;)w[v++]=w[H++]}else w[v++]=_}let E=new Uint16Array(e),B=0;for(;u<a;){let m=Y[t.charCodeAt(u++)];m>=s&&(m=m*91-c+Y[t.charCodeAt(u++)]);let S=g[m];if(S<0){let U=p[m],_=U+R[m];for(;U<_;)E[B++]=w[U++]}else E[B++]=S}return E}var In=_n("!}.&u%}'&}*'~!6*)%&,~!J~!J~%L~y<~!R,~~%Lu~~#GD~~#|)1#%}^%}2%+#.##%##%}&%##%'#%##&%#%#'%#&#%#&#'#%%#&#%##%#)%''%&%#%#'%#%%#%%}%%%#%#&(23#%%#&-%0%('1#(##%#'##+%'*.:1}#%#6-+(%'%%#%%%}#L'2351&('%}&/N'(0(/*-%(%%}#'+&T%7.2}#&%&#%#36/5##%&%%#&#%%#))2%%##%&&'0~!#*+&'%1~!%).'3q?&%'1~!.##%6(~!+%%%(Gw'rT~!E#<nA%#jZ~!H%(~!42##~!*31&~!G%U~#)5~#`3~!J~!Z~%]~%Y~%C~!q~!u~#kz~%#~!6'~!D~!U~!?~#T~!c%~!G#'~%7|~!G~!J~!G&~#pb~(Df}#%}*&}#%##%##%##&#-}&'#'&%#.++}%mI,#,@&(}*%}*'%&##&#%##%}&0}#.},U},%}+%}&%}#%##&}B%(}(%}+%)})%##%#&}&%##%&}<%}>%#%&}*%}(%}9%}/%})%}*%}*%}?&}&%}3%}&*#%})%#%#)}#&#-#+*%E%%'%'#%}#*V##&##I}#&&##%&%#&&Qf%%))w/0+&%#(#.%-''''++++7}>%4'',##1,#%#&%##&#'##&#*#9)%&%}#*}%,#+P(%A&%#'&##wSD',9E00#y#@}(+}&%&>~!#~!X}#*}(&&}(&}(,%}%&#+&}#&}I%#%}%)#(},'%#*}4%%#%}(''}#/##(##),%-##%%)#&}(.}&%#&}%%}*&#%},&&}&%}#%*'#%})%}D&}&%}-&}6&#&}-,%}#%})-(~+`~,=?~I9'9%~!,#%})%})%}@%}?%}(~!?~#<~#pP~#BG~#=1#%K+~#?#~%;)~#A~#mF1~#A'~'X%'~#lR~#N~'N~#r~#m#-~#i'?%#'%~#B%##%,%#~#_%#0%~#]732~,w~2+#:&#%&'0%&>%}#>##F+)#%&&#(+_}4&}-%}(&}@&}O7Fdf0@+/v4}&WU##&/0#&'('B#%}.%}'+#%}#%%&#&%#%##+#&#)#6#'#.},%}c%},%#%##%&#&%#&~#>'*-.%##%##%}#%%}%'~#)D1}#%*&~#_%%'(~#S2%'.}#~#=##*'*-%}&'%'##&&~'E%.#&~#M4}%%##&'%#~#O1##%&#'+~#<B%##%%'%+~#;#@%}#&%#&&%#(~#H1}'%'##&&~#?A}&'~#D#%32}'&&&&~#[}'(#%}'~#;C})&}%%#%~#=&%,3}%'(#%%~#^'#&&)#%'~#Y%-~#d-%'~#^%%&#&&&}#~#b~2t*&'~&(~&@~0%~e~3}%*''0})&}+~!9##-}#%-hD*)1fC#%/&/fB#40~!+#)*4~!+~!K'&:~!/*7~!.#~!H~!L':~%x&~!H#~!*~%1~!I#~!+A~#p'~!F~~#-#~,,(~.Z~!V~%;'B'mq-W~!N~%I%#&&#&}#%},%%}'%}+X#%}#&}(%}'%}<%}#%}%%'}'%}:~![)9@~%>~#UA%-%##&~!C%~!-.9:~!1~!-^2/:a~!y,D*J#-5)/4~%23,~#G~!L1~!0X3`~!2+~!!0-~&E~!W~!o,>Y&]~%cZx_&~#O*9#A#'#+I'%#)~!0B*-5A+-((F&*M#)(-7-5+'-3a5Vi~!Y~!?+[)%3),ERHm~!+:D,VG.+)?fB%%*(%)'(#&80%1'8`K8?`+'Z#&O&'H5#*9)A%%5&3))0%39+.*7#()&&*=4@**L)<'_&*+..;(#*+)./&0#3)%')-8(4ixD(&.}%,('aI:,)%,k2231T)I'#/-W7,/'Q#.'Y24+h')37</31&83##&0#),H(?'&?/1##%#&&#%''-%&&&#(&''&#.-'%#%%(,')*'&#&#'##%(%(#%('#&##%%%%('%#%#%%#%#&%##h>w+v<ayvyvcg.uuhKr}g/v|g>u9i[~>g5uI~=RvdwEg;v/g;uk!!TTSx]@RT!U!#!@VBRUU!'UTe-d0c`e&gSdicedFcrdTaqb.kYcAohdYd@a3e+d}dMdtd.aJ#bqcK`dle/e.e'dwdPdodddjbEb}ogd^ofdpduc6j?l%d{drdqc)d7bacOdQ%T#Y)X.sR[yH>6Vyv3[xwLu>vo'!*.[yBacahoj>6Rew3[xqdZa#!a&#^(X-[yG>6Vyu3[xvg3sEr|g.u/Ri9db0T#^(Xa)!-[y;>6Vylg4wKs{JwNZt3@3r=c4Z([xlg;wKt!cpq's@v7A'*a(a+!-a#[y<3Dt?3Dt'>6Vym3[xmg9rxsNJwLZt4~?r?db1T#`-!(Xa,!0[yS>6Vz%NuQs.g4wKtnJwNZtS@3r>c4Z([y%g;wKtrdga8!a(!#&T*Y-Xa#!a0<or[yc3Dtq>6Vz43[y3JwNZtf@3s!Ju}!%Dti:pm3c_%X#tjB5pkd6q!r]u?voC'*-a.a2!0a&a+[yI3DtI3Ds~3DtH>6Vyw3[xx;:s#~<5pKJwNZtE@3r~d`a)!a2T#a.(!+U.X1[yT3Dt`3Dtv>6Vz&3[y&g9rxwzcxstPu.<rAJwLZtT~?r@dZa%!a.&^*Za(/Reu[ya>6Vz23[y1g3sEr}wkg{NuQRg{ci(U#5@b`~,cg#U(2WnH5wugcRh7dX#T(Y,a'Ta!!a,[yZ<]mj>6Vz,3[y+Pv#5ReZKu+=,%!H}7ABwkaS?Rh:BcW(X#<]mrj:ubv/ARekdg%!(!a.*Ta(Y.X1!#sP>Rl*Dt6[y>>6Vyo3Wf*jOvuumvuRgRJuq*!:9<B@bX~3jVv&v@s@5Re[d/rQt{uAvo&a&a*)a2!,0Wf!3Dt0=Bs'>6Re}3[xy~<5s%JwJZt1~Gs)c;&!#2sJkNuXvzq7rxu,Re8dka4!a8(aEZ+a@Y.X1Xa)[yd=Bs(3DtP>6Vz53[y4cX#X&Re:avRe9~<5s&JwJZtQ~Gs*i^rzvdRg+Jv{%!2sbB@bX}kdga,!Za?&^*T1/!a'Dt+[y6>6Vyf3Wf%g/u;s4hGu6?Rh-JvZ,!c%#&RoX54Rivj7uyvf8RgTKvZB%*!2sGh<vu5Rgq<=C::9bb~#dZ#T&Ta6Y.X*Dt>[y93Wf)coZ(T,6VyifluvRgC@95@B@bX~/hFu34cC#T,k/unq8w8Q5RkUklwQuzunq8w8Q5Rk8d/rJu?v8w9)-&!a0a;a&aIWejg3sEr/h1s<DtDJvyZqY5aws3Jvy!&Wei~Hr1:au5@Bag>23E~5c:Z&bX};kKv?w&unuVu5Rjc;>bs)#~@:Rh.=ay<a]C;b`}Vd6s/t{uAvoaxa()!a,a7%-a#a2Dt,[yF2Wo[>6Vyt3[xuNuPRi&NuPwpi#RoWh?vf8Ri%Jv]!%Ri:KvxD!.'2WeAjZu`q9rxu,Re7woeAg-unLq(qA_/*2Wg_g3u5q^9:4E}/jTrxrzv=Wkkd~0UX#^^Xa-a1a5T&a=U1a'*aEa]!a*aPaA-adok[y54Rn>;:p3~Dp5g9rpsFNvZqjg3uJp4~<5p0Pw;5qlJwNZt*@3p1Pw:5p/Ou!5p2JvG'!6Vye=<qnJvh_[xhg3v,Rh3kOwOw-sDuev/Re^dha[a%!%!a+#Ta7)-5TaCaO!aka!a)sf[yb2>Rl!9ARiq5E}Qg=ucRkBE|oJrJ_@Wk~@Wk{JrJ_@Wk|@WkyJrJ_@Wk}@WkzJvO_[y2g-vMRmiKuYC!)&>Ri;>Ri<@3RkNc](X#@9Rk=g5vuRmhKvDB!+'=]meg3u4Rmgd)#Y'Vz3CARmfd`a+!%T'!+#Ta1Ta6TaM-sTDt9[yA9sYd'%Y#s[[xpj:ueunaXRgEjRq,v-vuqdd2'`#6Rev<32@5>:2<E}5xIo9a*X#Y(;5RePJvD_g>vyRgNj8w)v8<wggs:RgXiZt|vjx,hSq3ah!-(~@:Ro/Ou!5RhWj^v(pyw8unRhUdx-UY#^Ua.a3a70!)%UX1TaDa)'omRiRRhE[y:3Dsz=Br,>6Vyj3[xkg6ruwjcqsrPw;5r*Ku]D'Zt-@3r(~?r.i[vwv]dU1a--U#`a4(g/vsRhPOu!5RhLj:rmu9Wo!~@:wdh@g/vsRiTjXuvvNr}:RhBj^v(pyw8unRn]dz1UYa'a+^Y(!aETZalaRY.Ta?a4[yDJw1!#qLsW>6Vyrfzq-pLflpwRe|Js>%!Dt@3Dt&Jvy_[xs~HrnjMuwpsw'RecKu+D#'!t<~Grl~?rjg5u-x,gwp{ah!-(~@:Rg~Ou!5Rh'jXuvvNr}:Rh#cW#X/c;&!#2sLi[v7u7RgpJv)(!iLrxu,Re6j7v@s@5Se[e7d`aW!Za(a`T.a#!a3!&aDa-!9)Dt_=6s+3[x~~DR|h~DS6avhGun5RkZj3w)v-]mkKunB!&*]kb97R|i<ARk<c:Z(6Vy}Juh'!wziMRoS:F|vkLuauJv5vtvQRh1d='T+Y#VyO~DR|jcF#T'7R|g97R|kJv3'!ay<Rj,Jvh&!:ReXcsa6*a+#a#_aIRf9aLRf?c,Z&Rf5Rf7c.Z&Rf;Rf>cQ#%T'p-Rf8Rf=ct#%'(*!,p,Rf4p+Rf6Rf:Rf<d~'Ua%U*^UYa(!a,-!#a4YaTalaEX0a8a<Weo3Dt/3Dsx=Br93Wen~Dr;~<5p<JwNZt2@3p=Pw:5p;Ou!5r3c7&!#:p>3Ds}KvGB)_6Vyk2sM=<r7x'eovA(!hFu1ARf}cV#X&@r5j6rvwQa^Rf3c=Za'wkghJv__g;unRggA53B9=b^}%j6uduo5Jq;!(hIv%2Re`Ou4ARe_e%a#^^^Xa&!a*a2!&a6YaP!*ad!#a:aE/5Rn?[y@>6Vyp;:pE~DrY~<5pBJwNZt8@3pCh=rt3rWPw:5pAJup_[xoNuPpF9c!#'45pD5ARn)d8#X'X*3@rU72s]h>v<<sSjJpqvewOJq/(!hNw'5ReBk0s2u3w/w'5ReE5@Jq.!a+JQ!&WeU23d(#Y&RjG5]jBk!u7w&u0udARjEe#+^^^Ub#!a2/a`Z(agT1!a-a;|@TaG!aS[yV=Re~fow'RguNuPRe?bz#'>RoUWeL>:Cbb|?JwPZtVg6ruRmzJvD'!6Vz(g/vmRh~Jvy_[y(g9voRgyx*cy(#2>Ri2B9b]~9kIw9u7rluJu3Rg]dI#a%UY'@=p%CAx.gQZ&RhwwygtRm{x5g_Z'+ABqR9Woa=Bp&dV#^*Xa'!&@o{g4v]Rk;Jv{!%Rk[wkkiA5RkiwwfUB=x,fUuqC&*!>RfTg8v0RfV~ARfSd;rJsAuAv9wR'ae+/aO!a@aza/a#[yQ@Wg!2Wemg3sEr0JvB_g>uvReWg2v+Re=KupB_+[y!2AbY~-~Hr2AJwD!(h<~El>h<~El?Kun@+_:9b`}Kg-v/Ri3g;vtwyk_9]k_d=&T#*U.6qh@Ab`|K9:H|CJv[!&3Dtex'fDwC%!Rf[9WlMd[(^X,!a%Z06Vz!@WgBg=v~Rgvg,QRe@awd,#Y+jTv|Q~EfWj]uNr|~FRfXdy#Y&^Ua%!aO.!(a)Ua;=!a@aKap!a-,a!Ta]a[rSa]p?[y82sK=Bq~;:p:~<5p8Pw:5p7d'#Y'Wf(;RnRi[u4w&RgJJvG'!6Vyh=<r#ijuuv/sIKuYD'ZtG@3p9~Gr&d2#`(g<vtRgFj`u5w&rqpxRf2CJuY!+:wfnTOu!5Rg}jNs1ucv&RfwJvA!&3@q|BDcC#T,k/unq8w8Q5RkTklwQuzunq8w8Q5Rk9dga#!a'!a=#a0!:+Tb*b@aO.a4!aba8aFJv^}?!VyR~Dr<g;u%Rn.~<5p[x'e`wNZtR@3p]Pw:5pZhNvjBp.woe_g5u-r4JwF!%DtO3:ooc7&!#:p^3DtpLuGw(!+%)Dtk6Vz#2sd=<r8d'#Y([y#<x3gJt`w@!)%}MRiowzikRij=]ilxAf3,U(#B2Rf#g0v-Rm[ck{`U#]giKv3>)!&6Ri154s,KuGB_%@r68r:dJ|t`#X(9<E|u2@H|rx3gJu?w'!+'1Nu7Reg4=H~+9<wxgY95Rm]xLggZ-`(X}U2:Ri4h<uOawRmsJv__5@bb{jbV~3dka#a'a]!,#a+U=a>b6a3b%!/aKa/)!arwve^VyJ;:pR~DpTg3uJpS~<5pOPw;5qmPw:5pNOu!5pQJvG'!6Vyx=<qoJvA!{~Jup!%@qk7Rn/KvyD!}''[xz;>wkh'?Rh,x8gyt`w5D!&),(SgyccRgztJ@3pPB5p#d'(Y#<]mmifubw&RgoJvE&!82s^JvF&!8Rf,ADb]~;x=h'rNu]vK!,%'*0RnORh)4Rh*AqQg-vaRnNg;wHwkh'ba~4cE#Ta*x3gctyw@'!+%RnFRnD<4Rn@hFvK5RnCxWg[#`&a0Ua()`1Rm75Rg[c]%X#qi8Rg^NvdRj>BwzgZauwji7Rm6A4wgg]d1#&(*,.0a#Rm;Rm<Rm=Rm>Rm?Rm@RmARmBe%#^^^Xaea?aC/b+(,!a+a#!a/!>a&Ta<aKbD!2wphBRnk[yPw}hE|.=Br-3Dtm>6Vy~g6urRf.x,hPrNav!%'RnqRo%Ro#Nu;q[Pw;5r+JwNZtM@3r)d'#Y'Weh;xChL#`&RnmRnoKu}>%(!Rne~Bs-;2wjcussJv+'!aYSO}6@B<5?ba~8LrNvj!.%*ROwungw~ng~:9;Ri^>wtnig;wHRnixDh@|(UZ.x1h@|)!#:2<H|*xHn]#-UX'3Ro)z=iT}6ARns=Bwsn_wpnaRncw]aR(#UXa&Ua*a/=]iPd'#Y&Ro'WnXf{QRm2hNvj]nZd`'T~&1`{|`#9b]{}c:'!#Wl{>@=be}]?cl{{U#:5Abb}Jds#^YaF!a*b4a#a3aPa>&Tb!bH!*a_!Eau?/a&RjY<]gj>6Vz*;:pe~DrZg,QRj1JwNZtX@wihspcJvZ&!VyX9WmOJu|!|N2WmHJvh&!]ht~Bpbcn&T(!#RmQ<s7Nu;padH#X'`+WmJ@>RmKCARhnKup=!)&Wf+:RhqNuPpf9c!#'45pd5AwghpARn(Ls@w!%,)!RmP@Wfe<E|IJva!&WmNg8vsRmLd`*.`#Y'Xa!axRn*]hrA8Rhug5s@rXg8u!RmMd8#X'X*3@rV72smdI*#UY&RmICARho~GsgxVgd)Ta'U-Y&Xa!T#RnEWnA@Wffg1uDRi0hFvK5RnBxGnG&#`%owp)@wsf+bX}Ze-*1!a*^^^Ua|!#a.aq&Ya2!a>.a6!a:aO`aJDtL[y`@Wg#>6Vz12@wzoYRoZNuPRi!NuPRhzg=ucRi,@=b`{Yg=ucRi-ACJvB!&Sh[ebSh]ebi`wUuFRm4Jw2_[y0JvB!.<Ju(!&SoG}6Shd}6<Ju(!&SoH}6She}6Kur@._g5vHRieJvx!{L2G{Kx6gd'T#?Rh82Wi5cZ#X(g1w)Rm5dW-Y(Ta#!a)!#aYa=wnfE=su2>>bU{0j9udv:<svj8uQv-7RgHdE%#^'sq9sp=>Bb_{TJv`!&g/r|snj6v(us5d,#Y(56H}[978H}]Jw5!&g1rushJvB!+j;v{u5?zDhd}6}bj;v{u5?zDhe}6}ce*#`(^^^a[aea!=!a6a*aoXb1a.!aAbL!b>,b'aL!aV@Wf|2Wlg3[y/JwNZt^@3piPw:5pgJunZou3@rsJva&!Vy_g<v~Rm#JvG'!6Vz0=<r{Ju{%!:pj@WfsiXuJu3Rm:JvZ&!WfA~Bph@c4Z&Dtwax5rubx(#:awRk1@d,#Y&RfjRfid1#,Y(@Wfp2Wlrg5s@ryKu[@!,'=]ig9wlk?Rk>g5u-rqJvy'!@9RkQcH(T#=>Ri~@<wkj(Wj(KuZB*!&<7rw@9RkRcH(T#=>Ri}@<wkj)Wj)dg(Ta2Xa9X#`-!a*CARhg@@=I}d9x;c~#X%so=<sj>2@@=aybb}XjWv0Q~EfEj3vLv;<d,#Y(56H}`978H}_dgaPaFa'a/!#a3Y0a_a;a|!1(a7-[yE3[xt;:pJNvZrrg3uJrvJwNZt=@3pIh=rt3rxPw:5pGOu!5rpJvG'!6Vys=<rz@c4Z&Dt(ax5rtJvZ!&~BpH@wsfNg-vaRlNci*U#=<wei<F}a5@Jq.!a*JQ!%@qZ23d(#Y&RjH5]jCk!u7w&u0udARjFd/prq=tyvpaEa(a:.!a1aZ(@@=I}:9wpd%=<sX55w_h}@@=I{t=ay<aU@@=I}T=ay<2@@=I})?C9:9au@9Cb]}DP~=x-fAZ(2Wl1=ay<aU@@=I}>5@d##Y+jTv|vV~EfFj]uNpn~FRfGdgaK!Z2&!a8a-Tb({E!acTbM*!a(DtY[yYd'%Y#sl[y*hHvh>Re5x2c{Z}.j4uCvcawRiMd+#X+_x&d!},<5RkX;2Hzw@x,gavfB-!{CcF&T#Roe;RodwWbBg5urRgaKvHC*_6Vz+<4opieuew&Rmq@d]&Y)X,T#X0Rh}<BqP=4qS9:ReMg/ujReNJw0!/<Jui%!bd{kawwnemRelAxUa?a3#*.&UX(Ya+a/RhvRnQ<o}9Wmtd-#Y&RgSRmw9;Rmxay=Rmyg-vaRmuxEhSrNu,v-voC!%(aR.a(a7+1Ro1>Ro5CE{A9b]{@;5x#eO{:g;urRi+KrNA!%(Ro3>Ro79;Ri_Ku@>{;&!x%gX|{KunA_+g5QRj/g3u5Rj#g>uERj%wio/xRhS&!,!#^1U}wba{8>>@=be}qC@:D5ba{7Ku+A&!}x?ba}t>>@=be}se(aA^^^Uat!b0#{pa+awUazbGa#aLb9bgaWac'a5TbS=Br!d1#`%scp_Jvl!#rT>Re0JvX&!VyN=H{Fcm#U&:pY=ReaJv2&!]h0=]nUJvG'!6Vy|=<r%JrM_=]h2@Wlud'#)U'Wf'b]{i=]h/Jvh!&~BpWg=v]RnMx+ny#'Nu;pVwjnu=]nwxJnx,T#`&Reqwjnt=]nvieu9vrRjLLuYwP(#+!th@wih5pX~Gr'g5v/Rh4KunA'!-CARnP@wwiN:Rm_9x'cvw>!|l=<saKvAA!0&3@q}>w^e1bp#&Re2Re3BDx7gH#T|f5H|eKuZ>!%(:qNAH{]Jv6!+3B2B9=b^{X<5<B92:E{ZLvhwA(a;a%!igQuyRmad+#Y}m@3Rh5d8#X'X*:AqUAHzmaxwbh<aXRnVcF}RT#Nw&cj#U(BWnug/vsRntdka)(a3+.Zb7aYYan1!bVa@Xa}[y^@b[{G=H{+hFu73Rj&Pv#5ReQcK%T#sig1v{Rj'Ku+D#'!t]~Grm~?rkKuMB!01d5#`'Vy.ta3Dtu~Hroc8#'{^45s85AwZbP&!#Rn!wghxWn#KvEA!)&2RlA2RlBx:h|#(T,=]j09Wobz>x]z/@awRoTd+#Y(az]hFhCrm4d,#Y+jTv|Q~EfMj]uNr|~FRfOdCa!Xa9_X#@<plJvf!%b`{(9;Rgwc;.!#2x7cw#T|UDb]|T5Ju={(!=@E{&Jv)&!Ab`{'awJvf!~*>>@=be{#KuY>!+&4Ezyi[ugv&RjIdea+T)#UXa&T-T&a!Rh9auRmW=]kLg5vuRn+g3u4Rn-Ow6ARn,hHus5xNk?#UX(U~)/g8v0RkD~AwkkF?Ri.OuNBwkkA?Ri/d|a2`a*^UYa.!aBTZaTa'Xa;!(!2!-a#b2[yC>6Vyq3[xr2Wi?g1rusVh%s?DtF~<5rbJs;%!DtBfswKtCj[uvuSsEu3RgVx3o:u+wN'*Zt;@3rd~Grh~?rfg8w)Lq)qE&-a%!>bI|`jWv0vV~EfCjTv|vV~Ef@j]uNpn~FRfBcK#T']gWNu7x,k7q4ai(0!hHv8<RhmkMu9vrsBuev/RhlCJvB!,g<v{wchh~@:Rhji[vrv{wchi~@:RhkdS&a5UY#Ta!RgPwwiI5BwciI~@:Rh`x'iJvj'!5]iJPu8Bwch]~@:Rhach)U#h3rp]gLh@t|Ax,hTq3ah!-(~@:Ro0Ou!5RhXj^v(pyw8unRhVd|)`,^UYas!a?/a2Z'a^Ta{Tb7Ta(a#!a,Wf&9sZ3DtAadamov=Bqt3[xig8vsRm~>waiL2b`{QJv*_Ouv2qgj<v]v2BqfdR'X*X#Y-@3qr~Gqv~?p6hHv-]glPup5Lq+q?_%*b_{qF{n9b^{rOu4ARhpKvCD!+&~Bqp:5Dbb}nwoiKl&unuTuBv]v+ueunaXRf0=Jvh!0nKufu8v1w&w7q%w&uHrz:Rgnj5w,uxDJq/(!hNw'5ReCk0s2u3w/w'5ReFd>Za&!*UaA=<wkgsRnSJv^!%Refifw3vyRgOKu_B'!,<]gkiiu:w&Rh<=C@a^<B57@2F{[<B5@aW:=3away9A5aW=<B=C@a^<B57@2F{Ie-#`(^^^bCara.b8aza6!/bZ,!adTbnTbOb+aFaS!aAT9@Wf~2Wli3Dtl2@d,#Y&RfnRfmJwJZtN~GqyJva&!VyMg<v~Rm%iXuJu3Rm9Jv[_=]ih9wlkDRkCd1#`(@Wg>2Wls3cH#T(@<Rj*=>Ri|b~'#23s9h<~El.d'#Y&Dtxi^rzvdRl#d*#U%(o|B2s`hJwSaxRmDKv4B&!1:Rmdd5#`'Vx}to~Hq{x'f1v3(!BA5ba|bJv_&!Wfug1v]ReIdO+U/Y#&G}-8wze=Rh{g1v]ReHg/uQRf/by#)ibQwERl/cH#T(@<Rj+=>Ri{cNu+vlax-!(#a0qa9<Rii2;;bU{H;x<i=&X#Rk`<4wwi=C9H~8xAI(Y#<azRi@45wXI<B9;5bb~7dL(X#Xa(+!aL6Vy{g5QqOau:5au2@ay547EzbxOcU(UX-T#Ta#:Cbb|A?wjh/b_|SOw6ARgtihr}u7Rhy<d1#T)X1@@=I|~=ay<2@@=aybb}Sj3vLv;<d,#Y(56H}A978H}@dGpvs@uAu`vcw9*!aFa+ai%(b!aXa8.a?a[ozWey=sU2@G}Nch&U#Rf_WexKu+D#'!t:~Gr`~?r^j]uNr|~FRg*j^psurwJt|RmcKv)@&!)7Rkv~Br[@wxfO:Rl3co#U'6Rezj_q#vIuavjRltwzeyh@vr5JqD0!>aY?C9:9au@9Cb]}9cl#U*5;5<H||jbuus1ucv&Rfvg1v~d/pppzqFr^a--a~!aMat1(hFv;Wiz@@=Izoj5uuv-7Rix~Cw`fk2WlVcZ#X,k)u3vWs@u2]ktg;wEx'fBq(_2Wg/jTv|vV~EfoJv]!15x'hzqG!(P~EfU~CRl_j6v(us5x4i-#T(2WmZ?C2F|d>Kq<aj1!*jTqIsBv=Wl`~Cw`fi2WlWj`v0u*~>RlR=c>Z,k#u3vWs@u2]kr<c1Z+jTqIsBv=Wla~Cw`fm2WlXdmb3!a{(arZa`bkTa%TbQTa-a9+c'!aM!/[yL=Bqug.w'RifhFvyDRj.g>vgwyk^9]k^Jv3_@WfbAARkhJw2_[x|JvB_wkoIRoKwkoJRoLd'(Y#<]gm=<9<H|yd'%_X#skDtb3awwqkgNulRkgdB#^',9:p'hJwSaxRmEBwVb8@4=H|qLu+w50&!)@3qs~?pU>Awwn;;Rn=c:Z'ARn<=<qwKvC@!/&~BqqJv6!&]eVb^z^xRge'/a%+^`#Sge}6<4Rn3=]n0Pw2>Rn8Jw0!&>Rn:>Rn6cY#a7+!a&=<wkaNw~h3z_c5Z{=wjh#=]nLKv^D!&)Vyz=bW|swYb<WetcG#T(2wxa@qVx@gD#Y&b^|V5JwG&!5bb|pg/w&RgD@x=kHs=uAvn!a%%/'+RmSRh694Ro`g-vaRmRhHv-]mlxCcS#`&ba~.5cD#Ta)P~=d,#Y(56H{>978H{Dd_#{2^Y%_+qbbb{6g3sERhsbU{?dfa.,`a(Xa<!aiX#(55RiG54RiHcI#T'WiU3RiVNvdwtfcRlKNvdd,#Y&RlHRlExQgf.1*^T'X#Sgf}6Wn4=]hfPrk>Rn7Jw0!&>Rn5>Rn9Lunw?&a2!,5<oq@@wqfdRlJj5Q~=d,#Y(~ARfcOuN]fdDKw;ay(}i!547E}j?cI#T(@5bV}iCbV}hdv(^^Tb?a40,b##Tbo!a*bR!a<b|a/!aKai!aU[yK=]o^g:v>ReGJwPZtK<7Rh+h<~El,Pv#5ReR@awwxjCg,ulRjDJv6&!]j!z?aQeeg>w=Sh<eeJw;!&axEzOg,Qosc!#*:wkeJ]eJ>x'h-u(!%Ro.w~h.zPdNZ(X,Ya![x{;9ReY;wkgxRiF:x?ap#Y&RmUg<s2Rkod]+UY0TZ'!a&A9sw<=bczLNvuw{gqzNhJwSaxRmCKuLay!#&s_Rf-55b^{uJvZa!!c%#(55Ri654wmiu5RiuawLu,vp!+}^%b_}Y9;wkgxba}o>A9:=b^}zKuh=a''!3awRk3c*'!#aHRk6c+Z&Rk5Rk4Jv)&!awRjSawd9*`#0?C2@EzMj8u<uJ5RmbjQrquJu3x,k>uq@_+=ayb^|W~ARkEOuN]k@7dhzV^X/X&a-#zRzSb`zXcJzTT#2WkVKvDBzW!%FzY9;5bbzWjQrquJu3Jw3%!b`zU=ayb^zQd:#X(T-a!6Vyywxh}=b]{Jg=u1RiAdGp~qHtzv!w(wA+a+a;<!aJaYai'anasb(=azRmV:Cbb{MLq2vb!%')RjuRjrRjtRjqx3jnqCw3!%')Rk(Rk+Rk&Rk)Lq2vb!%')Rj{RjxRjzRjwLq2vb!%')RjsRjpRjfRjex3jcqCw3!%')Rk'Rk*RjkRjl9<CbbzfOu4ARhxLq2vb!%')RjyRjvRjhRjgx=joq*uKvb!%')+-Rk.Rk%Rj~Rk-Rk#Rj}x=jdq*uKvb!%')+-Rk,Rk!Rj|RjmRjjRjidAq&qKs@uAv8Aa.'*-a@a&0!aM@a5[y73Dsy3Ds|3Dt):wxgI2sHJwJZt.~Gqxwsf0ikrzt}Rl0Jvy_[xj~HqzKv_A|D!&WfP8axRoVcf,U#k(v]v+ueunaXRf1Ju}'!g8u#Ri=jQw!sCunLprq>!,')~<5qeGzq9F{W=c##%s5au:5aU3CBE|;d4#X(D!a&6Vygx(b;#(=]ed?C2F{N<capoq2r[a&!aPa9,'Pw;5s:@@=I|,55w_h|@@=IzcP~=x'fCqB_2Wl2>aU@@=I|1OuNBc1Z+jTqIsBv=Wlc~Cw`fl2WlZ~AcTa%!Z+jTqIsBv=Wlb~Cw`fh2WlYk+uNqJsBv=WlSg,u3dca3#UXaMYa)TaB-=cM|7T#<bI}l5@B932:aV2G{BOuNBJq:|M!5Ezt=<B=C@a^<B57@2F{v>cB{/T#=ay<bI{3Jv6!a.6BKq0ah&+!5E}HP~Ef{978BaU@@=Iza<7d#.Y#978BaU@@=IzH~AJq0!(@@=IzG978BaU@@=IzFe,aU*Y&^^^bvJb,b:bFad!a,c2Ta>aL.bo6!a#CbTa'T#Re{2Wlh2@G{yg6t~Ro_NvdRfticuRQRllJv3&!x&c|zs@Jw3!%RflwpfkRlpKuL;%(!Re<@G|C2GzdhIvuBwgjAg-u0RjAKQB%!(GzZ@G|5NuuRl7d='T+Y#Vy[g<v~Rm!==G|>JvA!)@wma=]m1ifuaw&RmnLs@vT'!|/+[y,g:v>ReTJw1!#qX=x!eC{bLu+wT&)ZtZauq_~Graci&U#F|89:r_Lupvq!.)&2RlG8RfaC=x!eF{_h?rpWlmd&'!#X|&]k::xJey#`'T|+<E|&2@H|%dE#(^,g;u.RiEg6vjRiC9xCkA{O|zY#g=ucRmXKs0@!&*@G|m@awRknJuh!,3d(}gY}eJvj!%Rm):Jw3!%Rm+Rm-Ls0w(&!a(a#@b[|6cZ#X'7RkxWgAOu4ARn'dH'U#Y*Vz-Wm'CARm}d]*#a%^a*T'aK!a<9bV{PC=p*Jw4!&SgxcbB5r]idw(wBRmF7xFkt#&`(Rm/Rm8E|!JuY_9:Rl5=wrgr2:bbxd@xXfB(a*#T+!.X0X1Ta/a'T&RlDRfL>RlyARl9b[z[>RfZ:RlL:RfRwlg/ARl;9;RlxKv,A/!%7s69<74=BA5ba{-8Bde#`a<XaKYa1,a'P~=wxfB2bZ}}?C972@@=I}r8@55B9;5bb}G978B2@@=aybb}3j3vLv;<Jw3&!>Rfk=ayb^}4~Ad1#`*@@=aybb{w2@>==<bbz]dx+UY#^UaF!a9!bB'Ya1.!ajXa#%olRhD[y=3Dt#Ov5BrHKuMB%!(Rf^Wep~HrJwkiQjKr|~FRg)Ku+D#'!t5~GrF~?rDdV)UY,Z/_7RkuG{<~BrBg,rlsO:235B@bX}|d?a1!#`(6Vyn5@d##Y+jTv|vV~EfIj]uNpn~FRfH7Lq2vb1!a9-978BaU@@=Iz9978BbU}#~AJq0!(@@=Iz8978BaU@@=Iz7~AJQ|}!978BbU}!JvkaK!AdUa21-U#`a+(g/vsRn~Ou!5RPj:rmu9WhOjXuvvNr}:RhAj^v(pyw8unRn[kPr}p|u7vwv]RiSBd;pppzq@qHQa?(b.!a.a`@.|xa(hFv;Wiyj5uuv-7Riw~Cw`fg2WlU978BbU|wOuNBJqG!(P~EfD~CRlQcZ#X,k)u3vWs@u2]ksg;wEx'f@q1_2Wg.j]uNpn~FRfqJv]!15x'h{qG!(@@=IzK~CRl^j6v(us5x4i,#T(2WmY?C2F{1>Kq<aj1!*jTqIsBv=Wld~Cw`fj2Wl[j`v0u*~>RlT=c>Z,k#u3vWs@u2]kq<c1Z+jTqIsBv=Wle~Cw`fn2Wl]dn1#c(a(b^a2!b/bAT(bj!aDa7bu,a_a{c0!2T0g:v>ReD2@G{42@G{5~DpM~<5rc=Bx6i>{RT#RnI@zCx]y]z:2Jv[!zr5Awyk]9]k]dD(Y+X#6Vz.g=wKtgwhaCwgmTWj2Lu,w%_+/[y-B;b^xeg3u3Rj-2@bX{*KrJ<!+'@Wg(g?QRlC@Jv`!%b[zIwsfII}8JQ_@w|kW|=Jv(%!AqcOuNBJvEzh!bYzjLs@wP#(0!oy@>RkdJwMZtc3Dtd@BcG#T'9bWxg2@2Fznd*#Y+;2x'c}w<zizixNgwa#Z'U+!/!a'!a+w~g~z6wcn{Rn}wcnzRn|5Rh%=]nJg5vuRmvNvdRlvcprJu}w*az*a#!%.a.'Bot9qT]kj@Wg'ay2Gzv@Jv`!%b[zEwsfHI}1;ck#Ux`<Cbbx_Lu+w!a&0*!wko*wwo,So,}6Juqxf!E}PigQuyRm`d3(`#8>Rn%:A5B;bZ~%KvhCa!a2!x>k7#Uxb@b{#xaRk7Jw0!)>wwhlShl}6>wwhmShm}6CJvB!.x'hhvj{!!5Bwkhhbaz}x'hivjz~!5Bwkhibaz|xEhTrNu,v-vpD!a%&/)a3a.,%Ro2t[CE{)@3re9b]{%wjo09:rgc:Z&Ro6=<riifuaw&RmoKrNA!%(Ro4>Ro89;Ri`dSaL'UYzxZb)7Rka3xRhT&!,!#^1U}vbaz{>>@=be}yC@:D5bazzKu+A&!}{?ba}y>>@=be}wxBh[t`u~vJvr!%a!a()a,a0a4RoC=]o;Ju(!%RoGRhdwjh`=]oAg>w#Ro?g5vuRo=NvdRl|Ku]C.!&;RoEJvB!%RoORoMBx'h[v+_?w~h`}~5?w~hd~!xKh]oiptu-utv.vp!#%&a30a@a'a+(a/aOp(o~p!RoDJu(!%RoHRhewjha=]oBNvdRl}g>w#Ro@g5vuRo>c[#X']o<CauRoRAd-#Y':RkpauRoQKu]C.!&;RoFJvB!%RoNRoPBx'h]v+_?w~ha}t5?w~he}ue!/UbhYacXaW^Tc&a;b:a-c/#b&aja1(!cL+!bKbt!bmcRc9aIc?8[yW3Dtt94Rg`Jv}!&SiRMzBhEebShEMNuPRe>x7gL#TzuwjirRipc<Z&>on;>z=h-MSh.Mwqczx'a7vj&!>Re4@=ResJt__NuPRi*NuPRi)j]uNr|~FRfzKrJ>_+@Wfy@Wf]2WocKrJ<!+'@Wg%g/QRl@@Jv`!&awRl<wsfFIzgLu(w*!.*&ShBMwvhIRhI9;RhNx1hK'!#Sn]Mx1hK~0!#:2<H~7cNu+w7D*'1ZtW>Rn1~?rOc:Z&Rn2=<rQ<7wjh&=BSnLMc]#X(6Vz)w[b=a!U#9wzgMc3#&(RgMRitRis<x,gKt`ax!&+SioM=BSilMc3#&(RgKRinRimKurB,!&SiQMzBhDebShDM6BJQ!(P~Efx978B2@@=I}WLrJw!!,a*&@G}O@9wkibRid@@x'fKwC!&SlDMSfLMjUv~Q~EfKKv3@a+!(hFv-]mpx/hYZ(C5RiWz<o/MwkhY?So/M@x,gbvfB*&!SgEM:SoeeehFu3:Rgbda(,^TZa)X/7Sg[eb:2RgI~BrMC@wgkc:wwkcRerx3h(uUvK!&*,SnOM4Sh*MArRg;wHRh(x=h;rJvPwI!a4',a'0@Wg&=BSh/Mg>w=Rh=g3w*wwgGRgGcW(X#;Sg}M2Gzk@Jv`!&awRl=wsfGIz`dKZ*T'Y-:RhR7RhQg5u-p`j6v(us5d,#Y+~Awkia?RicOuNBwkibba}Ld6p~tyu_vbAa'a+!a/'a3aEa8a!>Sh,ebJv{!&Sh@ebSaReb9;SgwebNuPRi(NvdRl)NuPRi'hHu^<Rm^Jvv_@Wl(g;u1Si/ebKu'B&!*Sh?eb@Wl'z@aPeb95Si.ebcpputyvjB)!,&a+0a%ShAMWeK@G}C@WfJ9;RhMwvhH9w{ia}ix,hJvRA1(!zAn[MRhHx1hJ~*!#hFv(BSn[MBJQ!(@@=I~'978B2@@=I}2db.Ua<'X}+T#a0XaG2G}E;wkg|wuh!Rh!x,hZu,@)!&So0MVy)C5RiXACJvB!&5RiY5RiZg8w)cG}*T#2@bU}=KsA>(!a.3wkhZba~(x,h^u(A!&(SoCMRhb5Bz=h[eb?w~hb~6x,h_u(A!&(SoDMRhc5Bz=h]eb?w~hc~6e)aA1T#T,^^^c-bMb&blcPaP(a/!0!bA=b5c@a(!bfbrc#2afwmhARnjwchORnp2Wlf3DtsNvdRl-2@wpa<]m0bx(#:awRk2@Jw3!%RfhwpfgRlnKQB%!(G{V@G|'NuuRl6d='T+Y#VyUg<v~Rl~==G|<Jv+'!aYShC}6@B<5?ba~8@Jw3'!g2QRljhLrpWlOd+#Y'g.w'rIg>w*wgj@g-u0Rj@Lu+wT&)ZtUauq]~GrGci&U#F|39:rELrNvj!.%*RhCwunfw~nf~:9;Ri]>wtnhg;wHRnhx3hDs@v~!/+'@Wfr@9RkSNu&Rlo=@<5GzoKs0@_+@Wl+@awRkmJuh!-3d(}pY#qWJvj!%Rm(:Jw3!%Rm,Rm*de&!1U-U#`)Re;@G|.@9Ri82@wjfvRlq=@<5GzpLvOvr!).&2RlF8Rf`C=x!eE{.Jw3_g2QRlkhLrpWlPde(!#U{s,UXa*Ta'[y'g:v>ReS;x0PZ&RnlRnn~HrKJw1}f!=x!eB|2w]aP(#Xa&a*Ta.Ua2a7=]iOd'#Y&Ro&WnWg;u.RiDg6vjRiBNvdRlzhNvj]nYJuW_2Wm3x)kFze{9d])!a.!,Y01!#&aC!a3RndC=ox~BrC@2b^{pg,rlse7x'ksuq!%Rm.E{xidw(wBRmGx9o+)X#wwo-So-}69:Rl4@xSf@a#XZ'X)X,Ta(/ARl8b[xc>RfY:RlI:RfQwlg.ARl:9;Rlwdn'#^XafaQa1X1TaHTa)@b[{zcZ#X'7RkwWg@Ou4ARn&x)kG#{,g7u/RkGdH'U#Y*Vz'Wm&CARm|bx#(A]gUbUzJj9Q~=d,#Y(56H}l978H{U7d,0#U*2>ABb_xZ978BbU{e~AJQ{g!978BbU{hxMh?ad{oUYZ.x1h?{l!#:2<H{mx3n[t{vl!,&a%3Ro(z=iS}6ARnr=Bwsn^wvn`Rnbd`*T}B0!#^X'BG{c9b]{a>>@=be}F?JvS!&BG{d7BG}(Bde#`a1X,Ya@!a'P~=wxf@2bZ}I56B2@@=aybb}08@55B9;5bb}<j3vLv;<Jw3&!>Rfg=ayb^}&OuNBKuLA!)a!P~=x#fD{f2@>==<bbzl?C972@@=Ix^d6rSu,v7w*C(0a)a6#B+a%!sQ[y?3Dt%3[xn~<5rLOu!5p@Ku+D#'!t7~GrP~?rNKvlaya7'!h+v-5qMg=t|cd,U#5AAaa5Abb{S@52B5@a[@52B5Gx[iXueu;d<#`a(!/549C;ag>23ExY5@Dah89b^~689Jv)!~2b[~1Lv'w(%*!a#bX|aPrmawRe]keu7uhv-q6rxu,q`xTo]/a5aU!bNaDXbi!b-!ao!b<bwA!#5@B932:aV2G|:d-)Y#hJrL>RhG<7@C5<H|_=Cau:5aj5@B932:bJ|ng>vIbs)#?C2F|9jPv0w.vISh-MKvUaz(.!9ABbb|[5;5<H|Eg>unwfh;9:4E|YjQsBt|vjx'hYq3!(?C2F|J:2<BaY?C2F|GOu!5x,g|p{ah!-(?C2F|c9:4E|OjXuvvNr}:Rh&i[w*t|cd+U#jJvsu)vsSn~Mkfrmu9p}u7vwv]So!McW#Xa!ax5@A5aY:5;5<H|>kJv~vYrquJu3x4ib#T)2@SmZM?C2F|Bj:rmu9@xPhI(a*a#U#`a3-5Abb|L~@:RhK9:4E|0@52B5G|#C::aY?C2F|-:2<BaY?C2F|.5Jvk!a)javYrquJu3x4ia#T)2@SmYM?C2F|HAxPhH(!a#U#`a*-5Abb|4~@:RhJ9:4E|R@52B5G|F:2<BaY?C2F|Sc^#Xa2j=Qq5CJvB!-g<v{z;hhM?C2F|Zi[vrv{z;hiM?C2F|XKsA>!a)-g<v{z;h[eb?C2F|]i[vrv{z;h]eb?C2F|^iZu.vix,hZq3ah!.(?C2F|QOu!5ShXM:2<BaY?C2F|P",13494,2713,49,25,61);var D;(function(t){t[t.VALUE_LENGTH=49152]="VALUE_LENGTH",t[t.FLAG13=8192]="FLAG13",t[t.BRANCH_LENGTH=8064]="BRANCH_LENGTH",t[t.JUMP_TABLE=127]="JUMP_TABLE",t[t.VALUE_MASK=8191]="VALUE_MASK"})(D||(D={}));var O;(function(t){t[t.AMP=38]="AMP",t[t.NUM=35]="NUM",t[t.SEMI=59]="SEMI",t[t.EQUALS=61]="EQUALS",t[t.ZERO=48]="ZERO",t[t.NINE=57]="NINE",t[t.LOWER_A=97]="LOWER_A",t[t.LOWER_X=120]="LOWER_X"})(O||(O={}));var ne=32,Nn=21,to=2097151,Me=2047,Hn=0;function eo(t){let e=t>>>Nn;return e===Me?Hn:e}function Mn(t){return t-O.ZERO>>>0<=9}function no(t){return(t|ne)-O.LOWER_A>>>0<=5}function On(t){return(t|ne)-O.LOWER_A>>>0<=25}function ro(t){return t===O.EQUALS||On(t)||Mn(t)}var Dn;(function(t){t[t.EntityStart=0]="EntityStart",t[t.NumericStart=1]="NumericStart",t[t.NumericDecimal=2]="NumericDecimal",t[t.NumericHex=3]="NumericHex",t[t.NamedEntity=4]="NamedEntity"})(Dn||(Dn={}));var Tt;(function(t){t[t.Legacy=0]="Legacy",t[t.Strict=1]="Strict",t[t.Attribute=2]="Attribute"})(Tt||(Tt={}));function oo(t,e,n,r){let o=(e&D.BRANCH_LENGTH)>>7,s=e&D.JUMP_TABLE;if(s){if(o===0)return r===s?n:-1;let c=r-s;if(c>>>0>=o)return-1;let u=t[n+c];return u===0?-1:n+o+u-1&65535}if(o===0)return-1;let i=o+1>>1,a=n+i+o;for(let c=0;c<o;c++){let f=t[n+(c>>1)]>>((c&1)<<3)&255;if(f===r){let l=n+i+c;return a+t[l]&65535}if(f>r)return-1}return-1}function Jn(t,e,n){return n===1?String.fromCharCode(t[e]&D.VALUE_MASK):n===2?String.fromCharCode(t[e+1]):String.fromCharCode(t[e+1],t[e+2])}function so(t,e,n){let r=e+1,o=0,s=r;if(r<n&&(t.charCodeAt(r)|ne)===O.LOWER_X)for(r+=1,s=r;r<n;){let a=t.charCodeAt(r);if(Mn(a))o=o*16+(a-O.ZERO);else if(no(a))o=o*16+((a|ne)-O.LOWER_A+10);else break;r+=1}else for(;r<n;){let a=t.charCodeAt(r)-O.ZERO;if(a>>>0>9)break;o=o*10+a,r+=1}if(r===s)return 0;r<n&&t.charCodeAt(r)===O.SEMI&&(r+=1),o>1114111&&(o=1114112);let i=r-e;return i>=Me&&(Hn=i,i=Me),i<<Nn|o}function io(t,e,n){let r=In,o=t.indexOf("&");if(o<0)return t;let s=t.length,i=0,a="",c=r[0],u=c&D.JUMP_TABLE,f=(c&D.BRANCH_LENGTH)>>7;do{let l=o+1,d=t.charCodeAt(l),g,p;if(d===O.NUM){let R=so(t,l,s);g=eo(R),e&&g>0&&t.charCodeAt(l+g-1)!==O.SEMI&&(g=0),p=g===0?"":jn(R&to)}else if(On(d)){g=0,p="";let R=d-u,b;if(R>>>0<f){let w=r[1+R];b=w===0?-1:f+w&65535}else b=-1;let A=0,T=0,x=b<0?0:r[b],h=l+1;t:for(;h<s;){for(;(x&(D.VALUE_LENGTH|D.FLAG13))===0&&(x&D.JUMP_TABLE)!==0;){let B=x&D.JUMP_TABLE,m=(x&D.BRANCH_LENGTH)>>7;if(m===0){if(t.charCodeAt(h)!==B)break t;b+=1}else{let S=t.charCodeAt(h)-B;if(S>>>0>=m)break t;let U=r[b+1+S];if(U===0)break t;b=b+m+U&65535}if(x=r[b],h+=1,h>=s)break t}if((x&(D.VALUE_LENGTH|D.FLAG13))===D.FLAG13){let B=(x&D.BRANCH_LENGTH)>>7;if(t.charCodeAt(h)!==(x&D.JUMP_TABLE))break;h+=1;let m=B-1,S=b+1,U=0;for(;U+1<m;U+=2){let _=r[S];if(t.charCodeAt(h)!==(_&255)||(h+=1,t.charCodeAt(h)!==(_>>8&255)))break t;h+=1,S+=1}if(U<m){if(t.charCodeAt(h)!==(r[S]&255))break;h+=1}b+=1+(B>>1),x=r[b];continue}let w=x>>>14,v=t.charCodeAt(h);if(w!==0){if(v===O.SEMI){g=h-l+1,p=w===1?String.fromCharCode(x&D.VALUE_MASK):Jn(r,b,w);break}if(!e&&(x&D.FLAG13)===0&&(g=h-l,A=b,T=w),w===1)break}let E=oo(r,x,b+(w||1),v);if(E<0)break;b=E,x=r[b],h+=1}if(p===""){let w=x>>>14;w!==0&&!e&&(x&D.FLAG13)===0&&(g=h-l,A=b,T=w),g>0&&(p=Jn(r,A,T))}}else g=0,p="";g===0||n&&d!==O.NUM&&t.charCodeAt(l+g-1)!==O.SEMI&&l+g<s&&ro(t.charCodeAt(l+g))?o=l:(i<o&&(a+=t.slice(i,o)),a+=p,o=i=l+g),t.charCodeAt(o)!==O.AMP&&(o=t.indexOf("&",o))}while(o>=0);return a+t.slice(i)}function Oe(t,e=Tt.Legacy){return io(t,e===Tt.Strict,e===Tt.Attribute)}var Wn;(function(t){t[t.XML=0]="XML",t[t.HTML=1]="HTML"})(Wn||(Wn={}));var Kn;(function(t){t[t.UTF8=0]="UTF8",t[t.ASCII=1]="ASCII",t[t.Extensive=2]="Extensive",t[t.Attribute=3]="Attribute",t[t.Text=4]="Text"})(Kn||(Kn={}));var J=typeof globalThis=="object"&&globalThis?globalThis:{},Dt=J.console,bt=(...t)=>{try{Dt?.log?.(`[0.9 port] ${t.join(" ")}`)}catch{}};function Pe(t){let e=String(t),n=[];for(let r=0;r<e.length;r++){let o=e.charCodeAt(r);if(o>=55296&&o<56320&&r+1<e.length){let s=e.charCodeAt(r+1);s>=56320&&s<57344&&(r++,o=65536+(o-55296<<10)+(s-56320))}o<128?n.push(o):o<2048?n.push(192|o>>6,128|o&63):o<65536?n.push(224|o>>12,128|o>>6&63,128|o&63):n.push(240|o>>18,128|o>>12&63,128|o>>6&63,128|o&63)}return new Uint8Array(n)}function St(t,e=!1){let n=t,r="",o=[],s=()=>{r+=String.fromCharCode.apply(null,o),o=[]};for(let i=0;i<n.length;){let a=n[i],c=65533,u=1;if(a<128?c=a:a>=194&&a<224&&i+1<n.length&&(n[i+1]&192)===128?(c=(a&31)<<6|n[i+1]&63,u=2):a>=224&&a<240&&i+2<n.length&&(n[i+1]&192)===128&&(n[i+2]&192)===128?(c=(a&15)<<12|(n[i+1]&63)<<6|n[i+2]&63,u=3,(c<2048||c>=55296&&c<57344)&&(c=65533)):a>=240&&a<245&&i+3<n.length&&(n[i+1]&192)===128&&(n[i+2]&192)===128&&(n[i+3]&192)===128&&(c=(a&7)<<18|(n[i+1]&63)<<12|(n[i+2]&63)<<6|n[i+3]&63,u=4,(c<65536||c>1114111)&&(c=65533)),c===65533&&e&&!(a===239&&n[i+1]===191&&n[i+2]===189))throw new TypeError("invalid utf-8");c>65535?(c-=65536,o.push(55296+(c>>10),56320+(c&1023))):o.push(c),o.length>8e3&&s(),i+=u}return s(),r}var Ye=t=>Object.prototype.toString.call(t)==="[object ArrayBuffer]";function j(t){return t instanceof Uint8Array?t:Ye(t)?new Uint8Array(t):ArrayBuffer.isView(t)?new Uint8Array(t.buffer,t.byteOffset,t.byteLength):Array.isArray(t)||t&&typeof t=="object"&&typeof t.length=="number"?Uint8Array.from(t):Pe(t??"")}var G=t=>{let e=j(t);return e.byteOffset===0&&e.byteLength===e.buffer.byteLength?e.buffer:e.buffer.slice(e.byteOffset,e.byteOffset+e.byteLength)},_t="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";function ue(t){let e="";for(let n=0;n<t.length;n+=3){let r=t[n]<<16|(t[n+1]??0)<<8|(t[n+2]??0);e+=_t[r>>18&63]+_t[r>>12&63]+(n+1<t.length?_t[r>>6&63]:"=")+(n+2<t.length?_t[r&63]:"=")}return e}function fe(t){let e=String(t).replace(/[\s=]/g,"").replace(/-/g,"+").replace(/_/g,"/"),n=new Uint8Array(Math.floor(e.length*3/4)),r=0,o=0,s=0;for(let i of e){let a=_t.indexOf(i);a<0||(o=o<<6|a,r+=6,r>=8&&(r-=8,n[s++]=o>>r&255))}return n.subarray(0,s)}var Xe=typeof WeakMap=="function"?new WeakMap:void 0,ie=class{constructor(e="utf-8",n={}){this.encoding=String(e).toLowerCase(),this.fatal=!!n.fatal}decode(e){if(e===void 0)return"";let n=j(e);if(this.encoding==="ascii"||this.encoding==="latin1"||this.encoding==="iso-8859-1"){let r="";for(let o=0;o<n.length;o+=8e3)r+=String.fromCharCode.apply(null,n.subarray(o,o+8e3));return r}return St(n,this.fatal)}},ze=class{get encoding(){return"utf-8"}encode(e=""){return Pe(e)}};function qe(t){let e=new Uint8Array(t);for(let n=0;n<t;n++)e[n]=Math.floor(Math.random()*256);return e}var ao={"SHA-1":Tn,"SHA-256":Ln,"SHA-384":Cn,"SHA-512":Un,MD5:Ie},re=t=>{let e=ao[String(typeof t=="object"?t?.name:t).toUpperCase()];if(!e)throw new Error(`Unsupported hash: ${String(t?.name??t)}`);return e},ce=t=>String(typeof t=="string"?t:t?.name).toUpperCase(),Jt=class{constructor(e,n,r,o){this.type="secret",this.algorithm=typeof n=="string"?{name:n}:{...n},this.extractable=!!r,this.usages=[...o??[]],Object.defineProperty(this,"_raw",{value:e,enumerable:!1})}},Fe={async digest(t,e){return G(re(ce(t))(j(e)))},async importKey(t,e,n,r,o){let s=t==="jwk"?fe(e.k??""):j(e);return new Jt(s,n,r,o)},async exportKey(t,e){return t==="jwk"?{kty:"oct",k:ue(e._raw).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}:G(e._raw)},async generateKey(t,e,n){let r=t?.length?t.length/8:32;return new Jt(qe(r),t,e,n)},async sign(t,e,n){let r=re(e.algorithm?.hash??t?.hash??"SHA-256");return G(dt(r,e._raw,j(n)))},async verify(t,e,n,r){let o=j(await Fe.sign(t,e,r)),s=j(n);return o.length===s.length&&o.every((i,a)=>i===s[a])},async encrypt(t,e,n){return G(Xn(t,e).encrypt(j(n)))},async decrypt(t,e,n){return G(Xn(t,e).decrypt(j(n)))},async deriveBits(t,e,n){let r=ce(t),o=n/8;if(r==="PBKDF2")return G(Sn(re(t.hash),e._raw,j(t.salt),{c:t.iterations,dkLen:o}));if(r==="HKDF")return G(ln(re(t.hash),e._raw,j(t.salt??[]),j(t.info??[]),o));throw new Error(`Unsupported key derivation: ${r}`)},async deriveKey(t,e,n,r,o){let s=n?.length??256,i=await Fe.deriveBits(t,e,s);return new Jt(new Uint8Array(i),n,r,o)}};function Xn(t,e){switch(ce(t)){case"AES-GCM":return un(e._raw,j(t.iv),t.additionalData?j(t.additionalData):void 0);case"AES-CBC":return an(e._raw,j(t.iv));case"AES-CTR":return cn(e._raw,j(t.counter));default:throw new Error(`Unsupported cipher: ${ce(t)}`)}}var uo={subtle:Fe,getRandomValues(t){let e=new Uint8Array(t.buffer,t.byteOffset,t.byteLength);return e.set(qe(e.length)),t},randomUUID(){let t=qe(16);t[6]=t[6]&15|64,t[8]=t[8]&63|128;let e=Array.from(t,n=>n.toString(16).padStart(2,"0"));return`${e.slice(0,4).join("")}-${e.slice(4,6).join("")}-${e.slice(6,8).join("")}-${e.slice(8,10).join("")}-${e.slice(10).join("")}`}};function fo(t){let e={};for(let n of["log","info","warn","error","debug","trace"])e[n]=(...r)=>{try{(typeof t?.[n]=="function"?t[n]:t?.log)?.apply(t,r)}catch{}};return e}var ho=(t,e,...n)=>(Promise.resolve().then(()=>t(...n)),0),lo=()=>{},Ge={TextDecoder:typeof J.TextDecoder=="function"?J.TextDecoder:ie,TextEncoder:typeof J.TextEncoder=="function"?J.TextEncoder:ze,crypto:J.crypto?.subtle?J.crypto:uo,atob:typeof J.atob=="function"?J.atob:t=>String.fromCharCode(...fe(t)),btoa:typeof J.btoa=="function"?J.btoa:t=>ue(Uint8Array.from(String(t),e=>e.charCodeAt(0)&255)),setTimeout:typeof J.setTimeout=="function"?J.setTimeout:ho,clearTimeout:typeof J.clearTimeout=="function"?J.clearTimeout:lo,console:fo(Dt)};for(let t of["TextDecoder","TextEncoder","crypto","atob","btoa"])if(J[t]===void 0)try{J[t]=Ge[t]}catch{}var $n="pb09_state",tr="pb09_secure",F={data:{},secure:{}},zn,Ze=()=>zn??(zn=App.createSourceStateManager());function go(t){return JSON.stringify(t,function(e,n){let r=this[e];return Object.prototype.toString.call(r)==="[object Date]"?Number.isNaN(r.getTime())?null:{$date:r.toISOString()}:Ye(r)?{$bytes:ue(new Uint8Array(r))}:n})}function qn(t){if(typeof t!="string"||!t)return{};try{return JSON.parse(t,(e,n)=>{if(n&&typeof n=="object"&&!Array.isArray(n)){let r=Object.keys(n);if(r.length===1&&typeof n.$date=="string")return new Date(n.$date);if(r.length===1&&typeof n.$bytes=="string")return G(fe(n.$bytes))}return n})}catch{return{}}}var We;function po(){return We??(We=(async()=>{let t=Ze();try{F.data=qn(await t.retrieve($n))??{}}catch(e){bt("couldn't read saved settings:",e?.message??e)}try{F.secure=qn(await t.keychain?.retrieve(tr))??{}}catch{F.secure={}}})()),We}function er(t,e){let n,r=!1;return()=>{r=!0,!n&&(n=(async()=>{for(;r;){r=!1;try{let o=Ze(),s=go(e?F.secure:F.data);await(e?o.keychain.store(t,s):o.store(t,s))}catch(o){bt("couldn't save settings:",o?.message??o)}}n=void 0})())}}var Fn=er($n,!1),wo=er(tr,!0),se={},Pn=typeof WeakMap=="function"?new WeakMap:new Map,bo=0,nr={registerSelector(t,e,n){se[t]={obj:e,key:n}},unregisterSelector(t){delete se[t]},selector(t){if(typeof t=="function")return t;let e=se[t];if(!e)return;let n=e.obj[e.key];return typeof n=="function"?n.bind(e.obj):n}};function xo(t,e){let n=Pn.get(t);n||(n={},Pn.set(t,n));let r=n[e]??(n[e]=`selector-${++bo}-${String(e)}`);return se[r]={obj:t,key:e},r}var $=(t,...e)=>{let n=nr.selector(t);if(typeof n!="function")throw new Error("Setting action not found");return n(...e)},wt=[],rr=/\.(?:jpe?g|png|gif|webp|avif|bmp)(?:[?#]|$)/i,Ve=t=>(/^[a-z]+:\/\/([^/?#:]+)/i.exec(String(t??""))?.[1]??"").toLowerCase(),yo=t=>/^[a-z]+:\/\/[^/?#]+/i.exec(String(t??""))?.[0]??"",Nt="";function he(t,e){let n=e.toLowerCase();for(let r of Object.keys(t??{}))if(r.toLowerCase()===n)return t[r]}function Ro(t){let e={};for(let n of Object.keys(t??{})){let r=Array.isArray(t[n])?t[n].join(", "):String(t[n]);e[n]=r,e[n.toLowerCase()]=r}return e}function mo(t,e){let n=he(t,"set-cookie");if(!n)return[];let r=Array.isArray(n)?n:String(n).split(/,(?=\s*[^;,=\s]+=)/),o=[];for(let s of r){let i=String(s).split(";"),a=i.shift()??"",c=a.indexOf("=");if(c<=0)continue;let u={name:a.slice(0,c).trim(),value:a.slice(c+1).trim(),domain:Ve(e),path:"/"};for(let f of i){let l=f.indexOf("="),d=(l<0?f:f.slice(0,l)).trim().toLowerCase(),g=l<0?"":f.slice(l+1).trim();if(d==="domain"&&g)u.domain=g;else if(d==="path"&&g)u.path=g;else if(d==="expires"){let p=new Date(g);Number.isNaN(p.getTime())||(u.expires=p)}else if(d==="max-age"){let p=Number(g);Number.isFinite(p)&&(u.expires=new Date(Date.now()+p*1e3))}}o.push(u)}return o}function Ao(t){if(t!=null)return typeof t=="string"?t:Ye(t)||ArrayBuffer.isView(t)?St(j(t)):t}function Qe(t){let e=String(t.url),n=Ve(e),r={...t.headers},o=Ao(t.body);return o&&typeof o=="object"&&!he(r,"content-type")&&(r["content-type"]="application/x-www-form-urlencoded"),App.createRequest({url:e,method:String(t.method??"GET").toUpperCase(),headers:r,data:o,cookies:Object.keys(t.cookies??{}).map(s=>App.createCookie({name:s,value:String(t.cookies[s]),domain:n}))})}function Yn(t){let e={};for(let n of t?.cookies??[])n?.name&&(e[n.name]=String(n.value??""));return{url:`${t?.url??""}${t?.param??""}`,method:String(t?.method??"GET").toUpperCase(),headers:{...t?.headers},body:t?.data,cookies:e}}function or(t){if(t?.rawData)try{let r=App.createByteArray(t.rawData),o=G(r);return typeof t.data=="string"&&Xe?.set(o,t.data),o}catch(r){bt("couldn't read response bytes:",r?.message??r)}let e=typeof t?.data=="string"?t.data:"",n=G(Pe(e));return Xe?.set(n,e),n}function sr(t,e){let n=Ro(e?.headers);return{url:t.url,headers:n,status:e?.status??0,mimeType:String(n["content-type"]??"").split(";")[0].trim()||void 0,cookies:mo(n,t.url)}}var vo={async interceptRequest(t){if(wt.length===0)return t;let e=Yn(t);for(let n of wt.slice())e=await $(n.request,e)??e;return Qe(e)},async interceptResponse(t){if(wt.length===0)return t;let e=Yn(t.request??{}),n=String(he(t.headers,"content-type")??"");if(/^image\//i.test(n)||rr.test(e.url))return t;let r=sr(e,t),o=or(t),s=o;for(let a of[...wt].reverse())s=await $(a.response,e,r,s)??s;if(s===o)return t;let i=j(s);return{request:t.request,status:t.status,headers:t.headers,data:St(i),rawData:App.createRawData({byteArray:i})}}},Gn,Ht=()=>Gn??(Gn=App.createRequestManager({requestsPerSecond:6,requestTimeout:3e4,interceptor:vo}));async function Eo(t){let e=Qe(t);rr.test(e.url)||(Nt=yo(e.url)||Nt);let n=await Ht().schedule(e,1);return[sr({url:e.url},n),or(n)]}var It=[],ae={isResourceLimited:!1,filterAdultTitles:!1,filterMatureTitles:!1,decodeHTMLEntities:t=>Oe(String(t??"")),sleep:t=>new Promise(e=>Ge.setTimeout(e,Math.max(0,Number(t)||0)*1e3)),registerDiscoverSection(t,e){ae.unregisterDiscoverSection(t.id),It.push({section:t,selector:e})},unregisterDiscoverSection(t){let e=It.findIndex(n=>n.section.id===t);e>=0&&It.splice(e,1)},registeredDiscoverSections:()=>It.map(t=>t.section),invalidateDiscoverSections(){},registerInterceptor(t,e,n){ae.unregisterInterceptor(t),wt.push({id:t,request:e,response:n})},unregisterInterceptor(t){let e=wt.findIndex(n=>n.id===t);e>=0&&wt.splice(e,1)},setRedirectHandler(){},getDefaultUserAgent:()=>Ht().getDefaultUserAgent(),scheduleRequest:Eo,arrayBufferToUTF8String:t=>Xe?.get(t)??St(j(t)),arrayBufferToASCIIString:t=>new ie("ascii").decode(t),arrayBufferToUTF16String(t){let e=j(t),n="";for(let r=0;r+1<e.length;r+=2)n+=String.fromCharCode(e[r]|e[r+1]<<8);return n},base64Encode:t=>ue(j(t)),base64Decode(t){let e=fe(typeof t=="string"?t:St(j(t)));try{return St(e,!0)}catch{return G(e)}},crypto_md5Hash:t=>Array.from(Ie(j(t)),e=>e.toString(16).padStart(2,"0")).join(""),getState:t=>F.data[t],setState(t,e){t===void 0?delete F.data[e]:F.data[e]=t,Fn()},getSecureState:t=>F.secure[t],setSecureState(t,e){t===void 0?delete F.secure[e]:F.secure[e]=t,wo()},resetAllState(){F.data={},Fn()},executeInWebView(){return Promise.reject(new Error("This needs Paperback 0.9 (it runs a hidden web page)."))},formDidChange(t){ir.get(t)?.()},console_log:t=>Dt?.log?.(...[].concat(t)),console_warn:t=>Dt?.log?.(...[].concat(t)),console_error:t=>Dt?.log?.(...[].concat(t)),Selector:xo,SelectorRegistry:nr};function To(t,e){for(let n of t.getSections()??[])for(let r of n.items??[])if(r?.id===e)return r}var So=t=>{if(t!=null){if(typeof t=="string")return t;if(t.text)return String(t.text);if(t.symbol==="checkmark")return"\u2713";if(t.symbol==="xmark")return"\u2717"}};function oe(t,e){return App.createDUIBinding({get:async()=>t(),set:async n=>e(n)})}function Bo(t){let e=t?.params;return!!(e&&("items"in e||"options"in e)&&e.onValueChange)}function Lo(t,e){let n=String(e.id),r=()=>To(t,n)??e;switch(e.type){case"labelRow":return e.onSelect?App.createDUIButton({id:n,label:e.title??"",onTap:async()=>$(r().onSelect)}):App.createDUILabel({id:n,label:e.title??"",value:So(e.value)??e.subtitle});case"inputRow":return(e.isSecureEntry?App.createDUISecureInputField:App.createDUIInputField)({id:n,label:e.title??"",value:oe(()=>r().value??"",s=>$(r().onValueChange,String(s??"")))});case"toggleRow":return App.createDUISwitch({id:n,label:e.title??"",value:oe(()=>!!r().value,o=>$(r().onValueChange,!!o))});case"stepperRow":return App.createDUIStepper({id:n,label:e.title??"",min:e.minValue,max:e.maxValue,step:e.stepValue,value:oe(()=>Number(r().value??0),o=>$(r().onValueChange,Number(o)))});case"buttonRow":return App.createDUIButton({id:n,label:e.title??"",onTap:async()=>$(r().onSelect)});case"navigationRow":{let o=e.form;if(Bo(o)){let s=o.params,i=("items"in s?s.items:s.options)??[],a=!Array.isArray(s.value);return App.createDUISelect({id:n,label:e.title??s.title??"",options:i.map(c=>String(c.id)),allowsMultiselect:a||(s.maxItemCount??1)>1,labelResolver:async c=>String(i.find(u=>String(u.id)===c)?.title??c),value:oe(()=>{let c=r().form?.params?.value??s.value;return Array.isArray(c)?c.map(String):Object.keys(c??{}).filter(u=>c[u]==="included")},c=>{let u=[].concat(c??[]).map(String),f=a?Object.fromEntries(u.map(l=>[l,"included"])):u;return $(r().form?.params?.onValueChange??s.onValueChange,f)})})}return App.createDUINavigationButton({id:n,label:e.title??"",form:ar(o)})}case"oauthButtonRow":return App.createDUIOAuthButton({id:n,label:e.title??"",authorizeEndpoint:e.authorizeEndpoint,clientId:e.clientId,responseType:e.responseType,redirectUri:e.redirectUri,scopes:e.scopes,successHandler:async(o,s)=>$(r().onSuccess,o,s)});case"webViewRow":return App.createDUILabel({id:n,label:e.title??"",value:"Needs Paperback 0.9"});default:return e.title?App.createDUILabel({id:n,label:String(e.title),value:""}):void 0}}function Uo(t,e){return async()=>((t.getSections()??[]).find(r=>r.id===e)?.items??[]).filter(r=>r&&!r.isHidden).map(r=>Lo(t,r)).filter(Boolean)}var ir=new Map,Co=0;function ko(t){let e=t.getSections()??[],n=e[0]?.items??[];return e.length===1&&n.length<=1&&/loading/i.test(`${e[0].id} ${n[0]?.id??""} ${n[0]?.title??""}`)}async function jo(t){t.__underlying_formId||Object.defineProperty(t,"__underlying_formId",{value:`form-${++Co}`,configurable:!0,writable:!0});let e=t.__underlying_formId,n,r=new Promise(o=>{n=o});ir.set(e,()=>n());try{t.formWillAppear?.()}catch(o){bt("settings:",o?.message??o)}for(let o=0;o<5&&ko(t);o++){let s=typeof J.setTimeout=="function"?new Promise(i=>J.setTimeout(i,1e4)):r;if(await Promise.race([r,s]),typeof J.setTimeout!="function")break}}async function cr(t){return await jo(t),(t.getSections()??[]).map((e,n)=>App.createDUISection({id:String(e.id??`section${n}`),header:e.header,footer:e.footer,isHidden:!1,rows:Uo(t,e.id)}))}function ar(t){return App.createDUIForm({sections:()=>cr(t),onSubmit:t.requiresExplicitSubmission?async()=>t.formDidSubmit?.():void 0})}var Zn={0:"featured",2:"singleRowLarge"},Ke="\u241F",Vn=t=>t==null||typeof t=="object"&&!Array.isArray(t)&&Object.keys(t).length===0?void 0:t;function Qn(t){return App.createPartialSourceManga({mangaId:String(t.mangaId),title:String(t.title??""),image:t.imageUrl??"",subtitle:t.subtitle??t.supertitle??void 0})}function _o(t,e){let n,r,o,s=!1,i=[],a,c,u=new Map,f=new Map,l=(x,h,w,v)=>{x.delete(h),x.set(h,w),x.size>v&&x.delete(x.keys().next().value)};async function d(){if(r||(r=(async()=>{await po();let x=t();if(n=x?.[e.id]??Object.values(x??{}).find(h=>h&&typeof h.getMangaDetails=="function"),!n)throw new Error(`0.9 extension ${e.id} not found in its bundle`);await n.initialise?.()})(),r.catch(()=>{r=void 0})),await r,s){s=!1;let x=(Ht().cookieStore?.getAllCookies?.()??[]).filter(h=>h?.name).map(h=>{let w=h.expires===void 0||h.expires===null?void 0:new Date(h.expires);return{name:String(h.name),value:String(h.value??""),domain:String(h.domain??Ve(Nt)),path:h.path??"/",...w&&!Number.isNaN(w.getTime())?{expires:w}:{}}});try{n.cloudflareBypassCompleted?await n.cloudflareBypassCompleted(o??{url:Nt,method:"GET"},x,{}):await n.saveCloudflareBypassCookies?.(x)}catch(h){bt("after the Cloudflare check:",h?.message??h)}}return n}function g(x){return x?.type==="cloudflareError"||x?.resolutionRequest?(o=x.resolutionRequest??o,new Error(`CLOUDFLARE BYPASS ERROR:
-Please go to the homepage of <${e.name}> and press the cloud icon.`)):x instanceof Error?x:new Error(String(x?.message??x))}let p=async x=>{try{return await x(await d())}catch(h){throw g(h)}};async function R(x){if(a===void 0)try{a=typeof x.getSearchFilters=="function"?await x.getSearchFilters()??[]:[]}catch(h){bt("search filters:",h?.message??h),a=[]}return a}function b(x){return u.get(x)??{mangaId:x,mangaInfo:{primaryTitle:"",secondaryTitles:[],thumbnailUrl:"",synopsis:"",contentRating:e.contentRating??"SAFE"}}}class A{constructor(h){this.cheerio=h,this.requestManager=Ht(),this.stateManager=Ze()}async getMangaDetails(h){return p(async w=>{let v=await w.getMangaDetails(h);l(u,h,v,200);let E=v?.mangaInfo??{};return App.createSourceManga({id:h,mangaInfo:App.createMangaInfo({image:E.thumbnailUrl??"",artist:E.artist??"",author:E.author??"",desc:E.synopsis??"",status:E.status??"Unknown",hentai:E.contentRating==="ADULT",titles:[E.primaryTitle,...E.secondaryTitles??[]].filter(Boolean).map(String),banner:E.bannerUrl,rating:E.rating,covers:E.artworkUrls,additionalInfo:E.additionalInfo,tags:(E.tagGroups??[]).map(B=>App.createTagSection({id:String(B.id),label:String(B.title??B.id),tags:(B.tags??[]).map(m=>App.createTag({id:String(m.id),label:String(m.title??m.id)}))}))})})})}getMangaShareUrl(h){return u.get(h)?.mangaInfo?.shareUrl}async getChapters(h){return p(async w=>(await w.getChapters(b(h))??[]).filter(Boolean).map(E=>{l(f,String(E.chapterId),E,5e3);let B=E.publishDate??E.creationDate;return App.createChapter({id:String(E.chapterId),chapNum:Number(E.chapNum)||0,volume:E.volume,name:E.title??"",group:E.version,langCode:E.langCode??"en",time:B?new Date(B):void 0,sortingIndex:E.sortingIndex})}))}async getChapterDetails(h,w){return p(async v=>{let E=f.get(String(w))??{chapterId:String(w),sourceManga:b(h),langCode:"en",chapNum:0},B=await v.getChapterDetails(E);if(B?.type&&B.type!=="images")throw new Error("This chapter is text, which Paperback 0.8 can't show. Open it on 0.9.");return App.createChapterDetails({id:String(w),mangaId:h,pages:(B?.pages??[]).map(String)})})}async getSearchTags(){return p(async h=>(await R(h)).filter(w=>w.type==="multiselect"||w.type==="dropdown").map(w=>App.createTagSection({id:String(w.id),label:String(w.title??w.id),tags:(w.options??[]).map(v=>App.createTag({id:`${w.id}${Ke}${v.id}`,label:String(v.value??v.id)}))})))}async getTags(){return this.getSearchTags()}async getSearchFields(){return p(async h=>(await R(h)).filter(w=>w.type==="input").map(w=>App.createSearchField({id:String(w.id),name:String(w.title??w.id),placeholder:String(w.placeholder??"")})))}async supportsTagExclusion(){return p(async h=>(await R(h)).some(w=>w.allowExclusion))}async getSearchResults(h,w){return p(async v=>{if(typeof v.getSearchResults!="function")return App.createPagedResults({results:[]});let E=await R(v),B=(C,at)=>{let ut={};for(let le of C??[]){let de=String(le.id).indexOf(Ke);if(de<0)continue;let ge=String(le.id).slice(0,de);(ut[ge]??(ut[ge]=[])).push([String(le.id).slice(de+Ke.length),at])}return ut},m=B(h?.includedTags,"included"),S=B(h?.excludedTags,"excluded"),U=E.map(C=>{let at=[...m[C.id]??[],...S[C.id]??[]];if(C.type==="multiselect")return{id:C.id,value:at.length?Object.fromEntries(at):C.value??{}};if(C.type==="dropdown"){let ut=(m[C.id]??[])[0];return{id:C.id,value:ut?ut[0]:C.value}}return{id:C.id,value:h?.parameters?.[C.id]??C.value??""}}),_={title:h?.title??"",metadata:E.length?U:void 0};if(c===void 0&&typeof v.getSortingOptions=="function")try{c=(await v.getSortingOptions(_)??[])[0]??null}catch{c=null}let H=await v.getSearchResults(_,Vn(w),c??void 0),W=(H?.items??[]).filter(C=>C?.mangaId);return App.createPagedResults({results:W.map(Qn),metadata:W.length?H?.metadata:void 0})})}async searchRequest(h,w){return this.getSearchResults(h,w)}async getHomePageSections(h){return p(async w=>{let v=[...typeof w.getDiscoverSections=="function"?await w.getDiscoverSections()??[]:[]];for(let m of ae.registeredDiscoverSections())v.some(S=>S.id===m.id)||v.push(m);i=v.filter(m=>m.type!==4);for(let m of i)h(App.createHomeSection({id:m.id,title:m.title,type:Zn[m.type]??"singleRowNormal",items:[],containsMoreItems:!0}));let E=0,B;if(await Promise.all(i.map(async m=>{try{let S=await this.discoverPage(w,m,void 0);h(App.createHomeSection({id:m.id,title:m.title,type:Zn[m.type]??"singleRowNormal",items:S.results,containsMoreItems:S.metadata!==void 0}))}catch(S){E++,B=S,bt(`home section ${m.id}:`,S?.message??S)}})),i.length>0&&E===i.length)throw B})}async discoverPage(h,w,v){let E=It.find(S=>S.section.id===w.id),B=E?.selector!==void 0?await $(E.selector,w,v):await h.getDiscoverSectionItems(w,v),m=(B?.items??[]).filter(S=>S?.mangaId);return App.createPagedResults({results:m.map(Qn),metadata:m.length?B?.metadata:void 0})}async getViewMoreItems(h,w){return p(async v=>{let E=i.find(B=>B.id===h);return!E&&typeof v.getDiscoverSections=="function"&&(i=await v.getDiscoverSections()??[],E=i.find(B=>B.id===h)),E?this.discoverPage(v,E,Vn(w)):App.createPagedResults({results:[]})})}async getSourceMenu(){return p(async h=>{let w=await h.getSettingsForm(),v=await cr(w);return v.length===1?v[0]:App.createDUISection({id:"settings",header:"Settings",isHidden:!1,rows:async()=>[App.createDUINavigationButton({id:"settings_form",label:"Settings",form:ar(w)})]})})}async getCloudflareBypassRequestAsync(){await d().catch(()=>{}),s=!0;let h=o??{url:e.website||`${Nt}/`,method:"GET"},w=await Ht().getDefaultUserAgent().catch(()=>{}),v=Qe(h);return w&&!he(v.headers,"user-agent")&&(v.headers["user-agent"]=w),v}}let T=A.prototype;return e.discover||(delete T.getHomePageSections,delete T.getViewMoreItems),e.settings||delete T.getSourceMenu,e.cloudflare||delete T.getCloudflareBypassRequestAsync,e.filters||(delete T.getSearchTags,delete T.getTags,delete T.getSearchFields,delete T.supportsTagExclusion),A}return pr(Io);})();
+"use strict";
+var _Sources = (() => {
+  var __create = Object.create;
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getProtoOf = Object.getPrototypeOf;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
+  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-;return __pbV9;
-})();
-return (function (Application, TextDecoder, TextEncoder, crypto, atob, btoa, setTimeout, clearTimeout, console) {
-var __load = function () {
-var source=(function(e){Object.defineProperty(e,Symbol.toStringTag,{value:`Module`});function t(e){"@babel/helpers - typeof";return t=typeof Symbol==`function`&&typeof Symbol.iterator==`symbol`?function(e){return typeof e}:function(e){return e&&typeof Symbol==`function`&&e.constructor===Symbol&&e!==Symbol.prototype?`symbol`:typeof e},t(e)}function n(e,n){if(t(e)!=`object`||!e)return e;var r=e[Symbol.toPrimitive];if(r!==void 0){var i=r.call(e,n||`default`);if(t(i)!=`object`)return i;throw TypeError(`@@toPrimitive must return a primitive value.`)}return(n===`string`?String:Number)(e)}function r(e){var r=n(e,`string`);return t(r)==`symbol`?r:r+``}function i(e,t,n){return(t=r(t))in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}var a=class{constructor(){i(this,`requiresExplicitSubmission`,!1)}reloadForm(){let e=this.__underlying_formId;e&&Application.formDidChange(e)}};function o(e,t,n){return e[`__closure_selector-`+t]=n,Application.Selector(e,`__closure_selector-`+t)}function s(e,t){let n;return n=typeof e==`string`?{id:e}:e,{type:`listSection`,...n,items:t.filter(e=>e),allowAddition:!1,allowDeletion:!1,allowReorder:!1}}function c(e,t){return{id:e,type:`listSection`,header:t.header,footer:t.footer,allowAddition:t.onAddition!=null&&t.allowAddition==1,allowDeletion:t.onDeletion!=null&&t.allowDeletion==1,allowReorder:t.onReorder!=null&&t.allowReorder==1,onAddition:t.onAddition,onDeletion:t.onDeletion,onReorder:t.onReorder,items:t.items.filter(e=>e)}}function l(e,t){let n;return n=typeof e==`string`?{id:e}:e,{type:`flowSection`,...n,items:t.filter(e=>e)}}function u(e,t){if(t.maxItemCount<1)throw Error(`[${t.id}] maxItemCount must not be less than one`);if(t.minItemCount<0)throw Error(`[${t.id}] minItemCount must not be less than zero`);if(t.minItemCount>=t.maxItemCount&&t.maxItemCount>1)throw Error(`[${t.id}] minItemCount must be less than maxItemCount, or both must be one`);if(t.value.length<t.minItemCount)throw Error(`[${t.id}] value count must not be less than minItemCount`);if(!t.value.every(e=>t.items.some(t=>t.id===e)))throw Error(`[${t.id}] All provided values must be inside items`);let n=Object.keys(t.value).length;return(t.layout==`flow`?l:s)({id:t.id,header:t.header,footer:t.footer},t.items.map(r=>{let i=t.value.indexOf(r.id),a=i!==-1;return d(r.id,{title:r.title,value:a?{symbol:`checkmark`,style:`success`}:void 0,onSelect:o(e,`__select_${t.id}#${r.id}`,async()=>{if(a)n>t.minItemCount&&t.value.splice(i,1);else if(t.maxItemCount==1)t.value.splice(0,t.value.length,r.id);else if(n<t.maxItemCount)t.value.push(r.id);else return;t.onValueChange&&await Application.SelectorRegistry.selector(t.onValueChange)(),e.reloadForm()})})}))}function ee(e,t){let n=Object.keys(t.value).length;return(t.layout==`flow`?l:s)({id:t.id,header:t.header,footer:t.footer},t.items.map(r=>{let i=t.value[r.id],a,s;switch(i){case`included`:t.layout==`flow`?(s=`success`,a=void 0):(s=void 0,a={symbol:`checkmark`,style:`success`});break;case`excluded`:t.layout==`flow`?(s=`error`,a=void 0):(s=void 0,a={symbol:`xmark`,style:`error`});break;default:a=void 0,s=void 0}return d(r.id,{style:s,title:r.title,value:a,onSelect:o(e,`__multiselect_${t.id}#${r.id}`,async()=>{let a,o=!t.maximum||n<t.maximum,s=t.allowEmptySelection&&n==1||n>1;switch(i){case`included`:if(t.allowExclusion){a=`excluded`;break}if(s){a=void 0;break}return;case`excluded`:if(s){a=void 0;break}return;case void 0:if(o){a=`included`;break}return}a==null?delete t.value[r.id]:t.value[r.id]=a,t.onValueChange&&await Application.SelectorRegistry.selector(t.onValueChange)(),e.reloadForm()})})}))}function d(e,t){return{...t,id:e,type:`labelRow`,isHidden:t.isHidden??!1,isSelectable:t.onSelect!=null}}function te(e,t){return{...t,id:e,type:`inputRow`,isHidden:t.isHidden??!1}}function f(e,t){return{...t,id:e,type:`toggleRow`,isHidden:t.isHidden??!1}}function p(e,t){let n=Object.keys(t.value).length;return h(e,{form:new re(t.title,t),title:t.title,subtitle:t.subtitle,value:n==1?`${(`items`in t?t.items.find(e=>e.id==t.value[0])?.title:t.options.find(e=>e.id==t.value[0])?.title)??`1 item`}`:`${Object.keys(t.value).length} items`,isHidden:t.isHidden})}function m(e,t){return h(e,{form:new ie(t.title,t),title:t.title,subtitle:t.subtitle,value:`${Object.keys(t.value).length} items`,isHidden:t.isHidden})}function ne(e,t){return{...t,id:e,type:`buttonRow`,isHidden:t.isHidden??!1}}function h(e,t){return{...t,id:e,type:`navigationRow`,isHidden:t.isHidden??!1}}var re=class extends a{constructor(e,t){super(),i(this,`title`,void 0),i(this,`params`,void 0),i(this,`states`,[]),i(this,`requiresExplicitSubmission`,!0),this.title=e,this.params=t,this.states=[...t.value]}getSections(){return[u(this,{id:`select`,value:this.states,layout:`layout`in this.params?this.params.layout:`list`,items:`items`in this.params?this.params.items:this.params.options,minItemCount:this.params.minItemCount,maxItemCount:this.params.maxItemCount,isHidden:this.params.isHidden})]}async formDidSubmit(){await Application.SelectorRegistry.selector(this.params.onValueChange)(this.states)}},ie=class extends a{constructor(e,t){super(),i(this,`title`,void 0),i(this,`params`,void 0),i(this,`states`,{}),i(this,`requiresExplicitSubmission`,!0),this.title=e,this.params=t,this.states={...t.value}}getSections(){return[ee(this,{id:`multiselect`,value:this.states,items:this.params.items,allowExclusion:this.params.allowExclusion,allowEmptySelection:this.params.allowEmptySelection,maximum:this.params.maximum,layout:this.params.layout})]}async formDidSubmit(){await Application.SelectorRegistry.selector(this.params.onValueChange)(this.states)}},ae=class extends Error{constructor(e,t){super(t),i(this,`onConfirmation`,void 0),i(this,`type`,`confirmationError`),this.onConfirmation=e}},g=class extends a{constructor(...e){super(...e),i(this,`requiresExplicitSubmission`,!0)}async formDidSubmit(){}formDidCancel(){}},_=class{constructor(e){i(this,`id`,void 0),this.id=e}registerInterceptor(){Application.registerInterceptor(this.id,Application.Selector(this,`interceptRequest`),Application.Selector(this,`interceptResponse`))}unregisterInterceptor(){Application.unregisterInterceptor(this.id)}};let v={},y={},b=async e=>{if(v[e]){await v[e],await b(e);return}v[e]=new Promise(t=>y[e]=()=>{delete v[e],t()})},oe=e=>{y[e]&&y[e]()};var se=class extends _{constructor(e,t){super(e),i(this,`options`,void 0),i(this,`promise`,void 0),i(this,`currentRequestsMade`,0),i(this,`lastReset`,Date.now()),i(this,`imageRegex`,new RegExp(/\.(avif|gif|jpeg|jpg|jxl|png|webp)(\?|$)/i)),this.options=t}async interceptRequest(e){return this.options.ignoreImages&&this.imageRegex.test(e.url)?e:(await b(this.id),await this.incrementRequestCount(),oe(this.id),e)}async interceptResponse(e,t,n){return n}async incrementRequestCount(){if(await this.promise,(Date.now()-this.lastReset)/1e3>this.options.bufferInterval&&(this.currentRequestsMade=0,this.lastReset=Date.now()),this.currentRequestsMade+=1,this.currentRequestsMade>=this.options.numberOfRequests){let e=(Date.now()-this.lastReset)/1e3;if(e<=this.options.bufferInterval){let t=this.options.bufferInterval-e;console.log(`[BasicRateLimiter] rate limit hit, sleeping for ${t}`),this.promise=Application.sleep(t)}}}},ce=class extends Error{constructor(e,t=`Cloudflare bypass is required`){super(t),i(this,`resolutionRequest`,void 0),i(this,`type`,`cloudflareError`),this.resolutionRequest=e}};function x(e){let t={},n=e.match(/^(?:([a-zA-Z][a-zA-Z\d+\-.]*):)?(?:\/\/([^/?#]*))?([^?#]*)(?:\?([^#]*))?(?:#(.*))?$/);if(!n)throw Error(`Invalid URL string provided.`);if(n[1]!==void 0&&n[1]!==``&&(t.protocol=n[1]),n[2]!==void 0&&n[2]!==``){let e=n[2],r=``,i=``,a=e.indexOf(`@`);if(a!==-1){if(r=e.substring(0,a),i=e.substring(a+1),r!==``){let e=r.indexOf(`:`);e===-1?(t.username=r,t.password=``):(t.username=r.substring(0,e),t.password=r.substring(e+1))}}else i=e;if(i!==``){if(i.startsWith(`[`)){let e=i.indexOf(`]`);if(e===-1)throw Error(`Invalid IPv6 address in URL update.`);t.hostname=i.substring(0,e+1);let n=i.substring(e+1);n.startsWith(`:`)&&(t.port=n.substring(1))}else{let e=i.lastIndexOf(`:`);e!==-1&&i.indexOf(`:`)===e?(t.hostname=i.substring(0,e),t.port=i.substring(e+1)):(t.hostname=i,t.port=``)}}}if(n[3]!==void 0&&n[3]!==``&&(t.path=n[3].startsWith(`/`)?n[3]:`/${n[3]}`),n[4]!==void 0){let e={},r=n[4].split(`&`);for(let t of r){if(!t)continue;let[n,r=``]=t.split(`=`);if(n===void 0)continue;let i=decodeURIComponent(n),a=decodeURIComponent(r);if(i in e){let t=e[i];Array.isArray(t)?t.push(a):e[i]=[t,a]}else e[i]=a}t.queryItems=e}return n[5]!==void 0&&(t.fragment=n[5]),t}var le=class{constructor(e){i(this,`protocol`,void 0),i(this,`hostname`,void 0),i(this,`path`,void 0),i(this,`username`,void 0),i(this,`password`,void 0),i(this,`port`,void 0),i(this,`queryItems`,void 0),i(this,`fragment`,void 0);let t=x(e);if(!t.hostname||!t.protocol)throw Error(`URL Hostname and Protocol are required`);this.hostname=t.hostname,this.protocol=t.protocol,this.path=t.path??``,this.username=t.username,this.password=t.password,this.port=t.port,this.queryItems=t.queryItems,this.fragment=t.fragment}toString(){let e=`${this.protocol}://`;if(this.username!==void 0&&this.username!==``&&(e+=this.username,this.password!==void 0&&this.password!==``&&(e+=`:${this.password}`),e+=`@`),e+=this.hostname,this.port!==void 0&&this.port!==``&&(e+=`:${this.port}`),this.path!==``&&(e+=this.path.startsWith(`/`)?this.path:`/${this.path}`),this.queryItems!==void 0){let t=Object.keys(this.queryItems),n=[];if(t.length>0)for(let e of t){let t=this.queryItems[e];if(Array.isArray(t))for(let r of t)n.push(`${encodeURIComponent(e)}=${encodeURIComponent(r)}`);else t!==void 0&&n.push(`${encodeURIComponent(e)}=${encodeURIComponent(t)}`)}e+=`?${n.join(`&`)}`}return this.fragment!==void 0&&(e+=`#${this.fragment}`),e}setProtocol(e){if(e===``)throw Error(`Protocol is required`);return this.protocol=e,this}setUsername(e){return this.username=e===``?void 0:e,this}setPassword(e){return this.password=e===``?void 0:e,this}setHostname(e){if(e===``)throw Error(`Hostname is required`);return this.hostname=e,this}setPort(e){return this.port=e===``?void 0:e,this}setPath(e){return this.path=e.startsWith(`/`)?e:`/${e}`,this}addPathComponent(e){return this.path=(this.path??``)+(e.startsWith(`/`)?e:`/${e}`),this}setQueryItems(e){return this.queryItems=e,this}setQueryItem(e,t){return this.queryItems===void 0&&(this.queryItems={}),this.queryItems[e]=t,this}removeQueryItem(e){return delete this.queryItems?.[e],this}setFragment(e){return this.fragment=e,this}update(e){let t;return t=typeof e==`string`?x(e):e,t.protocol!==void 0&&this.setProtocol(t.protocol),t.username!==void 0&&this.setUsername(t.username),t.password!==void 0&&this.setPassword(t.password),t.hostname!==void 0&&this.setHostname(t.hostname),t.port!==void 0&&this.setPort(t.port),t.path!==void 0&&this.setPath(t.path),t.queryItems!==void 0&&this.setQueryItems(t.queryItems),t.fragment!==void 0&&this.setFragment(t.fragment),this}};let ue=`cookie_store_cookies`;var de=class extends _{get cookies(){return Object.freeze(Object.values(this._cookies))}set cookies(e){let t={};for(let n of e)this.isCookieExpired(n)||(t[this.cookieIdentifier(n)]=n);this._cookies=t,this.saveCookiesToStorage()}constructor(e){super(`cookie_store`),i(this,`options`,void 0),i(this,`_cookies`,{}),this.options=e,this.loadCookiesFromStorage()}async interceptRequest(e){return e.cookies={...e.cookies??{},...this.cookiesForUrl(e.url).reduce((e,t)=>(e[t.name]=t.value,e),{})},e}async interceptResponse(e,t,n){let r=this._cookies;for(let e of t.cookies){let t=this.cookieIdentifier(e);if(this.isCookieExpired(e)){delete r[t];continue}r[t]=e}return this._cookies=r,this.saveCookiesToStorage(),n}setCookie(e){this.isCookieExpired(e)||(this._cookies[this.cookieIdentifier(e)]=e,this.saveCookiesToStorage())}deleteCookie(e){delete this._cookies[this.cookieIdentifier(e)]}cookiesForUrl(e){let t=new le(e),n=t.hostname;if(!n)return[];let r={},i=t.path.startsWith(`/`)?t.path:`/${t.path}`,a=n.split(`.`),o=i.split(`/`);o.shift();let s=this.cookies;for(let e of s){if(this.isCookieExpired(e)){delete this._cookies[this.cookieIdentifier(e)];continue}let t=this.cookieSanitizedDomain(e).split(`.`);if(a.length<t.length||t.length==0)continue;let n=!0;for(let e=0;e<t.length;e++){let r=t.length-1-e,i=a.length-1-e;if(t[r]!=a[i]){n=!1;break}}if(!n)continue;let s=this.cookieSanitizedPath(e),c=s.split(`/`);c.shift();let l=0;if(i===s)l=2**53-1;else if(c.length===0||s===`/`)l=1;else if(i.startsWith(s)&&o.length>=c.length)for(let e=0;e<c.length&&c[e]===o[e];e++)l+=1;l<=0||(r[e.name]?.pathMatches??0)<l&&(r[e.name]={cookie:e,pathMatches:l})}return Object.values(r).map(e=>e.cookie)}cookieIdentifier(e){return`${e.name}-${this.cookieSanitizedDomain(e)}-${this.cookieSanitizedPath(e)}`}cookieSanitizedPath(e){return e.path?.startsWith(`/`)?e.path:`/`+(e.path??``)}cookieSanitizedDomain(e){return e.domain.replace(/^(www)?\.?/gi,``).toLowerCase()}isCookieExpired(e){return!!(e.expires&&e.expires.getTime()<=Date.now())}loadCookiesFromStorage(){if(this.options.storage==`memory`)return;let e=Application.getState(ue);if(!e){this._cookies={};return}let t={};for(let n of e)n.expires&&!this.isCookieExpired(n)&&(t[this.cookieIdentifier(n)]=n);this._cookies=t}saveCookiesToStorage(){this.options.storage!=`memory`&&Application.setState(this.cookies.filter(e=>e.expires),ue)}},S;(function(e){e[e.NONE=0]=`NONE`,e[e.MANGA_CHAPTERS=1]=`MANGA_CHAPTERS`,e[e.CHAPTER_PROVIDING=1]=`CHAPTER_PROVIDING`,e[e.MANGA_PROGRESS=2]=`MANGA_PROGRESS`,e[e.MANGA_PROGRESS_PROVIDING=2]=`MANGA_PROGRESS_PROVIDING`,e[e.PROGRESS_PROVIDING=2]=`PROGRESS_PROVIDING`,e[e.DISCOVER_SECIONS=4]=`DISCOVER_SECIONS`,e[e.DISCOVER_SECIONS_PROVIDING=4]=`DISCOVER_SECIONS_PROVIDING`,e[e.DISCOVER_SECTION_PROVIDING=4]=`DISCOVER_SECTION_PROVIDING`,e[e.COLLECTION_MANAGEMENT=8]=`COLLECTION_MANAGEMENT`,e[e.MANAGED_COLLECTION_PROVIDING=8]=`MANAGED_COLLECTION_PROVIDING`,e[e.CLOUDFLARE_BYPASS_REQUIRED=16]=`CLOUDFLARE_BYPASS_REQUIRED`,e[e.CLOUDFLARE_BYPASS_PROVIDING=16]=`CLOUDFLARE_BYPASS_PROVIDING`,e[e.SETTINGS_UI=32]=`SETTINGS_UI`,e[e.SETTINGS_FORM_PROVIDING=32]=`SETTINGS_FORM_PROVIDING`,e[e.MANGA_SEARCH=64]=`MANGA_SEARCH`,e[e.SEARCH_RESULTS_PROVIDING=64]=`SEARCH_RESULTS_PROVIDING`,e[e.SEARCH_RESULT_PROVIDING=64]=`SEARCH_RESULT_PROVIDING`})(S||(S={}));var C;(function(e){e.EVERYONE=`SAFE`,e.MATURE=`MATURE`,e.ADULT=`ADULT`})(C||(C={}));var w;(function(e){e[e.featured=0]=`featured`,e[e.simpleCarousel=1]=`simpleCarousel`,e[e.prominentCarousel=2]=`prominentCarousel`,e[e.chapterUpdates=3]=`chapterUpdates`,e[e.genres=4]=`genres`})(w||(w={})),Object.freeze({items:[],metadata:void 0});let T=`https://mangadot.net`,fe=[{id:``,title:`Any`},{id:`Ongoing`,title:`Ongoing`},{id:`Completed`,title:`Completed`},{id:`Hiatus`,title:`Interrupted`}],pe=[{id:`daily`,title:`Day`},{id:`weekly`,title:`Week`},{id:`monthly`,title:`Month`}],E=[{id:``,title:`Any`},{id:`JP`,title:`Manga`},{id:`KR`,title:`Manhwa`},{id:`CN&TW`,title:`Manhua`},{id:`ONESHOT`,title:`Oneshot`}],D=[{id:`0`,title:`No`},{id:`1`,title:`Yes`},{id:`both`,title:`Both`}],O=[{id:`most_viewed`,title:`Most Viewed`},{id:`top_rated`,title:`Top Rated`},{id:`most_tracked`,title:`Most Tracked Comics`},{id:`latest_updates`,title:`Latest updates`},{id:`recently_added`,title:`Recently Added`},{id:`genres`,title:`Genres`},{id:`themes`,title:`Themes`},{id:`demographics`,title:`Demographics`}];function me(e){return e.replaceAll(`-`,`@#@`).replaceAll(`'`,`&#@`).replaceAll(` `,`#@&`)}function k(e){return e.replaceAll(`@#@`,`-`).replaceAll(`&#@`,`'`).replaceAll(`#@&`,` `)}function A(){return Application.getState(`content_type`)??[``]}function j(){return Application.getState(`section_content_type`)??[``]}function M(){return Application.getState(`hidden_genres`)??[]}function N(){return Application.getState(`hidden_demographic`)??[]}function P(){return Application.getState(`hidden_themes`)??[]}function F(){return Application.getState(`hidden_more`)??[]}function I(){return Application.getState(`english_only_content`)??!1}function L(){return Application.getState(`show_adult_content`)??[`0`]}function R(){return Application.getState(`range_type`)??!1}function z(){return Application.getState(`multipage_section`)??!1}function he(){return Application.getState(`sections`)??O}function B(e){return{id:me(e),title:k(e)}}function V(e=``){return{genres:{...Object.fromEntries(M().map(e=>[e,`excluded`])),...e.length>0?{[e]:`included`}:{}},demographic:Object.fromEntries(N().map(e=>[e,`excluded`])),themes:Object.fromEntries(P().map(e=>[e,`excluded`])),more:Object.fromEntries(F().map(e=>[e,`excluded`])),origin:A().filter(e=>e!==``),adult:L()}}function H(){let e=Application.getState(`search_filter`);if(e===void 0)return{demographic:[],genre:[],more:[],themeAndContent:[]};try{return JSON.parse(e)}catch{return{demographic:[],genre:[],more:[],themeAndContent:[]}}}async function U(e){let t=H();await W(t.genre.length+t.themeAndContent.length+t.demographic.length+t.more.length===0,e)}async function W(e,t){if(Number(Application.getState(`last_genres_fetch`)??0)+172800>new Date().valueOf()/1e3&&!e){Application.getState(`search_filter`)===void 0&&await W(!0,t);return}let n=await t.getFilters();n.sort((e,t)=>e.localeCompare(t));let r=_e(n);Application.setState(JSON.stringify(r),`search_filter`),Application.setState(String(new Date().valueOf()/1e3),`last_genres_fetch`)}let ge={Shounen:`Demographic`,Seinen:`Demographic`,Shoujo:`Demographic`,Josei:`Demographic`,Kids:`Demographic`,Action:`Genre`,Adventure:`Genre`,Comedy:`Genre`,Drama:`Genre`,Fantasy:`Genre`,Horror:`Genre`,Mystery:`Genre`,Romance:`Genre`,"Sci-Fi":`Genre`,"Slice of Life":`Genre`,Sports:`Genre`,Thriller:`Genre`,Tragedy:`Genre`,Psychological:`Genre`,Supernatural:`Genre`,Mecha:`Genre`,Historical:`Genre`,Isekai:`Theme & content`,Ecchi:`Theme & content`,Harem:`Theme & content`,"Martial Arts":`Theme & content`,"School Life":`Theme & content`,Magic:`Theme & content`,Military:`Theme & content`,Music:`Theme & content`,Demons:`Theme & content`,Vampire:`Theme & content`,Game:`Theme & content`,Cooking:`Theme & content`,Medical:`Theme & content`,Webtoon:`Theme & content`};function _e(e){let t={demographic:[],genre:[],themeAndContent:[],more:[]};for(let n of e)switch(ge[n]){case`Demographic`:t.demographic.push(B(n));break;case`Genre`:t.genre.push(B(n));break;case`Theme & content`:t.themeAndContent.push(B(n));break;default:t.more.push(B(n))}return t}var ve=class extends g{getSearchQueryMetadata(){return this.searchMetadata}constructor(e){super(),i(this,`searchMetadata`,void 0),this.searchMetadata=e.metadata===void 0?V():e.metadata}getSections(){return[s(`genres`,this.getGenresFilter()),s(`status`,this.getStatusFilter()),s(`origin`,this.getOriginFilter()),s(`adult`,[p(`adultToggle`,{title:`Show Adult results`,value:this.searchMetadata.adult??L(),options:D,minItemCount:1,maxItemCount:1,onValueChange:Application.Selector(this,`handleAdult`)})]),s(`author`,[h(`author_filter`,{title:`Authors`,subtitle:this.searchMetadata.author?.flatMap(k).join(`, `)??``,form:new ye(this.searchMetadata)})]),s(`artist`,[h(`artist_filter`,{title:`Artists`,subtitle:this.searchMetadata.artist?.flatMap(k).join(`, `)??``,form:new be(this.searchMetadata)})])]}getGenresFilter(){return[m(`genres`,{title:`Genres`,layout:`list`,onValueChange:Application.Selector(this,`handleGenres`),items:H().genre,value:this.searchMetadata.genres??{},allowEmptySelection:!0,allowExclusion:!0,isHidden:!1}),m(`demographic`,{title:`Demographic`,layout:`list`,onValueChange:Application.Selector(this,`handleDemographic`),items:H().demographic,value:this.searchMetadata.demographic??{},allowEmptySelection:!0,allowExclusion:!0,isHidden:!1}),m(`themes`,{title:`Themes`,layout:`list`,onValueChange:Application.Selector(this,`handleThemes`),items:H().themeAndContent,value:this.searchMetadata.themes??{},allowEmptySelection:!0,allowExclusion:!0,isHidden:!1}),m(`more`,{title:`More`,layout:`list`,onValueChange:Application.Selector(this,`handleMore`),items:H().more,value:this.searchMetadata.more??{},allowEmptySelection:!0,allowExclusion:!0,isHidden:!1})]}getStatusFilter(){return[p(`status`,{title:`Status`,layout:`list`,onValueChange:Application.Selector(this,`handleStatus`),items:fe,value:this.searchMetadata.status&&this.searchMetadata.status.length>0?this.searchMetadata.status:[``],minItemCount:1,maxItemCount:1,isHidden:!1})]}getOriginFilter(){return[p(`origin`,{title:`Content Type`,layout:`list`,onValueChange:Application.Selector(this,`handleOrigin`),items:E,value:this.searchMetadata.origin&&this.searchMetadata.origin.length>0?this.searchMetadata.origin:[``],minItemCount:1,maxItemCount:E.length,isHidden:!1})]}async handleAdult(e){this.searchMetadata.adult=e}async handleDemographic(e){this.searchMetadata.demographic=e}async handleThemes(e){this.searchMetadata.themes=e}async handleMore(e){this.searchMetadata.more=e}async handleGenres(e){this.searchMetadata.genres=e}async handleStatus(e){this.searchMetadata.status=e}async handleOrigin(e){let t=(this.searchMetadata?.origin??[``]).includes(``),n=e.includes(``);t&&e.length>1?e=e.filter(e=>e!==``):!t&&n&&(e=[``]),this.searchMetadata.origin=e}},ye=class extends g{constructor(e){super(),i(this,`authorMetadata`,void 0),i(this,`authorFiltered`,[]),i(this,`savedAuthorFiltered`,[]),i(this,`searchedValue`,``),this.authorMetadata=e===void 0?{author:[]}:e,this.savedAuthorFiltered=this.authorMetadata.author?this.authorMetadata.author:[]}getSearchQueryMetadata(){return this.savedAuthorFiltered.length>0&&(this.authorMetadata.author=this.savedAuthorFiltered),this.authorMetadata}async formDidSubmit(){this.savedAuthorFiltered.length>0&&(this.authorMetadata.author=this.savedAuthorFiltered)}getSections(){return this.getAuthorFilter()}getAuthorFilter(){return[s(`author`,[te(`author`,{title:`Search Author`,value:this.searchedValue,onValueChange:Application.Selector(this,`handleAuthorLabel`)})]),...this.authorFiltered.length>0?[u(this,{id:`authorSearch`,layout:`list`,value:this.savedAuthorFiltered??[],items:this.authorFiltered.map(e=>B(e)),minItemCount:0,maxItemCount:this.authorFiltered.length})]:[],...this.savedAuthorFiltered&&this.savedAuthorFiltered.length>0?[u(this,{id:`selections`,layout:`list`,value:this.savedAuthorFiltered??[],items:this.savedAuthorFiltered.map(e=>B(e)),minItemCount:0,maxItemCount:this.savedAuthorFiltered.length})]:[]]}async handleAuthorLabel(e){if(this.searchedValue=e,e.length>2){let t=await $.api.getAuthor(e);this.authorFiltered=t.suggestions}}},be=class extends g{constructor(e){super(),i(this,`artistMetadata`,void 0),i(this,`artistsFiltered`,[]),i(this,`savedArtistFiltered`,[]),i(this,`searchedValue`,``),this.artistMetadata=e===void 0?{artist:[]}:e,this.savedArtistFiltered=this.artistMetadata.artist?this.artistMetadata.artist:[]}getSearchQueryMetadata(){return this.savedArtistFiltered.length>0&&(this.artistMetadata.artist=this.savedArtistFiltered),this.artistMetadata}async formDidSubmit(){this.savedArtistFiltered.length>0&&(this.artistMetadata.artist=this.savedArtistFiltered)}getSections(){return this.getArtistsFilter()}getArtistsFilter(){return[s(`artist`,[te(`artist`,{title:`Search Artist`,value:this.searchedValue,onValueChange:Application.Selector(this,`handleArtistLabel`)})]),...this.artistsFiltered.length>0?[u(this,{id:`artistSearch`,layout:`list`,value:this.savedArtistFiltered??[],items:this.artistsFiltered.map(e=>B(e)),minItemCount:0,maxItemCount:this.artistsFiltered.length})]:[],...this.savedArtistFiltered&&this.savedArtistFiltered.length>0?[u(this,{id:`selections`,layout:`list`,value:this.savedArtistFiltered??[],items:this.savedArtistFiltered.map(e=>B(e)),minItemCount:0,maxItemCount:this.savedArtistFiltered.length})]:[]]}async handleArtistLabel(e){if(this.searchedValue=e,e.length>2){let t=await $.api.getArtist(e);this.artistsFiltered=t.suggestions}}},xe=class extends a{constructor(e){super(),i(this,`api`,void 0),this.api=e}getSections(){let e=H();return[s({id:`update_settings`,header:`Default Search Filter`},[p(`type`,{title:`Content Type`,subtitle:`This settings only as default search filter`,value:A(),options:E,minItemCount:0,maxItemCount:E.length,onValueChange:Application.Selector(this,`handleTypeStatusChange`)}),p(`hide_genres`,{title:`Hide Genres`,subtitle:`Default value for contents`,value:M(),options:e.genre,minItemCount:0,maxItemCount:e.genre.length,onValueChange:Application.Selector(this,`handleHideGenresStatusChange`)}),p(`hide_demographic`,{title:`Hide Demographic`,subtitle:`Default value for contents`,value:N(),options:e.demographic,minItemCount:0,maxItemCount:e.demographic.length,onValueChange:Application.Selector(this,`handleHideDemographicStatusChange`)}),p(`hide_themes`,{title:`Hide Themes`,subtitle:`Default value for contents`,value:P(),options:e.themeAndContent,minItemCount:0,maxItemCount:e.themeAndContent.length,onValueChange:Application.Selector(this,`handleHideThemesStatusChange`)}),p(`hide_more`,{title:`Hide More`,subtitle:`Default value for contents`,value:F(),options:e.more,minItemCount:0,maxItemCount:e.more.length,onValueChange:Application.Selector(this,`handleHideMoreStatusChange`)})]),s({id:`section_settings`,header:`Sections Settings`,footer:`This settings apply on sections only`},[p(`section_type`,{title:`Content Type`,value:j(),options:E,minItemCount:1,maxItemCount:E.length,onValueChange:Application.Selector(this,`handleSectionTypeStatusChange`)}),f(`range_type`,{title:`Use Time range in sections`,subtitle:`Day/Week/Month ranges may return fewer items and do not contain some information`,value:R(),onValueChange:Application.Selector(this,`handleRangeTypeStatusChange`)}),f(`multipage_section`,{title:`Use Multipage on Latest Update`,subtitle:`Using multipage might have different results from the website homepage`,value:z(),onValueChange:Application.Selector(this,`handleMultipageStatusChange`)}),h(`sectionOrder`,{title:`Sections Order`,subtitle:`Sections Order`,form:new Se})]),s({id:`global_settings`,header:`Global Settings`},[p(`toggle_adult`,{title:`Show Adult results`,value:L(),options:D,minItemCount:1,maxItemCount:1,onValueChange:Application.Selector(this,`handleShowAdultStatusChange`)})]),s({id:`chapter_settings`,footer:`Chapters Settings`},[f(`en_only`,{title:`Show English only chapters`,value:I(),subtitle:"Fetch only English chapters. Will need a `Reload Chapters` to update the existing one",onValueChange:Application.Selector(this,`handleEnglishOnlyStatusChange`)})]),s({id:`reset_settings`,footer:`Filters`},[ne(`reload_genres`,{title:`Refresh genres filters`,onSelect:Application.Selector(this,`resetFiltersDialog`)})])]}async updateValue(e,t){Application.setState(e,t),this.reloadForm()}async handleShowAdultStatusChange(e){await this.updateValue(e,`show_adult_content`)}async handleEnglishOnlyStatusChange(e){await this.updateValue(e,`english_only_content`)}async handleTypeStatusChange(e){let t=A().includes(``),n=e.includes(``);t&&e.length>1?e=e.filter(e=>e!==``):!t&&n&&(e=[``]),await this.updateValue(e,`content_type`)}async handleRangeTypeStatusChange(e){Application.invalidateDiscoverSections(),await this.updateValue(e,`range_type`)}async handleMultipageStatusChange(e){Application.invalidateDiscoverSections(),await this.updateValue(e,`multipage_section`)}async handleSectionTypeStatusChange(e){let t=j().includes(``),n=e.includes(``);t&&e.length>1?e=e.filter(e=>e!==``):!t&&n&&(e=[``]),await this.updateValue(e,`section_content_type`)}async handleHideGenresStatusChange(e){await this.updateValue(e,`hidden_genres`)}async handleHideDemographicStatusChange(e){await this.updateValue(e,`hidden_demographic`)}async handleHideThemesStatusChange(e){await this.updateValue(e,`hidden_themes`)}async handleHideMoreStatusChange(e){await this.updateValue(e,`hidden_more`)}async resetFiltersDialog(){throw new ae(Application.Selector(this,`resetFilters`),`Do you want to refresh genres filters?`)}async resetFilters(){await W(!0,this.api)}};function G(){return Application.getState(`deleted_sections`)??[]}async function K(e){Application.invalidateDiscoverSections(),Application.setState(e,`sections`)}async function q(e){Application.setState(e,`deleted_sections`)}function J(){return Application.getState(`sections`)??O}var Se=class extends a{getSections(){let e=Application.Selector(this,`rowDidReorder`),t=Application.Selector(this,`rowDidDelete`);return[{...c(`edit`,{id:`edit`,header:`Section order`,footer:`Long press to reorder, swipe to hide`,items:J().map(e=>this.itemRow(e))}),allowDeletion:!0,allowReorder:!0,onReorder:e,onDeletion:t},...G().length>0?[new Ce().getDeletedSections()]:[],s(`status`,[ne(`reset`,{title:`Reset all Sections`,isHidden:G().length==0,onSelect:Application.Selector(this,`resetFiltersDialog`)})])]}async resetFiltersDialog(){throw new ae(Application.Selector(this,`handleLimitStatusChangeReset`),`Do you want to restore all deleted sections?`)}async handleLimitStatusChangeReset(){await K(O),await q([]),this.reloadForm()}itemRow(e){return d(e.id,{title:e.title})}async rowDidDelete(e){let t=G(),n=J();n.splice(e,1).forEach(e=>{t.push(e)}),await q(t),await K(n),this.reloadForm()}async rowDidReorder(e,t){let n=J(),[r]=n.splice(e,1);r&&n.splice(t,0,r),await K(n),this.reloadForm(),Application.invalidateDiscoverSections()}},Ce=class{constructor(){i(this,`onSelectLabelProxy`,new Proxy(this,{has(e,t){return typeof t==`string`&&t.startsWith(`onSelect_`)?!0:Object.hasOwn(e,t)},get(e,t){if(typeof t==`string`&&t.startsWith(`onSelect_`)){let n=t.slice(9);return async()=>{await e.onSelect(n)}}return e[t]}})),i(this,`deletedForms`,G())}getDeletedSections(){return s({id:`addSectionSelect`,footer:`Tap to restore`},this.deletedForms.flatMap(e=>d(e.id,{title:e.title,onSelect:Application.Selector(this.onSelectLabelProxy,`onSelect_`+e.id)})))}async onSelect(e){let t=J(),n=this.deletedForms.filter(t=>t.id===e);t.push(n[0]),await K(t),await q(this.deletedForms.filter(t=>t.id!==e)),this.deletedForms=G()}},we=class extends _{async interceptRequest(e){return{...e,headers:{"user-agent":await Application.getDefaultUserAgent(),...e.headers}}}async interceptResponse(e,t,n){if(t.headers?.[`cf-mitigated`]===`challenge`)throw new ce({url:`${T}/`,method:e.method??`GET`,headers:{"user-agent":await Application.getDefaultUserAgent()}});return n}},Te=class{async fetchApi(e){let[,t]=await Application.scheduleRequest(e);try{return JSON.parse(Application.arrayBufferToUTF8String(t))}catch{throw Error(`Failed to fetch data from ${e.url} (Invalid response)`)}}async buildApiRequest(e){let t=new le(T);if((Array.isArray(e.path)?e.path:[e.path]).forEach(e=>t.addPathComponent(e)),e.query)for(let[n,r]of Object.entries(e.query))t.setQueryItem(n,r);let n={url:t.toString(),method:`GET`};return e.headers!==void 0&&(n.headers=e.headers),this.fetchApi(n)}buildTagSection(e,t){return{items:e.filter(e=>!t.includes(e.id)).map(e=>({type:`genresCarouselItem`,searchQuery:{title:``,metadata:V(e.id)},name:e.title,contentRating:C.EVERYONE}))}}async getRangeSection(e){return{items:pe.map(t=>({type:`genresCarouselItem`,searchQuery:{title:``,metadata:{range:t.id,sectionName:e}},name:t.title,contentRating:C.EVERYONE}))}}async getGenreSection(){return this.buildTagSection(H().genre,M())}async getDemographicSection(){return this.buildTagSection(H().demographic,N())}async getThemesSection(){return this.buildTagSection(H().themeAndContent,P())}async getSection(e,t){return e===`most_viewed`?this.getMostViewed(t):e===`latest_updates`?this.getLatestUpdateSection(t):this.getAllTimesSection(e,t)}async getAllTimesSection(e,t){let n={path:[`api`,`manga`,`section`,e.replaceAll(`_`,`-`)],query:{origin:j().join(`,`).replaceAll(`&`,`,`),adult:L(),page:t.toString()}};return this.buildApiRequest(n)}getMostViewed(e){let t={path:[`api`,`search`],query:{page:e.toString(),origin:j().join(`,`).replaceAll(`&`,`,`),sortBy:`views`,sortOrder:`desc`,adult:L()}};return this.buildApiRequest(t)}async getLatestUpdateSection(e){if(z()){let t={path:[`api`,`manga`,`section`,`latest-updates`],query:{origin:j().join(`,`).replaceAll(`&`,`,`),adult:L(),page:e.toString()}};return this.buildApiRequest(t)}{let e={path:[`api`,`manga`,`section`],query:{id:`latest_updates`,origin:j().join(`,`).replaceAll(`&`,`,`),adult:L(),limit:`100`}};return this.buildApiRequest(e)}}async getMangaData(e){let t={path:[`api`,`manga`,e]};return this.buildApiRequest(t)}async getChapterList(e){let t={path:[`api`,`manga`,e,`chapters`,`list`],query:I()?{lang:`en`}:{}};return this.buildApiRequest(t)}async getVolumes(e){let t={path:[`api`,`manga`,e,`volumes`]};return this.buildApiRequest(t)}async getSearch(e,t,n){let r={...e.metadata?.genres,...e.metadata?.demographic,...e.metadata?.more,...e.metadata?.themes},i=Object.entries(r).map(([e,t])=>{let n=k(e);return t===`excluded`?`-${n}`:n}),[a,o]=n.id.split(`$`),s={path:[`api`,`search`],query:{...e.title&&{search:e.title},page:t.toString(),...i.length&&{genres:i.join(`,`)},...e.metadata?.origin?.length&&{origin:(e.metadata?.origin??[]).join(`,`).replaceAll(`&`,`,`)},...e.metadata?.status?.length&&{status:(e.metadata?.status??[]).join(`,`)},...e.metadata?.author?.length&&{author:(e.metadata?.author??[]).join(`,`)},...e.metadata?.artist?.length&&{artist:(e.metadata?.artist??[]).join(`,`)},sortBy:a,sortOrder:o||``,adult:e.metadata?.adult??L()}};return this.buildApiRequest(s)}async getChapterPages(e,t,n){let r={path:[`api`,n===`trusted`?`uploads`:`chapters`,e,`images`],headers:{referer:`${T}/manga/${t}`}};return this.buildApiRequest(r)}async getFilters(){return this.buildApiRequest({path:[`api`,`manga`,`genres`]})}async getAuthor(e){let t={path:[`api`,`manga`,`people-suggest`],query:{kind:`author`,q:e}};return this.buildApiRequest(t)}async getArtist(e){let t={path:[`api`,`manga`,`people-suggest`],query:{kind:`artist`,q:e}};return this.buildApiRequest(t)}async MangaSectionRequestToSearchResponse(e,t){let n={path:[`api`,`manga`,`section`],query:{id:e,origin:j().join(`,`).replaceAll(`&`,`,`),adult:L(),range:t,limit:`100`}};return{items:(await this.buildApiRequest(n)).items.map(e=>({mangaId:e.id.toString(),title:e.title,subtitle:`Ch. ${e.chapter_count} | ★ ${e.avg_rating}`,imageUrl:`${T}${e.photo}`,contentRating:e.is_blurworthy?C.ADULT:C.EVERYONE})),metadata:void 0}}};function Y(e){if(e==null)return[];if(Array.isArray(e))return e;try{return JSON.parse(e)}catch{return[e]}}function X(e){return Y(e.authors).join(`,`)}function Z(e){return e?new Date(e.split(`.`)[0].split(`+`)[0].replace(` `,`T`)):new Date}function Q(e){if(e.is_adult)return C.ADULT;if(e.is_blurworthy)return C.MATURE;switch(e.content_rating){case`safe`:return C.EVERYONE;case`suggestive`:return C.EVERYONE;case`erotica`:return C.MATURE;case`pornographic`:return C.ADULT;default:return C.EVERYONE}}let Ee=(e,t)=>{let n=e.manga;return{mangaId:n.id.toString(),mangaInfo:{thumbnailUrl:`${T}${n.photo}`,synopsis:n.description,primaryTitle:n.title,secondaryTitles:Y(n.alt_titles),contentRating:Q(n),status:n.status,artist:Y(n.artists).join(`,`),author:X(n),bannerUrl:`${T}${n.banner_image}`,artworkUrls:[`${T}${n.banner_image}`,...t],rating:n.avg_rating?n.avg_rating/10:0,tagGroups:[{id:`genres`,title:`Genres`,tags:n.genres.map(e=>B(e))}],shareUrl:`${T}/manga/${n.id}`}}},De=(e,t)=>e.map(e=>({chapterId:e.id.toString(),sourceManga:t,langCode:e.language,chapNum:e.chapter_number??0,title:e.chapter_title,version:e.group_name,volume:e.volume_number??0,sortingIndex:e.chapter_number??0,publishDate:Z(e.date_added),creationDate:Z(e.date_added),additionalInfo:{upload:e.uploader_upload_status?.toString()??``}})),Oe=(e,t)=>{let n=[],r=t?.page??1;return e.manga_list.forEach(e=>{n.push({mangaId:e.id.toString(),title:e.title,subtitle:X(e),imageUrl:`${T}${e.photo}`,contentRating:Q(e)})}),{items:n,metadata:e.pagination.total_pages>r?{page:r+1}:void 0}},ke=(e,t)=>{if(!e?.images||!Array.isArray(e.images))throw Error(`pages.images doesn't exist`);return{id:t.chapterId,mangaId:t.sourceManga.mangaId,pages:e.images.map(e=>`${T}${e.url}`)}},Ae=(e,t,n)=>{let r=[],i=`manga_list`in e;return i&&(r=e.manga_list),`items`in e&&(r=e.items),{items:r.map(e=>{let t={mangaId:e.id.toString(),title:e.title,imageUrl:`${T}${e.photo}`,contentRating:i?Q(e):e.is_blurworthy?C.ADULT:C.EVERYONE},r={symbol:`star.fill`,text:`${e.avg_rating}`},a={symbol:`book.fill`,text:`${e.status}`},o;switch(e.avg_rating!=null&&e.status?o=[r,a]:e.avg_rating==null?e.status&&(o=[a]):o=[r],n){case`chapterUpdatesCarouselItem`:return{...t,type:n,subtitle:i?X(e):`Ch. ${e.latest_chapter_number} | ★ ${e.avg_rating}`,chapterId:e.latest_chapter_number??``,publishDate:Z(e.last_chapter_date)};case`featuredCarouselItem`:return{...t,type:n,supertitle:i?X(e):`Ch. ${e.latest_chapter_number} | ★ ${e.avg_rating}`,summary:i?e.description:``,infoItems:o};case`prominentCarouselItem`:return{...t,type:n,subtitle:i?X(e):`Ch. ${e.latest_chapter_number} | ★ ${e.avg_rating}`};default:return{...t,type:`simpleCarouselItem`,subtitle:i?X(e):`Ch. ${e.latest_chapter_number} | ★ ${e.avg_rating}`}}}),metadata:i&&e.pagination.total_pages>t?{page:t+1}:void 0}};var je=class{constructor(){i(this,`api`,new Te),i(this,`globalRateLimiter`,new se(`rateLimiter`,{numberOfRequests:5,bufferInterval:1,ignoreImages:!0})),i(this,`mainInterceptor`,new we(`main`)),i(this,`cookieStorageInterceptor`,new de({storage:`stateManager`}))}async initialise(){this.globalRateLimiter.registerInterceptor(),this.cookieStorageInterceptor.registerInterceptor(),this.mainInterceptor.registerInterceptor()}async getSettingsForm(){return await U(this.api),new xe(this.api)}async getMangaDetails(e){let t=await this.api.getMangaData(e),n=(await this.api.getVolumes(e)).map(e=>`${T}${e.cover_url}`);return Ee(t,n)}async getChapters(e){let t=await this.api.getChapterList(e.mangaId);return De(t,e)}async getChapterDetails(e){let t=await this.api.getChapterPages(e.chapterId,e.sourceManga.mangaId,e.additionalInfo?.upload);return ke(t,e)}async getDiscoverSections(){let e={most_viewed:{id:`most_viewed`,title:`Most Viewed`,type:w.featured},latest_updates:{id:`latest_updates`,title:`Latest updates`,type:w.chapterUpdates},most_tracked:{id:`most_tracked`,title:`Most Tracked Comics`,type:R()?w.genres:w.simpleCarousel},top_rated:{id:`top_rated`,title:`Top Rated`,type:R()?w.genres:w.prominentCarousel},recently_added:{id:`recently_added`,title:`Recently Added`,type:R()?w.genres:w.simpleCarousel},genres:{id:`genres`,title:`Genres`,type:w.genres},themes:{id:`themes`,title:`Themes`,type:w.genres},demographics:{id:`demographics`,title:`Demographics`,type:w.genres}};return he().map(t=>e[t.id]).filter(Boolean)}async processTitlesForUpdates(e,t){let n=e.getQueuedItems();n.length>0&&await this.api.getMangaData(n[0].mangaId)}async getDiscoverSectionItems(e,t){if(await U(this.api),e.id===`genres`)return this.api.getGenreSection();if(e.id===`demographics`)return this.api.getDemographicSection();if(e.id===`themes`)return this.api.getThemesSection();if(R()){if(e.id===`most_tracked`)return this.api.getRangeSection(`most_tracked`);if(e.id===`top_rated`)return this.api.getRangeSection(`top_rated`);if(e.id===`recently_added`)return this.api.getRangeSection(`recently_added`)}let n=t?.page??1,r=await this.api.getSection(e.id,n);return Ae(r,n,{most_viewed:`featuredCarouselItem`,latest_updates:`chapterUpdatesCarouselItem`,most_tracked:`simpleCarouselItem`,top_rated:`prominentCarouselItem`,recently_added:`simpleCarouselItem`}[e.id]??`simpleCarouselItem`)}async cloudflareBypassCompleted(e,t,n){for(let e of t)e.name==`cf_clearance`&&this.cookieStorageInterceptor.setCookie(e)}async getAdvancedSearchForm(e){return await U(this.api),new ve(e)}async getSearchResults(e,t,n){let r=n;r.id=r.id.split(e.title.length>0?`#title`:`#empty`)[0];let i=t?.page??1;if(e.metadata===void 0&&(e.metadata=V()),e.metadata.range&&e.metadata.sectionName)return this.api.MangaSectionRequestToSearchResponse(e.metadata.sectionName,e.metadata.range);let a=await this.api.getSearch(e,i,r);return Oe(a,t)}async getSortingOptions(e){let t=e.title.length>0?`#title`:``,n=[{id:`latest$desc#empty`,label:`Default`},{id:`latest$asc`,label:`Latest ↑`},{id:`latest$desc`,label:`Latest ↓`},{id:`alphabetical$asc`,label:`A-Z`},{id:`alphabetical$desc`,label:`Z-A`},{id:`chapters$asc`,label:`Chapters ↑`},{id:`chapters$desc`,label:`Chapters ↓`},{id:`views$asc`,label:`Most Viewed ↑`},{id:`views$desc`,label:`Most Viewed ↓`},{id:`tracked$asc`,label:`Most tracked ↑`},{id:`tracked$desc`,label:`Most tracked ↓`},{id:`rating$asc`,label:`Top Rated ↑`},{id:`rating$desc`,label:`Top Rated ↓`}];return e.title.length>0&&(n.unshift({id:`relevance$desc`+t,label:`Relevance`}),n=n.filter(e=>e.id!==`latest$desc#empty`)),n}};let $=new je;return e.MangaDot=$,e.MangaDotExtension=je,e})({});
-;return source;
-};
-var exported = {};
-exported["MangaDotInfo"] = {"version":"1.0.0-alpha.602","name":"MangaDot","icon":"icon.png","author":"Catta1997","authorWebsite":"https://github.com/Catta1997","description":"Extension that pulls content from MangaDot.net","contentRating":"EVERYONE","websiteBaseURL":"https://mangadot.net","sourceTags":[{"text":"0.9 port","type":"info"}],"intents":53,"language":"en"};
-exported["MangaDot"] = __pbV9.makeSourceClass(__load, {"id":"MangaDot","name":"MangaDot","website":"https://mangadot.net","contentRating":"SAFE","discover":true,"settings":true,"cloudflare":true,"filters":false});
-return exported;
-})(__pbV9.Application, __pbV9.globals.TextDecoder, __pbV9.globals.TextEncoder, __pbV9.globals.crypto, __pbV9.globals.atob, __pbV9.globals.btoa, __pbV9.globals.setTimeout, __pbV9.globals.clearTimeout, __pbV9.globals.console);
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Exports/DUIBinding.js
+  var require_DUIBinding = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Exports/DUIBinding.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Exports/DUIForm.js
+  var require_DUIForm = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Exports/DUIForm.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Exports/DUIFormRow.js
+  var require_DUIFormRow = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Exports/DUIFormRow.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Exports/DUISection.js
+  var require_DUISection = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Exports/DUISection.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUIButton.js
+  var require_DUIButton = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUIButton.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUIHeader.js
+  var require_DUIHeader = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUIHeader.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUIInputField.js
+  var require_DUIInputField = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUIInputField.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUILabel.js
+  var require_DUILabel = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUILabel.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUILink.js
+  var require_DUILink = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUILink.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUIMultilineLabel.js
+  var require_DUIMultilineLabel = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUIMultilineLabel.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUINavigationButton.js
+  var require_DUINavigationButton = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUINavigationButton.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUIOAuthButton.js
+  var require_DUIOAuthButton = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUIOAuthButton.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUISecureInputField.js
+  var require_DUISecureInputField = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUISecureInputField.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUISelect.js
+  var require_DUISelect = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUISelect.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUIStepper.js
+  var require_DUIStepper = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUIStepper.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUISwitch.js
+  var require_DUISwitch = __commonJS({
+    "node_modules/@paperback/types/lib/generated/DynamicUI/Rows/Exports/DUISwitch.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/ChapterDetails.js
+  var require_ChapterDetails = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/ChapterDetails.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/Chapter.js
+  var require_Chapter = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/Chapter.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/Cookie.js
+  var require_Cookie = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/Cookie.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/HomeSection.js
+  var require_HomeSection = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/HomeSection.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/IconText.js
+  var require_IconText = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/IconText.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/MangaInfo.js
+  var require_MangaInfo = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/MangaInfo.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/MangaProgress.js
+  var require_MangaProgress = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/MangaProgress.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/PartialSourceManga.js
+  var require_PartialSourceManga = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/PartialSourceManga.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/MangaUpdates.js
+  var require_MangaUpdates = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/MangaUpdates.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/PBCanvas.js
+  var require_PBCanvas = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/PBCanvas.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/PBImage.js
+  var require_PBImage = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/PBImage.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/PagedResults.js
+  var require_PagedResults = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/PagedResults.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/RawData.js
+  var require_RawData = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/RawData.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/Request.js
+  var require_Request = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/Request.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/SourceInterceptor.js
+  var require_SourceInterceptor = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/SourceInterceptor.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/RequestManager.js
+  var require_RequestManager = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/RequestManager.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/Response.js
+  var require_Response = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/Response.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/SearchField.js
+  var require_SearchField = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/SearchField.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/SearchRequest.js
+  var require_SearchRequest = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/SearchRequest.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/SourceCookieStore.js
+  var require_SourceCookieStore = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/SourceCookieStore.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/SourceManga.js
+  var require_SourceManga = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/SourceManga.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/SecureStateManager.js
+  var require_SecureStateManager = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/SecureStateManager.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/SourceStateManager.js
+  var require_SourceStateManager = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/SourceStateManager.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/Tag.js
+  var require_Tag = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/Tag.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/TagSection.js
+  var require_TagSection = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/TagSection.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/TrackedMangaChapterReadAction.js
+  var require_TrackedMangaChapterReadAction = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/TrackedMangaChapterReadAction.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/Exports/TrackerActionQueue.js
+  var require_TrackerActionQueue = __commonJS({
+    "node_modules/@paperback/types/lib/generated/Exports/TrackerActionQueue.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/generated/_exports.js
+  var require_exports = __commonJS({
+    "node_modules/@paperback/types/lib/generated/_exports.js"(exports) {
+      "use strict";
+      var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+        if (k2 === void 0) k2 = k;
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+          desc = { enumerable: true, get: function() {
+            return m[k];
+          } };
+        }
+        Object.defineProperty(o, k2, desc);
+      } : function(o, m, k, k2) {
+        if (k2 === void 0) k2 = k;
+        o[k2] = m[k];
+      });
+      var __exportStar = exports && exports.__exportStar || function(m, exports2) {
+        for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p)) __createBinding(exports2, m, p);
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      __exportStar(require_DUIBinding(), exports);
+      __exportStar(require_DUIForm(), exports);
+      __exportStar(require_DUIFormRow(), exports);
+      __exportStar(require_DUISection(), exports);
+      __exportStar(require_DUIButton(), exports);
+      __exportStar(require_DUIHeader(), exports);
+      __exportStar(require_DUIInputField(), exports);
+      __exportStar(require_DUILabel(), exports);
+      __exportStar(require_DUILink(), exports);
+      __exportStar(require_DUIMultilineLabel(), exports);
+      __exportStar(require_DUINavigationButton(), exports);
+      __exportStar(require_DUIOAuthButton(), exports);
+      __exportStar(require_DUISecureInputField(), exports);
+      __exportStar(require_DUISelect(), exports);
+      __exportStar(require_DUIStepper(), exports);
+      __exportStar(require_DUISwitch(), exports);
+      __exportStar(require_ChapterDetails(), exports);
+      __exportStar(require_Chapter(), exports);
+      __exportStar(require_Cookie(), exports);
+      __exportStar(require_HomeSection(), exports);
+      __exportStar(require_IconText(), exports);
+      __exportStar(require_MangaInfo(), exports);
+      __exportStar(require_MangaProgress(), exports);
+      __exportStar(require_PartialSourceManga(), exports);
+      __exportStar(require_MangaUpdates(), exports);
+      __exportStar(require_PBCanvas(), exports);
+      __exportStar(require_PBImage(), exports);
+      __exportStar(require_PagedResults(), exports);
+      __exportStar(require_RawData(), exports);
+      __exportStar(require_Request(), exports);
+      __exportStar(require_SourceInterceptor(), exports);
+      __exportStar(require_RequestManager(), exports);
+      __exportStar(require_Response(), exports);
+      __exportStar(require_SearchField(), exports);
+      __exportStar(require_SearchRequest(), exports);
+      __exportStar(require_SourceCookieStore(), exports);
+      __exportStar(require_SourceManga(), exports);
+      __exportStar(require_SecureStateManager(), exports);
+      __exportStar(require_SourceStateManager(), exports);
+      __exportStar(require_Tag(), exports);
+      __exportStar(require_TagSection(), exports);
+      __exportStar(require_TrackedMangaChapterReadAction(), exports);
+      __exportStar(require_TrackerActionQueue(), exports);
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/Source.js
+  var require_Source = __commonJS({
+    "node_modules/@paperback/types/lib/base/Source.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.urlEncodeObject = exports.convertTime = exports.Source = void 0;
+      var Source = class {
+        constructor(cheerio) {
+          this.cheerio = cheerio;
+        }
+        /**
+         * @deprecated use {@link Source.getSearchResults getSearchResults} instead
+         */
+        searchRequest(query, metadata) {
+          return this.getSearchResults(query, metadata);
+        }
+        /**
+         * @deprecated use {@link Source.getSearchTags} instead
+         */
+        async getTags() {
+          return this.getSearchTags?.();
+        }
+      };
+      exports.Source = Source;
+      function convertTime(timeAgo) {
+        let time;
+        let trimmed = Number((/\d*/.exec(timeAgo) ?? [])[0]);
+        trimmed = trimmed == 0 && timeAgo.includes("a") ? 1 : trimmed;
+        if (timeAgo.includes("minutes")) {
+          time = new Date(Date.now() - trimmed * 6e4);
+        } else if (timeAgo.includes("hours")) {
+          time = new Date(Date.now() - trimmed * 36e5);
+        } else if (timeAgo.includes("days")) {
+          time = new Date(Date.now() - trimmed * 864e5);
+        } else if (timeAgo.includes("year") || timeAgo.includes("years")) {
+          time = new Date(Date.now() - trimmed * 31556952e3);
+        } else {
+          time = new Date(Date.now());
+        }
+        return time;
+      }
+      exports.convertTime = convertTime;
+      function urlEncodeObject(obj) {
+        let ret = {};
+        for (const entry of Object.entries(obj)) {
+          ret[encodeURIComponent(entry[0])] = encodeURIComponent(entry[1]);
+        }
+        return ret;
+      }
+      exports.urlEncodeObject = urlEncodeObject;
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/ByteArray.js
+  var require_ByteArray = __commonJS({
+    "node_modules/@paperback/types/lib/base/ByteArray.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/Badge.js
+  var require_Badge = __commonJS({
+    "node_modules/@paperback/types/lib/base/Badge.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.BadgeColor = void 0;
+      var BadgeColor2;
+      (function(BadgeColor3) {
+        BadgeColor3["BLUE"] = "default";
+        BadgeColor3["GREEN"] = "success";
+        BadgeColor3["GREY"] = "info";
+        BadgeColor3["YELLOW"] = "warning";
+        BadgeColor3["RED"] = "danger";
+      })(BadgeColor2 = exports.BadgeColor || (exports.BadgeColor = {}));
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/interfaces/ChapterProviding.js
+  var require_ChapterProviding = __commonJS({
+    "node_modules/@paperback/types/lib/base/interfaces/ChapterProviding.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/interfaces/CloudflareBypassRequestProviding.js
+  var require_CloudflareBypassRequestProviding = __commonJS({
+    "node_modules/@paperback/types/lib/base/interfaces/CloudflareBypassRequestProviding.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/interfaces/HomePageSectionsProviding.js
+  var require_HomePageSectionsProviding = __commonJS({
+    "node_modules/@paperback/types/lib/base/interfaces/HomePageSectionsProviding.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/interfaces/MangaProgressProviding.js
+  var require_MangaProgressProviding = __commonJS({
+    "node_modules/@paperback/types/lib/base/interfaces/MangaProgressProviding.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/interfaces/MangaProviding.js
+  var require_MangaProviding = __commonJS({
+    "node_modules/@paperback/types/lib/base/interfaces/MangaProviding.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/interfaces/RequestManagerProviding.js
+  var require_RequestManagerProviding = __commonJS({
+    "node_modules/@paperback/types/lib/base/interfaces/RequestManagerProviding.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/interfaces/SearchResultsProviding.js
+  var require_SearchResultsProviding = __commonJS({
+    "node_modules/@paperback/types/lib/base/interfaces/SearchResultsProviding.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/interfaces/index.js
+  var require_interfaces = __commonJS({
+    "node_modules/@paperback/types/lib/base/interfaces/index.js"(exports) {
+      "use strict";
+      var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+        if (k2 === void 0) k2 = k;
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+          desc = { enumerable: true, get: function() {
+            return m[k];
+          } };
+        }
+        Object.defineProperty(o, k2, desc);
+      } : function(o, m, k, k2) {
+        if (k2 === void 0) k2 = k;
+        o[k2] = m[k];
+      });
+      var __exportStar = exports && exports.__exportStar || function(m, exports2) {
+        for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p)) __createBinding(exports2, m, p);
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      __exportStar(require_ChapterProviding(), exports);
+      __exportStar(require_CloudflareBypassRequestProviding(), exports);
+      __exportStar(require_HomePageSectionsProviding(), exports);
+      __exportStar(require_MangaProgressProviding(), exports);
+      __exportStar(require_MangaProviding(), exports);
+      __exportStar(require_RequestManagerProviding(), exports);
+      __exportStar(require_SearchResultsProviding(), exports);
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/SourceInfo.js
+  var require_SourceInfo = __commonJS({
+    "node_modules/@paperback/types/lib/base/SourceInfo.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.ContentRating = exports.SourceIntents = void 0;
+      var SourceIntents2;
+      (function(SourceIntents3) {
+        SourceIntents3[SourceIntents3["MANGA_CHAPTERS"] = 1] = "MANGA_CHAPTERS";
+        SourceIntents3[SourceIntents3["MANGA_TRACKING"] = 2] = "MANGA_TRACKING";
+        SourceIntents3[SourceIntents3["HOMEPAGE_SECTIONS"] = 4] = "HOMEPAGE_SECTIONS";
+        SourceIntents3[SourceIntents3["COLLECTION_MANAGEMENT"] = 8] = "COLLECTION_MANAGEMENT";
+        SourceIntents3[SourceIntents3["CLOUDFLARE_BYPASS_REQUIRED"] = 16] = "CLOUDFLARE_BYPASS_REQUIRED";
+        SourceIntents3[SourceIntents3["SETTINGS_UI"] = 32] = "SETTINGS_UI";
+      })(SourceIntents2 = exports.SourceIntents || (exports.SourceIntents = {}));
+      var ContentRating2;
+      (function(ContentRating3) {
+        ContentRating3["EVERYONE"] = "EVERYONE";
+        ContentRating3["MATURE"] = "MATURE";
+        ContentRating3["ADULT"] = "ADULT";
+      })(ContentRating2 = exports.ContentRating || (exports.ContentRating = {}));
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/HomeSectionType.js
+  var require_HomeSectionType = __commonJS({
+    "node_modules/@paperback/types/lib/base/HomeSectionType.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.HomeSectionType = void 0;
+      var HomeSectionType2;
+      (function(HomeSectionType3) {
+        HomeSectionType3["singleRowNormal"] = "singleRowNormal";
+        HomeSectionType3["singleRowLarge"] = "singleRowLarge";
+        HomeSectionType3["doubleRow"] = "doubleRow";
+        HomeSectionType3["featured"] = "featured";
+      })(HomeSectionType2 = exports.HomeSectionType || (exports.HomeSectionType = {}));
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/PaperbackExtensionBase.js
+  var require_PaperbackExtensionBase = __commonJS({
+    "node_modules/@paperback/types/lib/base/PaperbackExtensionBase.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/base/index.js
+  var require_base = __commonJS({
+    "node_modules/@paperback/types/lib/base/index.js"(exports) {
+      "use strict";
+      var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+        if (k2 === void 0) k2 = k;
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+          desc = { enumerable: true, get: function() {
+            return m[k];
+          } };
+        }
+        Object.defineProperty(o, k2, desc);
+      } : function(o, m, k, k2) {
+        if (k2 === void 0) k2 = k;
+        o[k2] = m[k];
+      });
+      var __exportStar = exports && exports.__exportStar || function(m, exports2) {
+        for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p)) __createBinding(exports2, m, p);
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      __exportStar(require_Source(), exports);
+      __exportStar(require_ByteArray(), exports);
+      __exportStar(require_Badge(), exports);
+      __exportStar(require_interfaces(), exports);
+      __exportStar(require_SourceInfo(), exports);
+      __exportStar(require_HomeSectionType(), exports);
+      __exportStar(require_PaperbackExtensionBase(), exports);
+    }
+  });
+
+  // node_modules/@paperback/types/lib/compat/DyamicUI.js
+  var require_DyamicUI = __commonJS({
+    "node_modules/@paperback/types/lib/compat/DyamicUI.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+    }
+  });
+
+  // node_modules/@paperback/types/lib/index.js
+  var require_lib = __commonJS({
+    "node_modules/@paperback/types/lib/index.js"(exports) {
+      "use strict";
+      var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+        if (k2 === void 0) k2 = k;
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+          desc = { enumerable: true, get: function() {
+            return m[k];
+          } };
+        }
+        Object.defineProperty(o, k2, desc);
+      } : function(o, m, k, k2) {
+        if (k2 === void 0) k2 = k;
+        o[k2] = m[k];
+      });
+      var __exportStar = exports && exports.__exportStar || function(m, exports2) {
+        for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p)) __createBinding(exports2, m, p);
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      __exportStar(require_exports(), exports);
+      __exportStar(require_base(), exports);
+      __exportStar(require_DyamicUI(), exports);
+    }
+  });
+
+  // src/MangaDot/MangaDot.ts
+  var MangaDot_exports = {};
+  __export(MangaDot_exports, {
+    MangaDot: () => MangaDot,
+    MangaDotInfo: () => MangaDotInfo
+  });
+
+  // common/UrlBuilder.ts
+  var UrlBuilder = class {
+    constructor(base) {
+      this.pathComponents = [];
+      this.queryItems = [];
+      this.base = base.replace(/\/+$/, "");
+    }
+    addPathComponent(component) {
+      const value = String(component).replace(/^\/+|\/+$/g, "");
+      if (value.length > 0) {
+        this.pathComponents.push(value);
+      }
+      return this;
+    }
+    /**
+     * Sets a query item. An array value is expanded into one item per entry;
+     * `undefined` and empty strings are dropped so callers can pass optional
+     * values straight through.
+     */
+    setQueryItem(key, value) {
+      if (value === void 0) {
+        return this;
+      }
+      const values = Array.isArray(value) ? value : [value];
+      for (const entry of values) {
+        const asString = String(entry);
+        if (asString.length === 0) {
+          continue;
+        }
+        this.queryItems.push([key, asString]);
+      }
+      return this;
+    }
+    /**
+     * Replaces the whole path at once.
+     *
+     * Useful when a site hands back a path in an attribute and it just needs
+     * hanging off the domain.
+     */
+    setPath(path) {
+      this.pathComponents = path.replace(/^\/+|\/+$/g, "").split("/").filter((component) => component.length > 0);
+      return this;
+    }
+    /** Removes every query item previously set under `key`. */
+    removeQueryItem(key) {
+      this.queryItems = this.queryItems.filter(([existing]) => existing !== key);
+      return this;
+    }
+    setFragment(fragment) {
+      this.fragment = fragment;
+      return this;
+    }
+    build() {
+      let url = this.base;
+      if (this.pathComponents.length > 0) {
+        url += "/" + this.pathComponents.join("/");
+      }
+      if (this.queryItems.length > 0) {
+        const query = this.queryItems.map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join("&");
+        url += (url.includes("?") ? "&" : "?") + query;
+      }
+      if (this.fragment !== void 0 && this.fragment.length > 0) {
+        url += "#" + this.fragment;
+      }
+      return url;
+    }
+    toString() {
+      return this.build();
+    }
+  };
+  function URL(base) {
+    return new UrlBuilder(base);
+  }
+  function hostOf(url) {
+    return url.match(/^[a-z][a-z0-9+.-]*:\/\/([^/:?#]+)/i)?.[1] ?? "";
+  }
+
+  // common/Cloudflare.ts
+  var CloudflareError = class extends Error {
+    constructor(request) {
+      super(
+        `CLOUDFLARE BYPASS ERROR:
+Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
+      );
+      this.name = "CloudflareError";
+      this.request = request;
+    }
+  };
+  var CHALLENGE_HEADER = "cf-mitigated";
+  var CHALLENGE_BODY = /Just a moment|cf-chl-|_cf_chl_opt|cf_chl_prog|g-recaptcha|challenge-platform/i;
+  function isCloudflareChallenge(status, headers, body) {
+    const mitigated = headerValue(headers, CHALLENGE_HEADER);
+    if (mitigated?.toLowerCase() === "challenge") {
+      return true;
+    }
+    if (status !== 403 && status !== 503) {
+      return false;
+    }
+    const server = headerValue(headers, "server")?.toLowerCase() ?? "";
+    return CHALLENGE_BODY.test(body) || server.includes("cloudflare");
+  }
+  function headerValue(headers, name) {
+    if (headers === void 0) {
+      return void 0;
+    }
+    const wanted = name.toLowerCase();
+    for (const key of Object.keys(headers)) {
+      if (key.toLowerCase() === wanted) {
+        const value = headers[key];
+        return typeof value === "string" ? value : void 0;
+      }
+    }
+    return void 0;
+  }
+
+  // common/Dates.ts
+  var UNIT_MS = {
+    second: 1e3,
+    minute: 60 * 1e3,
+    hour: 60 * 60 * 1e3,
+    day: 24 * 60 * 60 * 1e3,
+    week: 7 * 24 * 60 * 60 * 1e3,
+    month: 30 * 24 * 60 * 60 * 1e3,
+    year: 365 * 24 * 60 * 60 * 1e3
+  };
+
+  // common/Discover.ts
+  var import_types = __toESM(require_lib());
+  function homeSectionType(type) {
+    switch (type) {
+      case "featured" /* featured */:
+        return import_types.HomeSectionType.featured;
+      case "prominentCarousel" /* prominentCarousel */:
+        return import_types.HomeSectionType.singleRowLarge;
+      case "simpleCarousel" /* simpleCarousel */:
+      case "chapterUpdates" /* chapterUpdates */:
+      case "genres" /* genres */:
+        return import_types.HomeSectionType.singleRowNormal;
+    }
+  }
+  function isRenderableSection(type) {
+    return type !== "genres" /* genres */;
+  }
+
+  // common/Convert.ts
+  function plainQuotes(text) {
+    return text.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g, "'").replace(/[\u201C\u201D\u201E\u201F\u2033\u2036]/g, '"');
+  }
+  function toSourceManga(manga) {
+    const info = manga.mangaInfo;
+    return App.createSourceManga({
+      id: manga.mangaId,
+      mangaInfo: App.createMangaInfo({
+        image: info.thumbnailUrl,
+        titles: [info.primaryTitle, ...info.secondaryTitles].filter(
+          (title, index, all) => title.length > 0 && all.indexOf(title) === index
+        ),
+        desc: info.synopsis,
+        status: info.status,
+        hentai: info.contentRating === "ADULT" /* ADULT */,
+        author: info.author,
+        artist: info.artist,
+        banner: info.bannerUrl,
+        rating: info.rating,
+        tags: (info.tagGroups ?? []).map(toTagSection),
+        covers: [info.thumbnailUrl].filter((url) => url.length > 0),
+        additionalInfo: info.additionalInfo
+      })
+    });
+  }
+  function toTagSection(section) {
+    return App.createTagSection({
+      id: section.id,
+      label: section.title,
+      tags: section.tags.map((tag) => App.createTag({ id: tag.id, label: tag.title }))
+    });
+  }
+  function toChapter(chapter) {
+    return App.createChapter({
+      id: chapter.chapterId,
+      chapNum: chapter.chapNum,
+      name: chapter.title,
+      volume: chapter.volume,
+      group: chapter.group,
+      time: chapter.publishDate,
+      langCode: chapter.langCode ?? "\u{1F1EC}\u{1F1E7}",
+      sortingIndex: chapter.sortingIndex
+    });
+  }
+  function toChapterDetails(details) {
+    return App.createChapterDetails({
+      id: details.id,
+      mangaId: details.mangaId,
+      pages: details.pages
+    });
+  }
+  function toPartialFromSearch(item) {
+    return App.createPartialSourceManga({
+      mangaId: item.mangaId,
+      title: item.title,
+      image: item.imageUrl,
+      subtitle: item.subtitle
+    });
+  }
+  function toPartialFromDiscover(item) {
+    return App.createPartialSourceManga({
+      mangaId: item.mangaId,
+      title: item.title,
+      image: item.imageUrl,
+      subtitle: item.subtitle ?? item.chapterId
+    });
+  }
+  function toPagedResults(results, metadata) {
+    return App.createPagedResults({
+      results,
+      // A section with no follow-up page must report no metadata, otherwise
+      // the app keeps asking for more and repeats the last page forever.
+      metadata: metadata ?? void 0
+    });
+  }
+  function toHomeSection(section, items, containsMoreItems) {
+    return App.createHomeSection({
+      id: section.id,
+      title: section.title,
+      type: homeSectionType(section.type),
+      items,
+      containsMoreItems
+    });
+  }
+
+  // common/Info.ts
+  var import_types2 = __toESM(require_lib());
+  var INTENT_FOR = {
+    ["chapters" /* CHAPTERS */]: import_types2.SourceIntents.MANGA_CHAPTERS,
+    ["homePage" /* HOME_PAGE */]: import_types2.SourceIntents.HOMEPAGE_SECTIONS,
+    ["cloudflare" /* CLOUDFLARE */]: import_types2.SourceIntents.CLOUDFLARE_BYPASS_REQUIRED,
+    ["settings" /* SETTINGS */]: import_types2.SourceIntents.SETTINGS_UI,
+    ["tracking" /* TRACKING */]: import_types2.SourceIntents.MANGA_TRACKING
+  };
+  function sourceInfo(description) {
+    const intents = description.capabilities.reduce(
+      (mask, capability) => mask | INTENT_FOR[capability],
+      0
+    );
+    const badges = [...description.badges ?? []];
+    if (description.kind === "Novels" /* NOVEL */) {
+      badges.unshift({ text: "Novels" /* NOVEL */, type: import_types2.BadgeColor.BLUE });
+    }
+    if (description.language !== void 0) {
+      badges.unshift({ text: description.language, type: import_types2.BadgeColor.GREY });
+    }
+    return {
+      name: description.name,
+      description: description.description,
+      version: description.version,
+      icon: description.icon,
+      author: "Popmango",
+      authorWebsite: "https://github.com/PoppingMangoSources",
+      websiteBaseURL: description.websiteBaseURL,
+      contentRating: runtimeRating(description.contentRating),
+      language: description.language,
+      sourceTags: badges,
+      intents
+    };
+  }
+  function runtimeRating(rating) {
+    switch (rating) {
+      case "ADULT" /* ADULT */:
+        return import_types2.ContentRating.ADULT;
+      case "MATURE" /* MATURE */:
+        return import_types2.ContentRating.MATURE;
+      case "EVERYONE" /* EVERYONE */:
+        return import_types2.ContentRating.EVERYONE;
+    }
+  }
+
+  // common/Interceptor.ts
+  var PaperbackInterceptor = class {
+    /** Adjusts a request before it leaves — headers, cookies, rewritten URLs. */
+    async interceptRequest(request) {
+      return request;
+    }
+    /**
+     * Inspects or rewrites a response before the source sees it.
+     *
+     * This is where a source detects a bot challenge and throws, or unpacks a
+     * body the site has obfuscated.
+     */
+    async interceptResponse(_request, _response, body) {
+      return body;
+    }
+  };
+  var CookieStorageInterceptor = class {
+    constructor(stateManager, key = "stored_cookies") {
+      this.cookies = {};
+      this.stateManager = stateManager;
+      this.key = key;
+    }
+    /** Stores a cookie, dropping it instead if it has already expired. */
+    setCookie(cookie) {
+      if (cookie.expires !== void 0 && cookie.expires.getTime() <= Date.now()) {
+        delete this.cookies[cookie.name];
+      } else {
+        this.cookies[cookie.name] = cookie.value;
+      }
+      void this.persist();
+    }
+    /** Forgets every stored cookie. */
+    clear() {
+      this.cookies = {};
+      void this.persist();
+    }
+    /**
+     * Returns the stored cookies, loading them from state on first use.
+     *
+     * The load is shared rather than merely flagged. The home page fires every
+     * section at once on a cold start, so without this each of them would race
+     * past a half-set flag and go out with no cookies — one request would
+     * carry the saved clearance and the rest would come back challenged.
+     */
+    async all() {
+      this.hydration ??= this.hydrate();
+      await this.hydration;
+      return this.cookies;
+    }
+    async hydrate() {
+      try {
+        const stored = await this.stateManager.retrieve(this.key);
+        this.cookies = { ...stored ?? {}, ...this.cookies };
+      } catch {
+      }
+    }
+    async persist() {
+      try {
+        await this.stateManager.store(this.key, this.cookies);
+      } catch {
+      }
+    }
+  };
+  var InterceptorChain = class {
+    constructor(options) {
+      this.cookieStorage = options.cookieStorage;
+      this.interceptor = options.interceptor;
+      this.sharedCookies = options.sharedCookies;
+    }
+    async interceptRequest(request) {
+      let intercepted = {
+        url: request.url,
+        method: request.method,
+        headers: { ...request.headers },
+        cookies: {
+          ...this.borrowedCookies(request.url),
+          ...await this.cookieStorage?.all(),
+          ...cookiesToRecord(request.cookies)
+        },
+        data: request.data,
+        param: request.param
+      };
+      if (this.interceptor !== void 0) {
+        intercepted = await this.interceptor.interceptRequest(intercepted);
+      }
+      return App.createRequest({
+        url: intercepted.url,
+        method: intercepted.method,
+        headers: intercepted.headers,
+        param: intercepted.param,
+        data: intercepted.data,
+        cookies: recordToCookies(intercepted.cookies, hostOf(intercepted.url))
+      });
+    }
+    borrowedCookies(url) {
+      if (this.sharedCookies === void 0) {
+        return {};
+      }
+      let cookies;
+      try {
+        cookies = this.sharedCookies() ?? [];
+      } catch {
+        return {};
+      }
+      const host = hostOf(url);
+      const now = Date.now();
+      const borrowed = {};
+      for (const cookie of cookies) {
+        const domain = cookie.domain.replace(/^\./, "").toLowerCase();
+        const expired = cookie.expires !== void 0 && cookie.expires.getTime() <= now;
+        if (!expired && domain && (host === domain || host.endsWith(`.${domain}`))) {
+          borrowed[cookie.name] = cookie.value;
+        }
+      }
+      return borrowed;
+    }
+    async interceptResponse(response) {
+      if (this.interceptor === void 0) {
+        return response;
+      }
+      const request = {
+        url: response.request.url,
+        method: response.request.method,
+        headers: { ...response.request.headers },
+        cookies: cookiesToRecord(response.request.cookies),
+        data: response.request.data,
+        param: response.request.param
+      };
+      const body = await this.interceptor.interceptResponse(request, response, {
+        text: response.data ?? "",
+        raw: response.rawData,
+        contentType: headerValue(response.headers, "content-type")
+      });
+      const contentTypeChanged = body.contentType !== void 0 && body.contentType !== headerValue(response.headers, "content-type");
+      if (body.text === (response.data ?? "") && body.raw === response.rawData && !contentTypeChanged) {
+        return response;
+      }
+      const mutable = response;
+      let written = false;
+      try {
+        if (body.raw !== response.rawData) {
+          mutable.rawData = body.raw;
+        }
+        if (body.text !== (response.data ?? "")) {
+          mutable.data = body.text;
+        }
+        written = true;
+      } catch {
+      }
+      if (written) {
+        if (contentTypeChanged) {
+          try {
+            mutable.mimeType = body.contentType;
+          } catch {
+          }
+          try {
+            setContentType(response.headers, body.contentType ?? "");
+          } catch {
+          }
+        }
+        return response;
+      }
+      const rebuilt = {
+        data: body.text,
+        rawData: body.raw,
+        status: response.status,
+        headers: contentTypeChanged ? withContentType(response.headers, body.contentType ?? "") : response.headers,
+        request: response.request
+      };
+      if (contentTypeChanged) {
+        rebuilt.mimeType = body.contentType;
+      }
+      return rebuilt;
+    }
+  };
+  function setContentType(headers, contentType) {
+    for (const key of Object.keys(headers ?? {})) {
+      if (key.toLowerCase() === "content-type") {
+        delete headers[key];
+      }
+    }
+    headers["content-type"] = contentType;
+    headers["Content-Type"] = contentType;
+  }
+  function withContentType(headers, contentType) {
+    const next = {};
+    for (const [key, value] of Object.entries(headers ?? {})) {
+      if (key.toLowerCase() !== "content-type") {
+        next[key] = value;
+      }
+    }
+    next["content-type"] = contentType;
+    next["Content-Type"] = contentType;
+    return next;
+  }
+  function cookiesToRecord(cookies) {
+    const record = {};
+    for (const cookie of cookies ?? []) {
+      record[cookie.name] = cookie.value;
+    }
+    return record;
+  }
+  function recordToCookies(record, domain) {
+    return Object.entries(record).map(
+      ([name, value]) => App.createCookie({ name, value, domain, path: "/" })
+    );
+  }
+
+  // node_modules/html-entities/dist/esm/named-references.js
+  var __assign = function() {
+    __assign = Object.assign || function(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+          t[p] = s[p];
+      }
+      return t;
+    };
+    return __assign.apply(this, arguments);
+  };
+  var pairDivider = "~";
+  var blockDivider = "~~";
+  function generateNamedReferences(input, prev) {
+    var entities = {};
+    var characters = {};
+    var blocks = input.split(blockDivider);
+    var isOptionalBlock = false;
+    for (var i = 0; blocks.length > i; i++) {
+      var entries = blocks[i].split(pairDivider);
+      for (var j = 0; j < entries.length; j += 2) {
+        var entity = entries[j];
+        var character = entries[j + 1];
+        var fullEntity = "&" + entity + ";";
+        entities[fullEntity] = character;
+        if (isOptionalBlock) {
+          entities["&" + entity] = character;
+        }
+        characters[character] = fullEntity;
+      }
+      isOptionalBlock = true;
+    }
+    return prev ? { entities: __assign(__assign({}, entities), prev.entities), characters: __assign(__assign({}, characters), prev.characters) } : { entities, characters };
+  }
+  var bodyRegExps = {
+    xml: /&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);?/g,
+    html4: /&notin;|&(?:nbsp|iexcl|cent|pound|curren|yen|brvbar|sect|uml|copy|ordf|laquo|not|shy|reg|macr|deg|plusmn|sup2|sup3|acute|micro|para|middot|cedil|sup1|ordm|raquo|frac14|frac12|frac34|iquest|Agrave|Aacute|Acirc|Atilde|Auml|Aring|AElig|Ccedil|Egrave|Eacute|Ecirc|Euml|Igrave|Iacute|Icirc|Iuml|ETH|Ntilde|Ograve|Oacute|Ocirc|Otilde|Ouml|times|Oslash|Ugrave|Uacute|Ucirc|Uuml|Yacute|THORN|szlig|agrave|aacute|acirc|atilde|auml|aring|aelig|ccedil|egrave|eacute|ecirc|euml|igrave|iacute|icirc|iuml|eth|ntilde|ograve|oacute|ocirc|otilde|ouml|divide|oslash|ugrave|uacute|ucirc|uuml|yacute|thorn|yuml|quot|amp|lt|gt|#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);?/g,
+    html5: /&centerdot;|&copysr;|&divideontimes;|&gtcc;|&gtcir;|&gtdot;|&gtlPar;|&gtquest;|&gtrapprox;|&gtrarr;|&gtrdot;|&gtreqless;|&gtreqqless;|&gtrless;|&gtrsim;|&ltcc;|&ltcir;|&ltdot;|&lthree;|&ltimes;|&ltlarr;|&ltquest;|&ltrPar;|&ltri;|&ltrie;|&ltrif;|&notin;|&notinE;|&notindot;|&notinva;|&notinvb;|&notinvc;|&notni;|&notniva;|&notnivb;|&notnivc;|&parallel;|&timesb;|&timesbar;|&timesd;|&(?:AElig|AMP|Aacute|Acirc|Agrave|Aring|Atilde|Auml|COPY|Ccedil|ETH|Eacute|Ecirc|Egrave|Euml|GT|Iacute|Icirc|Igrave|Iuml|LT|Ntilde|Oacute|Ocirc|Ograve|Oslash|Otilde|Ouml|QUOT|REG|THORN|Uacute|Ucirc|Ugrave|Uuml|Yacute|aacute|acirc|acute|aelig|agrave|amp|aring|atilde|auml|brvbar|ccedil|cedil|cent|copy|curren|deg|divide|eacute|ecirc|egrave|eth|euml|frac12|frac14|frac34|gt|iacute|icirc|iexcl|igrave|iquest|iuml|laquo|lt|macr|micro|middot|nbsp|not|ntilde|oacute|ocirc|ograve|ordf|ordm|oslash|otilde|ouml|para|plusmn|pound|quot|raquo|reg|sect|shy|sup1|sup2|sup3|szlig|thorn|times|uacute|ucirc|ugrave|uml|uuml|yacute|yen|yuml|#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);?/g
+  };
+  var namedReferences = {};
+  namedReferences["xml"] = generateNamedReferences(`lt~<~gt~>~quot~"~apos~'~amp~&`);
+  namedReferences["html4"] = generateNamedReferences(`apos~'~OElig~\u0152~oelig~\u0153~Scaron~\u0160~scaron~\u0161~Yuml~\u0178~circ~\u02C6~tilde~\u02DC~ensp~\u2002~emsp~\u2003~thinsp~\u2009~zwnj~\u200C~zwj~\u200D~lrm~\u200E~rlm~\u200F~ndash~\u2013~mdash~\u2014~lsquo~\u2018~rsquo~\u2019~sbquo~\u201A~ldquo~\u201C~rdquo~\u201D~bdquo~\u201E~dagger~\u2020~Dagger~\u2021~permil~\u2030~lsaquo~\u2039~rsaquo~\u203A~euro~\u20AC~fnof~\u0192~Alpha~\u0391~Beta~\u0392~Gamma~\u0393~Delta~\u0394~Epsilon~\u0395~Zeta~\u0396~Eta~\u0397~Theta~\u0398~Iota~\u0399~Kappa~\u039A~Lambda~\u039B~Mu~\u039C~Nu~\u039D~Xi~\u039E~Omicron~\u039F~Pi~\u03A0~Rho~\u03A1~Sigma~\u03A3~Tau~\u03A4~Upsilon~\u03A5~Phi~\u03A6~Chi~\u03A7~Psi~\u03A8~Omega~\u03A9~alpha~\u03B1~beta~\u03B2~gamma~\u03B3~delta~\u03B4~epsilon~\u03B5~zeta~\u03B6~eta~\u03B7~theta~\u03B8~iota~\u03B9~kappa~\u03BA~lambda~\u03BB~mu~\u03BC~nu~\u03BD~xi~\u03BE~omicron~\u03BF~pi~\u03C0~rho~\u03C1~sigmaf~\u03C2~sigma~\u03C3~tau~\u03C4~upsilon~\u03C5~phi~\u03C6~chi~\u03C7~psi~\u03C8~omega~\u03C9~thetasym~\u03D1~upsih~\u03D2~piv~\u03D6~bull~\u2022~hellip~\u2026~prime~\u2032~Prime~\u2033~oline~\u203E~frasl~\u2044~weierp~\u2118~image~\u2111~real~\u211C~trade~\u2122~alefsym~\u2135~larr~\u2190~uarr~\u2191~rarr~\u2192~darr~\u2193~harr~\u2194~crarr~\u21B5~lArr~\u21D0~uArr~\u21D1~rArr~\u21D2~dArr~\u21D3~hArr~\u21D4~forall~\u2200~part~\u2202~exist~\u2203~empty~\u2205~nabla~\u2207~isin~\u2208~notin~\u2209~ni~\u220B~prod~\u220F~sum~\u2211~minus~\u2212~lowast~\u2217~radic~\u221A~prop~\u221D~infin~\u221E~ang~\u2220~and~\u2227~or~\u2228~cap~\u2229~cup~\u222A~int~\u222B~there4~\u2234~sim~\u223C~cong~\u2245~asymp~\u2248~ne~\u2260~equiv~\u2261~le~\u2264~ge~\u2265~sub~\u2282~sup~\u2283~nsub~\u2284~sube~\u2286~supe~\u2287~oplus~\u2295~otimes~\u2297~perp~\u22A5~sdot~\u22C5~lceil~\u2308~rceil~\u2309~lfloor~\u230A~rfloor~\u230B~lang~\u2329~rang~\u232A~loz~\u25CA~spades~\u2660~clubs~\u2663~hearts~\u2665~diams~\u2666~~nbsp~\xA0~iexcl~\xA1~cent~\xA2~pound~\xA3~curren~\xA4~yen~\xA5~brvbar~\xA6~sect~\xA7~uml~\xA8~copy~\xA9~ordf~\xAA~laquo~\xAB~not~\xAC~shy~\xAD~reg~\xAE~macr~\xAF~deg~\xB0~plusmn~\xB1~sup2~\xB2~sup3~\xB3~acute~\xB4~micro~\xB5~para~\xB6~middot~\xB7~cedil~\xB8~sup1~\xB9~ordm~\xBA~raquo~\xBB~frac14~\xBC~frac12~\xBD~frac34~\xBE~iquest~\xBF~Agrave~\xC0~Aacute~\xC1~Acirc~\xC2~Atilde~\xC3~Auml~\xC4~Aring~\xC5~AElig~\xC6~Ccedil~\xC7~Egrave~\xC8~Eacute~\xC9~Ecirc~\xCA~Euml~\xCB~Igrave~\xCC~Iacute~\xCD~Icirc~\xCE~Iuml~\xCF~ETH~\xD0~Ntilde~\xD1~Ograve~\xD2~Oacute~\xD3~Ocirc~\xD4~Otilde~\xD5~Ouml~\xD6~times~\xD7~Oslash~\xD8~Ugrave~\xD9~Uacute~\xDA~Ucirc~\xDB~Uuml~\xDC~Yacute~\xDD~THORN~\xDE~szlig~\xDF~agrave~\xE0~aacute~\xE1~acirc~\xE2~atilde~\xE3~auml~\xE4~aring~\xE5~aelig~\xE6~ccedil~\xE7~egrave~\xE8~eacute~\xE9~ecirc~\xEA~euml~\xEB~igrave~\xEC~iacute~\xED~icirc~\xEE~iuml~\xEF~eth~\xF0~ntilde~\xF1~ograve~\xF2~oacute~\xF3~ocirc~\xF4~otilde~\xF5~ouml~\xF6~divide~\xF7~oslash~\xF8~ugrave~\xF9~uacute~\xFA~ucirc~\xFB~uuml~\xFC~yacute~\xFD~thorn~\xFE~yuml~\xFF~quot~"~amp~&~lt~<~gt~>`);
+  namedReferences["html5"] = generateNamedReferences('Abreve~\u0102~Acy~\u0410~Afr~\u{1D504}~Amacr~\u0100~And~\u2A53~Aogon~\u0104~Aopf~\u{1D538}~ApplyFunction~\u2061~Ascr~\u{1D49C}~Assign~\u2254~Backslash~\u2216~Barv~\u2AE7~Barwed~\u2306~Bcy~\u0411~Because~\u2235~Bernoullis~\u212C~Bfr~\u{1D505}~Bopf~\u{1D539}~Breve~\u02D8~Bscr~\u212C~Bumpeq~\u224E~CHcy~\u0427~Cacute~\u0106~Cap~\u22D2~CapitalDifferentialD~\u2145~Cayleys~\u212D~Ccaron~\u010C~Ccirc~\u0108~Cconint~\u2230~Cdot~\u010A~Cedilla~\xB8~CenterDot~\xB7~Cfr~\u212D~CircleDot~\u2299~CircleMinus~\u2296~CirclePlus~\u2295~CircleTimes~\u2297~ClockwiseContourIntegral~\u2232~CloseCurlyDoubleQuote~\u201D~CloseCurlyQuote~\u2019~Colon~\u2237~Colone~\u2A74~Congruent~\u2261~Conint~\u222F~ContourIntegral~\u222E~Copf~\u2102~Coproduct~\u2210~CounterClockwiseContourIntegral~\u2233~Cross~\u2A2F~Cscr~\u{1D49E}~Cup~\u22D3~CupCap~\u224D~DD~\u2145~DDotrahd~\u2911~DJcy~\u0402~DScy~\u0405~DZcy~\u040F~Darr~\u21A1~Dashv~\u2AE4~Dcaron~\u010E~Dcy~\u0414~Del~\u2207~Dfr~\u{1D507}~DiacriticalAcute~\xB4~DiacriticalDot~\u02D9~DiacriticalDoubleAcute~\u02DD~DiacriticalGrave~`~DiacriticalTilde~\u02DC~Diamond~\u22C4~DifferentialD~\u2146~Dopf~\u{1D53B}~Dot~\xA8~DotDot~\u20DC~DotEqual~\u2250~DoubleContourIntegral~\u222F~DoubleDot~\xA8~DoubleDownArrow~\u21D3~DoubleLeftArrow~\u21D0~DoubleLeftRightArrow~\u21D4~DoubleLeftTee~\u2AE4~DoubleLongLeftArrow~\u27F8~DoubleLongLeftRightArrow~\u27FA~DoubleLongRightArrow~\u27F9~DoubleRightArrow~\u21D2~DoubleRightTee~\u22A8~DoubleUpArrow~\u21D1~DoubleUpDownArrow~\u21D5~DoubleVerticalBar~\u2225~DownArrow~\u2193~DownArrowBar~\u2913~DownArrowUpArrow~\u21F5~DownBreve~\u0311~DownLeftRightVector~\u2950~DownLeftTeeVector~\u295E~DownLeftVector~\u21BD~DownLeftVectorBar~\u2956~DownRightTeeVector~\u295F~DownRightVector~\u21C1~DownRightVectorBar~\u2957~DownTee~\u22A4~DownTeeArrow~\u21A7~Downarrow~\u21D3~Dscr~\u{1D49F}~Dstrok~\u0110~ENG~\u014A~Ecaron~\u011A~Ecy~\u042D~Edot~\u0116~Efr~\u{1D508}~Element~\u2208~Emacr~\u0112~EmptySmallSquare~\u25FB~EmptyVerySmallSquare~\u25AB~Eogon~\u0118~Eopf~\u{1D53C}~Equal~\u2A75~EqualTilde~\u2242~Equilibrium~\u21CC~Escr~\u2130~Esim~\u2A73~Exists~\u2203~ExponentialE~\u2147~Fcy~\u0424~Ffr~\u{1D509}~FilledSmallSquare~\u25FC~FilledVerySmallSquare~\u25AA~Fopf~\u{1D53D}~ForAll~\u2200~Fouriertrf~\u2131~Fscr~\u2131~GJcy~\u0403~Gammad~\u03DC~Gbreve~\u011E~Gcedil~\u0122~Gcirc~\u011C~Gcy~\u0413~Gdot~\u0120~Gfr~\u{1D50A}~Gg~\u22D9~Gopf~\u{1D53E}~GreaterEqual~\u2265~GreaterEqualLess~\u22DB~GreaterFullEqual~\u2267~GreaterGreater~\u2AA2~GreaterLess~\u2277~GreaterSlantEqual~\u2A7E~GreaterTilde~\u2273~Gscr~\u{1D4A2}~Gt~\u226B~HARDcy~\u042A~Hacek~\u02C7~Hat~^~Hcirc~\u0124~Hfr~\u210C~HilbertSpace~\u210B~Hopf~\u210D~HorizontalLine~\u2500~Hscr~\u210B~Hstrok~\u0126~HumpDownHump~\u224E~HumpEqual~\u224F~IEcy~\u0415~IJlig~\u0132~IOcy~\u0401~Icy~\u0418~Idot~\u0130~Ifr~\u2111~Im~\u2111~Imacr~\u012A~ImaginaryI~\u2148~Implies~\u21D2~Int~\u222C~Integral~\u222B~Intersection~\u22C2~InvisibleComma~\u2063~InvisibleTimes~\u2062~Iogon~\u012E~Iopf~\u{1D540}~Iscr~\u2110~Itilde~\u0128~Iukcy~\u0406~Jcirc~\u0134~Jcy~\u0419~Jfr~\u{1D50D}~Jopf~\u{1D541}~Jscr~\u{1D4A5}~Jsercy~\u0408~Jukcy~\u0404~KHcy~\u0425~KJcy~\u040C~Kcedil~\u0136~Kcy~\u041A~Kfr~\u{1D50E}~Kopf~\u{1D542}~Kscr~\u{1D4A6}~LJcy~\u0409~Lacute~\u0139~Lang~\u27EA~Laplacetrf~\u2112~Larr~\u219E~Lcaron~\u013D~Lcedil~\u013B~Lcy~\u041B~LeftAngleBracket~\u27E8~LeftArrow~\u2190~LeftArrowBar~\u21E4~LeftArrowRightArrow~\u21C6~LeftCeiling~\u2308~LeftDoubleBracket~\u27E6~LeftDownTeeVector~\u2961~LeftDownVector~\u21C3~LeftDownVectorBar~\u2959~LeftFloor~\u230A~LeftRightArrow~\u2194~LeftRightVector~\u294E~LeftTee~\u22A3~LeftTeeArrow~\u21A4~LeftTeeVector~\u295A~LeftTriangle~\u22B2~LeftTriangleBar~\u29CF~LeftTriangleEqual~\u22B4~LeftUpDownVector~\u2951~LeftUpTeeVector~\u2960~LeftUpVector~\u21BF~LeftUpVectorBar~\u2958~LeftVector~\u21BC~LeftVectorBar~\u2952~Leftarrow~\u21D0~Leftrightarrow~\u21D4~LessEqualGreater~\u22DA~LessFullEqual~\u2266~LessGreater~\u2276~LessLess~\u2AA1~LessSlantEqual~\u2A7D~LessTilde~\u2272~Lfr~\u{1D50F}~Ll~\u22D8~Lleftarrow~\u21DA~Lmidot~\u013F~LongLeftArrow~\u27F5~LongLeftRightArrow~\u27F7~LongRightArrow~\u27F6~Longleftarrow~\u27F8~Longleftrightarrow~\u27FA~Longrightarrow~\u27F9~Lopf~\u{1D543}~LowerLeftArrow~\u2199~LowerRightArrow~\u2198~Lscr~\u2112~Lsh~\u21B0~Lstrok~\u0141~Lt~\u226A~Map~\u2905~Mcy~\u041C~MediumSpace~\u205F~Mellintrf~\u2133~Mfr~\u{1D510}~MinusPlus~\u2213~Mopf~\u{1D544}~Mscr~\u2133~NJcy~\u040A~Nacute~\u0143~Ncaron~\u0147~Ncedil~\u0145~Ncy~\u041D~NegativeMediumSpace~\u200B~NegativeThickSpace~\u200B~NegativeThinSpace~\u200B~NegativeVeryThinSpace~\u200B~NestedGreaterGreater~\u226B~NestedLessLess~\u226A~NewLine~\n~Nfr~\u{1D511}~NoBreak~\u2060~NonBreakingSpace~\xA0~Nopf~\u2115~Not~\u2AEC~NotCongruent~\u2262~NotCupCap~\u226D~NotDoubleVerticalBar~\u2226~NotElement~\u2209~NotEqual~\u2260~NotEqualTilde~\u2242\u0338~NotExists~\u2204~NotGreater~\u226F~NotGreaterEqual~\u2271~NotGreaterFullEqual~\u2267\u0338~NotGreaterGreater~\u226B\u0338~NotGreaterLess~\u2279~NotGreaterSlantEqual~\u2A7E\u0338~NotGreaterTilde~\u2275~NotHumpDownHump~\u224E\u0338~NotHumpEqual~\u224F\u0338~NotLeftTriangle~\u22EA~NotLeftTriangleBar~\u29CF\u0338~NotLeftTriangleEqual~\u22EC~NotLess~\u226E~NotLessEqual~\u2270~NotLessGreater~\u2278~NotLessLess~\u226A\u0338~NotLessSlantEqual~\u2A7D\u0338~NotLessTilde~\u2274~NotNestedGreaterGreater~\u2AA2\u0338~NotNestedLessLess~\u2AA1\u0338~NotPrecedes~\u2280~NotPrecedesEqual~\u2AAF\u0338~NotPrecedesSlantEqual~\u22E0~NotReverseElement~\u220C~NotRightTriangle~\u22EB~NotRightTriangleBar~\u29D0\u0338~NotRightTriangleEqual~\u22ED~NotSquareSubset~\u228F\u0338~NotSquareSubsetEqual~\u22E2~NotSquareSuperset~\u2290\u0338~NotSquareSupersetEqual~\u22E3~NotSubset~\u2282\u20D2~NotSubsetEqual~\u2288~NotSucceeds~\u2281~NotSucceedsEqual~\u2AB0\u0338~NotSucceedsSlantEqual~\u22E1~NotSucceedsTilde~\u227F\u0338~NotSuperset~\u2283\u20D2~NotSupersetEqual~\u2289~NotTilde~\u2241~NotTildeEqual~\u2244~NotTildeFullEqual~\u2247~NotTildeTilde~\u2249~NotVerticalBar~\u2224~Nscr~\u{1D4A9}~Ocy~\u041E~Odblac~\u0150~Ofr~\u{1D512}~Omacr~\u014C~Oopf~\u{1D546}~OpenCurlyDoubleQuote~\u201C~OpenCurlyQuote~\u2018~Or~\u2A54~Oscr~\u{1D4AA}~Otimes~\u2A37~OverBar~\u203E~OverBrace~\u23DE~OverBracket~\u23B4~OverParenthesis~\u23DC~PartialD~\u2202~Pcy~\u041F~Pfr~\u{1D513}~PlusMinus~\xB1~Poincareplane~\u210C~Popf~\u2119~Pr~\u2ABB~Precedes~\u227A~PrecedesEqual~\u2AAF~PrecedesSlantEqual~\u227C~PrecedesTilde~\u227E~Product~\u220F~Proportion~\u2237~Proportional~\u221D~Pscr~\u{1D4AB}~Qfr~\u{1D514}~Qopf~\u211A~Qscr~\u{1D4AC}~RBarr~\u2910~Racute~\u0154~Rang~\u27EB~Rarr~\u21A0~Rarrtl~\u2916~Rcaron~\u0158~Rcedil~\u0156~Rcy~\u0420~Re~\u211C~ReverseElement~\u220B~ReverseEquilibrium~\u21CB~ReverseUpEquilibrium~\u296F~Rfr~\u211C~RightAngleBracket~\u27E9~RightArrow~\u2192~RightArrowBar~\u21E5~RightArrowLeftArrow~\u21C4~RightCeiling~\u2309~RightDoubleBracket~\u27E7~RightDownTeeVector~\u295D~RightDownVector~\u21C2~RightDownVectorBar~\u2955~RightFloor~\u230B~RightTee~\u22A2~RightTeeArrow~\u21A6~RightTeeVector~\u295B~RightTriangle~\u22B3~RightTriangleBar~\u29D0~RightTriangleEqual~\u22B5~RightUpDownVector~\u294F~RightUpTeeVector~\u295C~RightUpVector~\u21BE~RightUpVectorBar~\u2954~RightVector~\u21C0~RightVectorBar~\u2953~Rightarrow~\u21D2~Ropf~\u211D~RoundImplies~\u2970~Rrightarrow~\u21DB~Rscr~\u211B~Rsh~\u21B1~RuleDelayed~\u29F4~SHCHcy~\u0429~SHcy~\u0428~SOFTcy~\u042C~Sacute~\u015A~Sc~\u2ABC~Scedil~\u015E~Scirc~\u015C~Scy~\u0421~Sfr~\u{1D516}~ShortDownArrow~\u2193~ShortLeftArrow~\u2190~ShortRightArrow~\u2192~ShortUpArrow~\u2191~SmallCircle~\u2218~Sopf~\u{1D54A}~Sqrt~\u221A~Square~\u25A1~SquareIntersection~\u2293~SquareSubset~\u228F~SquareSubsetEqual~\u2291~SquareSuperset~\u2290~SquareSupersetEqual~\u2292~SquareUnion~\u2294~Sscr~\u{1D4AE}~Star~\u22C6~Sub~\u22D0~Subset~\u22D0~SubsetEqual~\u2286~Succeeds~\u227B~SucceedsEqual~\u2AB0~SucceedsSlantEqual~\u227D~SucceedsTilde~\u227F~SuchThat~\u220B~Sum~\u2211~Sup~\u22D1~Superset~\u2283~SupersetEqual~\u2287~Supset~\u22D1~TRADE~\u2122~TSHcy~\u040B~TScy~\u0426~Tab~	~Tcaron~\u0164~Tcedil~\u0162~Tcy~\u0422~Tfr~\u{1D517}~Therefore~\u2234~ThickSpace~\u205F\u200A~ThinSpace~\u2009~Tilde~\u223C~TildeEqual~\u2243~TildeFullEqual~\u2245~TildeTilde~\u2248~Topf~\u{1D54B}~TripleDot~\u20DB~Tscr~\u{1D4AF}~Tstrok~\u0166~Uarr~\u219F~Uarrocir~\u2949~Ubrcy~\u040E~Ubreve~\u016C~Ucy~\u0423~Udblac~\u0170~Ufr~\u{1D518}~Umacr~\u016A~UnderBar~_~UnderBrace~\u23DF~UnderBracket~\u23B5~UnderParenthesis~\u23DD~Union~\u22C3~UnionPlus~\u228E~Uogon~\u0172~Uopf~\u{1D54C}~UpArrow~\u2191~UpArrowBar~\u2912~UpArrowDownArrow~\u21C5~UpDownArrow~\u2195~UpEquilibrium~\u296E~UpTee~\u22A5~UpTeeArrow~\u21A5~Uparrow~\u21D1~Updownarrow~\u21D5~UpperLeftArrow~\u2196~UpperRightArrow~\u2197~Upsi~\u03D2~Uring~\u016E~Uscr~\u{1D4B0}~Utilde~\u0168~VDash~\u22AB~Vbar~\u2AEB~Vcy~\u0412~Vdash~\u22A9~Vdashl~\u2AE6~Vee~\u22C1~Verbar~\u2016~Vert~\u2016~VerticalBar~\u2223~VerticalLine~|~VerticalSeparator~\u2758~VerticalTilde~\u2240~VeryThinSpace~\u200A~Vfr~\u{1D519}~Vopf~\u{1D54D}~Vscr~\u{1D4B1}~Vvdash~\u22AA~Wcirc~\u0174~Wedge~\u22C0~Wfr~\u{1D51A}~Wopf~\u{1D54E}~Wscr~\u{1D4B2}~Xfr~\u{1D51B}~Xopf~\u{1D54F}~Xscr~\u{1D4B3}~YAcy~\u042F~YIcy~\u0407~YUcy~\u042E~Ycirc~\u0176~Ycy~\u042B~Yfr~\u{1D51C}~Yopf~\u{1D550}~Yscr~\u{1D4B4}~ZHcy~\u0416~Zacute~\u0179~Zcaron~\u017D~Zcy~\u0417~Zdot~\u017B~ZeroWidthSpace~\u200B~Zfr~\u2128~Zopf~\u2124~Zscr~\u{1D4B5}~abreve~\u0103~ac~\u223E~acE~\u223E\u0333~acd~\u223F~acy~\u0430~af~\u2061~afr~\u{1D51E}~aleph~\u2135~amacr~\u0101~amalg~\u2A3F~andand~\u2A55~andd~\u2A5C~andslope~\u2A58~andv~\u2A5A~ange~\u29A4~angle~\u2220~angmsd~\u2221~angmsdaa~\u29A8~angmsdab~\u29A9~angmsdac~\u29AA~angmsdad~\u29AB~angmsdae~\u29AC~angmsdaf~\u29AD~angmsdag~\u29AE~angmsdah~\u29AF~angrt~\u221F~angrtvb~\u22BE~angrtvbd~\u299D~angsph~\u2222~angst~\xC5~angzarr~\u237C~aogon~\u0105~aopf~\u{1D552}~ap~\u2248~apE~\u2A70~apacir~\u2A6F~ape~\u224A~apid~\u224B~approx~\u2248~approxeq~\u224A~ascr~\u{1D4B6}~ast~*~asympeq~\u224D~awconint~\u2233~awint~\u2A11~bNot~\u2AED~backcong~\u224C~backepsilon~\u03F6~backprime~\u2035~backsim~\u223D~backsimeq~\u22CD~barvee~\u22BD~barwed~\u2305~barwedge~\u2305~bbrk~\u23B5~bbrktbrk~\u23B6~bcong~\u224C~bcy~\u0431~becaus~\u2235~because~\u2235~bemptyv~\u29B0~bepsi~\u03F6~bernou~\u212C~beth~\u2136~between~\u226C~bfr~\u{1D51F}~bigcap~\u22C2~bigcirc~\u25EF~bigcup~\u22C3~bigodot~\u2A00~bigoplus~\u2A01~bigotimes~\u2A02~bigsqcup~\u2A06~bigstar~\u2605~bigtriangledown~\u25BD~bigtriangleup~\u25B3~biguplus~\u2A04~bigvee~\u22C1~bigwedge~\u22C0~bkarow~\u290D~blacklozenge~\u29EB~blacksquare~\u25AA~blacktriangle~\u25B4~blacktriangledown~\u25BE~blacktriangleleft~\u25C2~blacktriangleright~\u25B8~blank~\u2423~blk12~\u2592~blk14~\u2591~blk34~\u2593~block~\u2588~bne~=\u20E5~bnequiv~\u2261\u20E5~bnot~\u2310~bopf~\u{1D553}~bot~\u22A5~bottom~\u22A5~bowtie~\u22C8~boxDL~\u2557~boxDR~\u2554~boxDl~\u2556~boxDr~\u2553~boxH~\u2550~boxHD~\u2566~boxHU~\u2569~boxHd~\u2564~boxHu~\u2567~boxUL~\u255D~boxUR~\u255A~boxUl~\u255C~boxUr~\u2559~boxV~\u2551~boxVH~\u256C~boxVL~\u2563~boxVR~\u2560~boxVh~\u256B~boxVl~\u2562~boxVr~\u255F~boxbox~\u29C9~boxdL~\u2555~boxdR~\u2552~boxdl~\u2510~boxdr~\u250C~boxh~\u2500~boxhD~\u2565~boxhU~\u2568~boxhd~\u252C~boxhu~\u2534~boxminus~\u229F~boxplus~\u229E~boxtimes~\u22A0~boxuL~\u255B~boxuR~\u2558~boxul~\u2518~boxur~\u2514~boxv~\u2502~boxvH~\u256A~boxvL~\u2561~boxvR~\u255E~boxvh~\u253C~boxvl~\u2524~boxvr~\u251C~bprime~\u2035~breve~\u02D8~bscr~\u{1D4B7}~bsemi~\u204F~bsim~\u223D~bsime~\u22CD~bsol~\\~bsolb~\u29C5~bsolhsub~\u27C8~bullet~\u2022~bump~\u224E~bumpE~\u2AAE~bumpe~\u224F~bumpeq~\u224F~cacute~\u0107~capand~\u2A44~capbrcup~\u2A49~capcap~\u2A4B~capcup~\u2A47~capdot~\u2A40~caps~\u2229\uFE00~caret~\u2041~caron~\u02C7~ccaps~\u2A4D~ccaron~\u010D~ccirc~\u0109~ccups~\u2A4C~ccupssm~\u2A50~cdot~\u010B~cemptyv~\u29B2~centerdot~\xB7~cfr~\u{1D520}~chcy~\u0447~check~\u2713~checkmark~\u2713~cir~\u25CB~cirE~\u29C3~circeq~\u2257~circlearrowleft~\u21BA~circlearrowright~\u21BB~circledR~\xAE~circledS~\u24C8~circledast~\u229B~circledcirc~\u229A~circleddash~\u229D~cire~\u2257~cirfnint~\u2A10~cirmid~\u2AEF~cirscir~\u29C2~clubsuit~\u2663~colon~:~colone~\u2254~coloneq~\u2254~comma~,~commat~@~comp~\u2201~compfn~\u2218~complement~\u2201~complexes~\u2102~congdot~\u2A6D~conint~\u222E~copf~\u{1D554}~coprod~\u2210~copysr~\u2117~cross~\u2717~cscr~\u{1D4B8}~csub~\u2ACF~csube~\u2AD1~csup~\u2AD0~csupe~\u2AD2~ctdot~\u22EF~cudarrl~\u2938~cudarrr~\u2935~cuepr~\u22DE~cuesc~\u22DF~cularr~\u21B6~cularrp~\u293D~cupbrcap~\u2A48~cupcap~\u2A46~cupcup~\u2A4A~cupdot~\u228D~cupor~\u2A45~cups~\u222A\uFE00~curarr~\u21B7~curarrm~\u293C~curlyeqprec~\u22DE~curlyeqsucc~\u22DF~curlyvee~\u22CE~curlywedge~\u22CF~curvearrowleft~\u21B6~curvearrowright~\u21B7~cuvee~\u22CE~cuwed~\u22CF~cwconint~\u2232~cwint~\u2231~cylcty~\u232D~dHar~\u2965~daleth~\u2138~dash~\u2010~dashv~\u22A3~dbkarow~\u290F~dblac~\u02DD~dcaron~\u010F~dcy~\u0434~dd~\u2146~ddagger~\u2021~ddarr~\u21CA~ddotseq~\u2A77~demptyv~\u29B1~dfisht~\u297F~dfr~\u{1D521}~dharl~\u21C3~dharr~\u21C2~diam~\u22C4~diamond~\u22C4~diamondsuit~\u2666~die~\xA8~digamma~\u03DD~disin~\u22F2~div~\xF7~divideontimes~\u22C7~divonx~\u22C7~djcy~\u0452~dlcorn~\u231E~dlcrop~\u230D~dollar~$~dopf~\u{1D555}~dot~\u02D9~doteq~\u2250~doteqdot~\u2251~dotminus~\u2238~dotplus~\u2214~dotsquare~\u22A1~doublebarwedge~\u2306~downarrow~\u2193~downdownarrows~\u21CA~downharpoonleft~\u21C3~downharpoonright~\u21C2~drbkarow~\u2910~drcorn~\u231F~drcrop~\u230C~dscr~\u{1D4B9}~dscy~\u0455~dsol~\u29F6~dstrok~\u0111~dtdot~\u22F1~dtri~\u25BF~dtrif~\u25BE~duarr~\u21F5~duhar~\u296F~dwangle~\u29A6~dzcy~\u045F~dzigrarr~\u27FF~eDDot~\u2A77~eDot~\u2251~easter~\u2A6E~ecaron~\u011B~ecir~\u2256~ecolon~\u2255~ecy~\u044D~edot~\u0117~ee~\u2147~efDot~\u2252~efr~\u{1D522}~eg~\u2A9A~egs~\u2A96~egsdot~\u2A98~el~\u2A99~elinters~\u23E7~ell~\u2113~els~\u2A95~elsdot~\u2A97~emacr~\u0113~emptyset~\u2205~emptyv~\u2205~emsp13~\u2004~emsp14~\u2005~eng~\u014B~eogon~\u0119~eopf~\u{1D556}~epar~\u22D5~eparsl~\u29E3~eplus~\u2A71~epsi~\u03B5~epsiv~\u03F5~eqcirc~\u2256~eqcolon~\u2255~eqsim~\u2242~eqslantgtr~\u2A96~eqslantless~\u2A95~equals~=~equest~\u225F~equivDD~\u2A78~eqvparsl~\u29E5~erDot~\u2253~erarr~\u2971~escr~\u212F~esdot~\u2250~esim~\u2242~excl~!~expectation~\u2130~exponentiale~\u2147~fallingdotseq~\u2252~fcy~\u0444~female~\u2640~ffilig~\uFB03~fflig~\uFB00~ffllig~\uFB04~ffr~\u{1D523}~filig~\uFB01~fjlig~fj~flat~\u266D~fllig~\uFB02~fltns~\u25B1~fopf~\u{1D557}~fork~\u22D4~forkv~\u2AD9~fpartint~\u2A0D~frac13~\u2153~frac15~\u2155~frac16~\u2159~frac18~\u215B~frac23~\u2154~frac25~\u2156~frac35~\u2157~frac38~\u215C~frac45~\u2158~frac56~\u215A~frac58~\u215D~frac78~\u215E~frown~\u2322~fscr~\u{1D4BB}~gE~\u2267~gEl~\u2A8C~gacute~\u01F5~gammad~\u03DD~gap~\u2A86~gbreve~\u011F~gcirc~\u011D~gcy~\u0433~gdot~\u0121~gel~\u22DB~geq~\u2265~geqq~\u2267~geqslant~\u2A7E~ges~\u2A7E~gescc~\u2AA9~gesdot~\u2A80~gesdoto~\u2A82~gesdotol~\u2A84~gesl~\u22DB\uFE00~gesles~\u2A94~gfr~\u{1D524}~gg~\u226B~ggg~\u22D9~gimel~\u2137~gjcy~\u0453~gl~\u2277~glE~\u2A92~gla~\u2AA5~glj~\u2AA4~gnE~\u2269~gnap~\u2A8A~gnapprox~\u2A8A~gne~\u2A88~gneq~\u2A88~gneqq~\u2269~gnsim~\u22E7~gopf~\u{1D558}~grave~`~gscr~\u210A~gsim~\u2273~gsime~\u2A8E~gsiml~\u2A90~gtcc~\u2AA7~gtcir~\u2A7A~gtdot~\u22D7~gtlPar~\u2995~gtquest~\u2A7C~gtrapprox~\u2A86~gtrarr~\u2978~gtrdot~\u22D7~gtreqless~\u22DB~gtreqqless~\u2A8C~gtrless~\u2277~gtrsim~\u2273~gvertneqq~\u2269\uFE00~gvnE~\u2269\uFE00~hairsp~\u200A~half~\xBD~hamilt~\u210B~hardcy~\u044A~harrcir~\u2948~harrw~\u21AD~hbar~\u210F~hcirc~\u0125~heartsuit~\u2665~hercon~\u22B9~hfr~\u{1D525}~hksearow~\u2925~hkswarow~\u2926~hoarr~\u21FF~homtht~\u223B~hookleftarrow~\u21A9~hookrightarrow~\u21AA~hopf~\u{1D559}~horbar~\u2015~hscr~\u{1D4BD}~hslash~\u210F~hstrok~\u0127~hybull~\u2043~hyphen~\u2010~ic~\u2063~icy~\u0438~iecy~\u0435~iff~\u21D4~ifr~\u{1D526}~ii~\u2148~iiiint~\u2A0C~iiint~\u222D~iinfin~\u29DC~iiota~\u2129~ijlig~\u0133~imacr~\u012B~imagline~\u2110~imagpart~\u2111~imath~\u0131~imof~\u22B7~imped~\u01B5~in~\u2208~incare~\u2105~infintie~\u29DD~inodot~\u0131~intcal~\u22BA~integers~\u2124~intercal~\u22BA~intlarhk~\u2A17~intprod~\u2A3C~iocy~\u0451~iogon~\u012F~iopf~\u{1D55A}~iprod~\u2A3C~iscr~\u{1D4BE}~isinE~\u22F9~isindot~\u22F5~isins~\u22F4~isinsv~\u22F3~isinv~\u2208~it~\u2062~itilde~\u0129~iukcy~\u0456~jcirc~\u0135~jcy~\u0439~jfr~\u{1D527}~jmath~\u0237~jopf~\u{1D55B}~jscr~\u{1D4BF}~jsercy~\u0458~jukcy~\u0454~kappav~\u03F0~kcedil~\u0137~kcy~\u043A~kfr~\u{1D528}~kgreen~\u0138~khcy~\u0445~kjcy~\u045C~kopf~\u{1D55C}~kscr~\u{1D4C0}~lAarr~\u21DA~lAtail~\u291B~lBarr~\u290E~lE~\u2266~lEg~\u2A8B~lHar~\u2962~lacute~\u013A~laemptyv~\u29B4~lagran~\u2112~langd~\u2991~langle~\u27E8~lap~\u2A85~larrb~\u21E4~larrbfs~\u291F~larrfs~\u291D~larrhk~\u21A9~larrlp~\u21AB~larrpl~\u2939~larrsim~\u2973~larrtl~\u21A2~lat~\u2AAB~latail~\u2919~late~\u2AAD~lates~\u2AAD\uFE00~lbarr~\u290C~lbbrk~\u2772~lbrace~{~lbrack~[~lbrke~\u298B~lbrksld~\u298F~lbrkslu~\u298D~lcaron~\u013E~lcedil~\u013C~lcub~{~lcy~\u043B~ldca~\u2936~ldquor~\u201E~ldrdhar~\u2967~ldrushar~\u294B~ldsh~\u21B2~leftarrow~\u2190~leftarrowtail~\u21A2~leftharpoondown~\u21BD~leftharpoonup~\u21BC~leftleftarrows~\u21C7~leftrightarrow~\u2194~leftrightarrows~\u21C6~leftrightharpoons~\u21CB~leftrightsquigarrow~\u21AD~leftthreetimes~\u22CB~leg~\u22DA~leq~\u2264~leqq~\u2266~leqslant~\u2A7D~les~\u2A7D~lescc~\u2AA8~lesdot~\u2A7F~lesdoto~\u2A81~lesdotor~\u2A83~lesg~\u22DA\uFE00~lesges~\u2A93~lessapprox~\u2A85~lessdot~\u22D6~lesseqgtr~\u22DA~lesseqqgtr~\u2A8B~lessgtr~\u2276~lesssim~\u2272~lfisht~\u297C~lfr~\u{1D529}~lg~\u2276~lgE~\u2A91~lhard~\u21BD~lharu~\u21BC~lharul~\u296A~lhblk~\u2584~ljcy~\u0459~ll~\u226A~llarr~\u21C7~llcorner~\u231E~llhard~\u296B~lltri~\u25FA~lmidot~\u0140~lmoust~\u23B0~lmoustache~\u23B0~lnE~\u2268~lnap~\u2A89~lnapprox~\u2A89~lne~\u2A87~lneq~\u2A87~lneqq~\u2268~lnsim~\u22E6~loang~\u27EC~loarr~\u21FD~lobrk~\u27E6~longleftarrow~\u27F5~longleftrightarrow~\u27F7~longmapsto~\u27FC~longrightarrow~\u27F6~looparrowleft~\u21AB~looparrowright~\u21AC~lopar~\u2985~lopf~\u{1D55D}~loplus~\u2A2D~lotimes~\u2A34~lowbar~_~lozenge~\u25CA~lozf~\u29EB~lpar~(~lparlt~\u2993~lrarr~\u21C6~lrcorner~\u231F~lrhar~\u21CB~lrhard~\u296D~lrtri~\u22BF~lscr~\u{1D4C1}~lsh~\u21B0~lsim~\u2272~lsime~\u2A8D~lsimg~\u2A8F~lsqb~[~lsquor~\u201A~lstrok~\u0142~ltcc~\u2AA6~ltcir~\u2A79~ltdot~\u22D6~lthree~\u22CB~ltimes~\u22C9~ltlarr~\u2976~ltquest~\u2A7B~ltrPar~\u2996~ltri~\u25C3~ltrie~\u22B4~ltrif~\u25C2~lurdshar~\u294A~luruhar~\u2966~lvertneqq~\u2268\uFE00~lvnE~\u2268\uFE00~mDDot~\u223A~male~\u2642~malt~\u2720~maltese~\u2720~map~\u21A6~mapsto~\u21A6~mapstodown~\u21A7~mapstoleft~\u21A4~mapstoup~\u21A5~marker~\u25AE~mcomma~\u2A29~mcy~\u043C~measuredangle~\u2221~mfr~\u{1D52A}~mho~\u2127~mid~\u2223~midast~*~midcir~\u2AF0~minusb~\u229F~minusd~\u2238~minusdu~\u2A2A~mlcp~\u2ADB~mldr~\u2026~mnplus~\u2213~models~\u22A7~mopf~\u{1D55E}~mp~\u2213~mscr~\u{1D4C2}~mstpos~\u223E~multimap~\u22B8~mumap~\u22B8~nGg~\u22D9\u0338~nGt~\u226B\u20D2~nGtv~\u226B\u0338~nLeftarrow~\u21CD~nLeftrightarrow~\u21CE~nLl~\u22D8\u0338~nLt~\u226A\u20D2~nLtv~\u226A\u0338~nRightarrow~\u21CF~nVDash~\u22AF~nVdash~\u22AE~nacute~\u0144~nang~\u2220\u20D2~nap~\u2249~napE~\u2A70\u0338~napid~\u224B\u0338~napos~\u0149~napprox~\u2249~natur~\u266E~natural~\u266E~naturals~\u2115~nbump~\u224E\u0338~nbumpe~\u224F\u0338~ncap~\u2A43~ncaron~\u0148~ncedil~\u0146~ncong~\u2247~ncongdot~\u2A6D\u0338~ncup~\u2A42~ncy~\u043D~neArr~\u21D7~nearhk~\u2924~nearr~\u2197~nearrow~\u2197~nedot~\u2250\u0338~nequiv~\u2262~nesear~\u2928~nesim~\u2242\u0338~nexist~\u2204~nexists~\u2204~nfr~\u{1D52B}~ngE~\u2267\u0338~nge~\u2271~ngeq~\u2271~ngeqq~\u2267\u0338~ngeqslant~\u2A7E\u0338~nges~\u2A7E\u0338~ngsim~\u2275~ngt~\u226F~ngtr~\u226F~nhArr~\u21CE~nharr~\u21AE~nhpar~\u2AF2~nis~\u22FC~nisd~\u22FA~niv~\u220B~njcy~\u045A~nlArr~\u21CD~nlE~\u2266\u0338~nlarr~\u219A~nldr~\u2025~nle~\u2270~nleftarrow~\u219A~nleftrightarrow~\u21AE~nleq~\u2270~nleqq~\u2266\u0338~nleqslant~\u2A7D\u0338~nles~\u2A7D\u0338~nless~\u226E~nlsim~\u2274~nlt~\u226E~nltri~\u22EA~nltrie~\u22EC~nmid~\u2224~nopf~\u{1D55F}~notinE~\u22F9\u0338~notindot~\u22F5\u0338~notinva~\u2209~notinvb~\u22F7~notinvc~\u22F6~notni~\u220C~notniva~\u220C~notnivb~\u22FE~notnivc~\u22FD~npar~\u2226~nparallel~\u2226~nparsl~\u2AFD\u20E5~npart~\u2202\u0338~npolint~\u2A14~npr~\u2280~nprcue~\u22E0~npre~\u2AAF\u0338~nprec~\u2280~npreceq~\u2AAF\u0338~nrArr~\u21CF~nrarr~\u219B~nrarrc~\u2933\u0338~nrarrw~\u219D\u0338~nrightarrow~\u219B~nrtri~\u22EB~nrtrie~\u22ED~nsc~\u2281~nsccue~\u22E1~nsce~\u2AB0\u0338~nscr~\u{1D4C3}~nshortmid~\u2224~nshortparallel~\u2226~nsim~\u2241~nsime~\u2244~nsimeq~\u2244~nsmid~\u2224~nspar~\u2226~nsqsube~\u22E2~nsqsupe~\u22E3~nsubE~\u2AC5\u0338~nsube~\u2288~nsubset~\u2282\u20D2~nsubseteq~\u2288~nsubseteqq~\u2AC5\u0338~nsucc~\u2281~nsucceq~\u2AB0\u0338~nsup~\u2285~nsupE~\u2AC6\u0338~nsupe~\u2289~nsupset~\u2283\u20D2~nsupseteq~\u2289~nsupseteqq~\u2AC6\u0338~ntgl~\u2279~ntlg~\u2278~ntriangleleft~\u22EA~ntrianglelefteq~\u22EC~ntriangleright~\u22EB~ntrianglerighteq~\u22ED~num~#~numero~\u2116~numsp~\u2007~nvDash~\u22AD~nvHarr~\u2904~nvap~\u224D\u20D2~nvdash~\u22AC~nvge~\u2265\u20D2~nvgt~>\u20D2~nvinfin~\u29DE~nvlArr~\u2902~nvle~\u2264\u20D2~nvlt~<\u20D2~nvltrie~\u22B4\u20D2~nvrArr~\u2903~nvrtrie~\u22B5\u20D2~nvsim~\u223C\u20D2~nwArr~\u21D6~nwarhk~\u2923~nwarr~\u2196~nwarrow~\u2196~nwnear~\u2927~oS~\u24C8~oast~\u229B~ocir~\u229A~ocy~\u043E~odash~\u229D~odblac~\u0151~odiv~\u2A38~odot~\u2299~odsold~\u29BC~ofcir~\u29BF~ofr~\u{1D52C}~ogon~\u02DB~ogt~\u29C1~ohbar~\u29B5~ohm~\u03A9~oint~\u222E~olarr~\u21BA~olcir~\u29BE~olcross~\u29BB~olt~\u29C0~omacr~\u014D~omid~\u29B6~ominus~\u2296~oopf~\u{1D560}~opar~\u29B7~operp~\u29B9~orarr~\u21BB~ord~\u2A5D~order~\u2134~orderof~\u2134~origof~\u22B6~oror~\u2A56~orslope~\u2A57~orv~\u2A5B~oscr~\u2134~osol~\u2298~otimesas~\u2A36~ovbar~\u233D~par~\u2225~parallel~\u2225~parsim~\u2AF3~parsl~\u2AFD~pcy~\u043F~percnt~%~period~.~pertenk~\u2031~pfr~\u{1D52D}~phiv~\u03D5~phmmat~\u2133~phone~\u260E~pitchfork~\u22D4~planck~\u210F~planckh~\u210E~plankv~\u210F~plus~+~plusacir~\u2A23~plusb~\u229E~pluscir~\u2A22~plusdo~\u2214~plusdu~\u2A25~pluse~\u2A72~plussim~\u2A26~plustwo~\u2A27~pm~\xB1~pointint~\u2A15~popf~\u{1D561}~pr~\u227A~prE~\u2AB3~prap~\u2AB7~prcue~\u227C~pre~\u2AAF~prec~\u227A~precapprox~\u2AB7~preccurlyeq~\u227C~preceq~\u2AAF~precnapprox~\u2AB9~precneqq~\u2AB5~precnsim~\u22E8~precsim~\u227E~primes~\u2119~prnE~\u2AB5~prnap~\u2AB9~prnsim~\u22E8~profalar~\u232E~profline~\u2312~profsurf~\u2313~propto~\u221D~prsim~\u227E~prurel~\u22B0~pscr~\u{1D4C5}~puncsp~\u2008~qfr~\u{1D52E}~qint~\u2A0C~qopf~\u{1D562}~qprime~\u2057~qscr~\u{1D4C6}~quaternions~\u210D~quatint~\u2A16~quest~?~questeq~\u225F~rAarr~\u21DB~rAtail~\u291C~rBarr~\u290F~rHar~\u2964~race~\u223D\u0331~racute~\u0155~raemptyv~\u29B3~rangd~\u2992~range~\u29A5~rangle~\u27E9~rarrap~\u2975~rarrb~\u21E5~rarrbfs~\u2920~rarrc~\u2933~rarrfs~\u291E~rarrhk~\u21AA~rarrlp~\u21AC~rarrpl~\u2945~rarrsim~\u2974~rarrtl~\u21A3~rarrw~\u219D~ratail~\u291A~ratio~\u2236~rationals~\u211A~rbarr~\u290D~rbbrk~\u2773~rbrace~}~rbrack~]~rbrke~\u298C~rbrksld~\u298E~rbrkslu~\u2990~rcaron~\u0159~rcedil~\u0157~rcub~}~rcy~\u0440~rdca~\u2937~rdldhar~\u2969~rdquor~\u201D~rdsh~\u21B3~realine~\u211B~realpart~\u211C~reals~\u211D~rect~\u25AD~rfisht~\u297D~rfr~\u{1D52F}~rhard~\u21C1~rharu~\u21C0~rharul~\u296C~rhov~\u03F1~rightarrow~\u2192~rightarrowtail~\u21A3~rightharpoondown~\u21C1~rightharpoonup~\u21C0~rightleftarrows~\u21C4~rightleftharpoons~\u21CC~rightrightarrows~\u21C9~rightsquigarrow~\u219D~rightthreetimes~\u22CC~ring~\u02DA~risingdotseq~\u2253~rlarr~\u21C4~rlhar~\u21CC~rmoust~\u23B1~rmoustache~\u23B1~rnmid~\u2AEE~roang~\u27ED~roarr~\u21FE~robrk~\u27E7~ropar~\u2986~ropf~\u{1D563}~roplus~\u2A2E~rotimes~\u2A35~rpar~)~rpargt~\u2994~rppolint~\u2A12~rrarr~\u21C9~rscr~\u{1D4C7}~rsh~\u21B1~rsqb~]~rsquor~\u2019~rthree~\u22CC~rtimes~\u22CA~rtri~\u25B9~rtrie~\u22B5~rtrif~\u25B8~rtriltri~\u29CE~ruluhar~\u2968~rx~\u211E~sacute~\u015B~sc~\u227B~scE~\u2AB4~scap~\u2AB8~sccue~\u227D~sce~\u2AB0~scedil~\u015F~scirc~\u015D~scnE~\u2AB6~scnap~\u2ABA~scnsim~\u22E9~scpolint~\u2A13~scsim~\u227F~scy~\u0441~sdotb~\u22A1~sdote~\u2A66~seArr~\u21D8~searhk~\u2925~searr~\u2198~searrow~\u2198~semi~;~seswar~\u2929~setminus~\u2216~setmn~\u2216~sext~\u2736~sfr~\u{1D530}~sfrown~\u2322~sharp~\u266F~shchcy~\u0449~shcy~\u0448~shortmid~\u2223~shortparallel~\u2225~sigmav~\u03C2~simdot~\u2A6A~sime~\u2243~simeq~\u2243~simg~\u2A9E~simgE~\u2AA0~siml~\u2A9D~simlE~\u2A9F~simne~\u2246~simplus~\u2A24~simrarr~\u2972~slarr~\u2190~smallsetminus~\u2216~smashp~\u2A33~smeparsl~\u29E4~smid~\u2223~smile~\u2323~smt~\u2AAA~smte~\u2AAC~smtes~\u2AAC\uFE00~softcy~\u044C~sol~/~solb~\u29C4~solbar~\u233F~sopf~\u{1D564}~spadesuit~\u2660~spar~\u2225~sqcap~\u2293~sqcaps~\u2293\uFE00~sqcup~\u2294~sqcups~\u2294\uFE00~sqsub~\u228F~sqsube~\u2291~sqsubset~\u228F~sqsubseteq~\u2291~sqsup~\u2290~sqsupe~\u2292~sqsupset~\u2290~sqsupseteq~\u2292~squ~\u25A1~square~\u25A1~squarf~\u25AA~squf~\u25AA~srarr~\u2192~sscr~\u{1D4C8}~ssetmn~\u2216~ssmile~\u2323~sstarf~\u22C6~star~\u2606~starf~\u2605~straightepsilon~\u03F5~straightphi~\u03D5~strns~\xAF~subE~\u2AC5~subdot~\u2ABD~subedot~\u2AC3~submult~\u2AC1~subnE~\u2ACB~subne~\u228A~subplus~\u2ABF~subrarr~\u2979~subset~\u2282~subseteq~\u2286~subseteqq~\u2AC5~subsetneq~\u228A~subsetneqq~\u2ACB~subsim~\u2AC7~subsub~\u2AD5~subsup~\u2AD3~succ~\u227B~succapprox~\u2AB8~succcurlyeq~\u227D~succeq~\u2AB0~succnapprox~\u2ABA~succneqq~\u2AB6~succnsim~\u22E9~succsim~\u227F~sung~\u266A~supE~\u2AC6~supdot~\u2ABE~supdsub~\u2AD8~supedot~\u2AC4~suphsol~\u27C9~suphsub~\u2AD7~suplarr~\u297B~supmult~\u2AC2~supnE~\u2ACC~supne~\u228B~supplus~\u2AC0~supset~\u2283~supseteq~\u2287~supseteqq~\u2AC6~supsetneq~\u228B~supsetneqq~\u2ACC~supsim~\u2AC8~supsub~\u2AD4~supsup~\u2AD6~swArr~\u21D9~swarhk~\u2926~swarr~\u2199~swarrow~\u2199~swnwar~\u292A~target~\u2316~tbrk~\u23B4~tcaron~\u0165~tcedil~\u0163~tcy~\u0442~tdot~\u20DB~telrec~\u2315~tfr~\u{1D531}~therefore~\u2234~thetav~\u03D1~thickapprox~\u2248~thicksim~\u223C~thkap~\u2248~thksim~\u223C~timesb~\u22A0~timesbar~\u2A31~timesd~\u2A30~tint~\u222D~toea~\u2928~top~\u22A4~topbot~\u2336~topcir~\u2AF1~topf~\u{1D565}~topfork~\u2ADA~tosa~\u2929~tprime~\u2034~triangle~\u25B5~triangledown~\u25BF~triangleleft~\u25C3~trianglelefteq~\u22B4~triangleq~\u225C~triangleright~\u25B9~trianglerighteq~\u22B5~tridot~\u25EC~trie~\u225C~triminus~\u2A3A~triplus~\u2A39~trisb~\u29CD~tritime~\u2A3B~trpezium~\u23E2~tscr~\u{1D4C9}~tscy~\u0446~tshcy~\u045B~tstrok~\u0167~twixt~\u226C~twoheadleftarrow~\u219E~twoheadrightarrow~\u21A0~uHar~\u2963~ubrcy~\u045E~ubreve~\u016D~ucy~\u0443~udarr~\u21C5~udblac~\u0171~udhar~\u296E~ufisht~\u297E~ufr~\u{1D532}~uharl~\u21BF~uharr~\u21BE~uhblk~\u2580~ulcorn~\u231C~ulcorner~\u231C~ulcrop~\u230F~ultri~\u25F8~umacr~\u016B~uogon~\u0173~uopf~\u{1D566}~uparrow~\u2191~updownarrow~\u2195~upharpoonleft~\u21BF~upharpoonright~\u21BE~uplus~\u228E~upsi~\u03C5~upuparrows~\u21C8~urcorn~\u231D~urcorner~\u231D~urcrop~\u230E~uring~\u016F~urtri~\u25F9~uscr~\u{1D4CA}~utdot~\u22F0~utilde~\u0169~utri~\u25B5~utrif~\u25B4~uuarr~\u21C8~uwangle~\u29A7~vArr~\u21D5~vBar~\u2AE8~vBarv~\u2AE9~vDash~\u22A8~vangrt~\u299C~varepsilon~\u03F5~varkappa~\u03F0~varnothing~\u2205~varphi~\u03D5~varpi~\u03D6~varpropto~\u221D~varr~\u2195~varrho~\u03F1~varsigma~\u03C2~varsubsetneq~\u228A\uFE00~varsubsetneqq~\u2ACB\uFE00~varsupsetneq~\u228B\uFE00~varsupsetneqq~\u2ACC\uFE00~vartheta~\u03D1~vartriangleleft~\u22B2~vartriangleright~\u22B3~vcy~\u0432~vdash~\u22A2~vee~\u2228~veebar~\u22BB~veeeq~\u225A~vellip~\u22EE~verbar~|~vert~|~vfr~\u{1D533}~vltri~\u22B2~vnsub~\u2282\u20D2~vnsup~\u2283\u20D2~vopf~\u{1D567}~vprop~\u221D~vrtri~\u22B3~vscr~\u{1D4CB}~vsubnE~\u2ACB\uFE00~vsubne~\u228A\uFE00~vsupnE~\u2ACC\uFE00~vsupne~\u228B\uFE00~vzigzag~\u299A~wcirc~\u0175~wedbar~\u2A5F~wedge~\u2227~wedgeq~\u2259~wfr~\u{1D534}~wopf~\u{1D568}~wp~\u2118~wr~\u2240~wreath~\u2240~wscr~\u{1D4CC}~xcap~\u22C2~xcirc~\u25EF~xcup~\u22C3~xdtri~\u25BD~xfr~\u{1D535}~xhArr~\u27FA~xharr~\u27F7~xlArr~\u27F8~xlarr~\u27F5~xmap~\u27FC~xnis~\u22FB~xodot~\u2A00~xopf~\u{1D569}~xoplus~\u2A01~xotime~\u2A02~xrArr~\u27F9~xrarr~\u27F6~xscr~\u{1D4CD}~xsqcup~\u2A06~xuplus~\u2A04~xutri~\u25B3~xvee~\u22C1~xwedge~\u22C0~yacy~\u044F~ycirc~\u0177~ycy~\u044B~yfr~\u{1D536}~yicy~\u0457~yopf~\u{1D56A}~yscr~\u{1D4CE}~yucy~\u044E~zacute~\u017A~zcaron~\u017E~zcy~\u0437~zdot~\u017C~zeetrf~\u2128~zfr~\u{1D537}~zhcy~\u0436~zigrarr~\u21DD~zopf~\u{1D56B}~zscr~\u{1D4CF}~~AMP~&~COPY~\xA9~GT~>~LT~<~QUOT~"~REG~\xAE', namedReferences["html4"]);
+
+  // node_modules/html-entities/dist/esm/numeric-unicode-map.js
+  var numericUnicodeMap = {
+    0: 65533,
+    128: 8364,
+    130: 8218,
+    131: 402,
+    132: 8222,
+    133: 8230,
+    134: 8224,
+    135: 8225,
+    136: 710,
+    137: 8240,
+    138: 352,
+    139: 8249,
+    140: 338,
+    142: 381,
+    145: 8216,
+    146: 8217,
+    147: 8220,
+    148: 8221,
+    149: 8226,
+    150: 8211,
+    151: 8212,
+    152: 732,
+    153: 8482,
+    154: 353,
+    155: 8250,
+    156: 339,
+    158: 382,
+    159: 376
+  };
+
+  // node_modules/html-entities/dist/esm/surrogate-pairs.js
+  var fromCodePoint = String.fromCodePoint || function(astralCodePoint) {
+    return String.fromCharCode(Math.floor((astralCodePoint - 65536) / 1024) + 55296, (astralCodePoint - 65536) % 1024 + 56320);
+  };
+  var getCodePoint = String.prototype.codePointAt ? function(input, position) {
+    return input.codePointAt(position);
+  } : function(input, position) {
+    return (input.charCodeAt(position) - 55296) * 1024 + input.charCodeAt(position + 1) - 56320 + 65536;
+  };
+
+  // node_modules/html-entities/dist/esm/index.js
+  var __assign2 = function() {
+    __assign2 = Object.assign || function(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+          t[p] = s[p];
+      }
+      return t;
+    };
+    return __assign2.apply(this, arguments);
+  };
+  var allNamedReferences = __assign2(__assign2({}, namedReferences), { all: namedReferences.html5 });
+  var defaultDecodeOptions = {
+    scope: "body",
+    level: "all"
+  };
+  var strict = /&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);/g;
+  var attribute = /&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+)[;=]?/g;
+  var baseDecodeRegExps = {
+    xml: {
+      strict,
+      attribute,
+      body: bodyRegExps.xml
+    },
+    html4: {
+      strict,
+      attribute,
+      body: bodyRegExps.html4
+    },
+    html5: {
+      strict,
+      attribute,
+      body: bodyRegExps.html5
+    }
+  };
+  var decodeRegExps = __assign2(__assign2({}, baseDecodeRegExps), { all: baseDecodeRegExps.html5 });
+  var fromCharCode = String.fromCharCode;
+  var outOfBoundsChar = fromCharCode(65533);
+  function getDecodedEntity(entity, references, isAttribute, isStrict) {
+    var decodeResult = entity;
+    var decodeEntityLastChar = entity[entity.length - 1];
+    if (isAttribute && decodeEntityLastChar === "=") {
+      decodeResult = entity;
+    } else if (isStrict && decodeEntityLastChar !== ";") {
+      decodeResult = entity;
+    } else {
+      var decodeResultByReference = references[entity];
+      if (decodeResultByReference) {
+        decodeResult = decodeResultByReference;
+      } else if (entity[0] === "&" && entity[1] === "#") {
+        var decodeSecondChar = entity[2];
+        var decodeCode = decodeSecondChar == "x" || decodeSecondChar == "X" ? parseInt(entity.substr(3), 16) : parseInt(entity.substr(2));
+        decodeResult = decodeCode >= 1114111 ? outOfBoundsChar : decodeCode > 65535 ? fromCodePoint(decodeCode) : fromCharCode(numericUnicodeMap[decodeCode] || decodeCode);
+      }
+    }
+    return decodeResult;
+  }
+  function decode(text, _a) {
+    var _b = _a === void 0 ? defaultDecodeOptions : _a, _c = _b.level, level = _c === void 0 ? "all" : _c, _d = _b.scope, scope = _d === void 0 ? level === "xml" ? "strict" : "body" : _d;
+    if (!text) {
+      return "";
+    }
+    var decodeRegExp = decodeRegExps[level][scope];
+    var references = allNamedReferences[level].entities;
+    var isAttribute = scope === "attribute";
+    var isStrict = scope === "strict";
+    return text.replace(decodeRegExp, function(entity) {
+      return getDecodedEntity(entity, references, isAttribute, isStrict);
+    });
+  }
+
+  // common/Runtime.ts
+  var DEFAULT_RETRIES = 1;
+  var RESPONSE_CACHE_MS = 5e3;
+  var REPLACEMENT = "\uFFFD";
+  var BASE64_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  function utf8Decode(bytes) {
+    let result = "";
+    for (let index = 0; index < bytes.length; ) {
+      const byte = bytes[index] ?? 0;
+      let codePoint;
+      let length;
+      if (byte < 128) {
+        codePoint = byte;
+        length = 1;
+      } else if ((byte & 224) === 192) {
+        codePoint = byte & 31;
+        length = 2;
+      } else if ((byte & 240) === 224) {
+        codePoint = byte & 15;
+        length = 3;
+      } else if ((byte & 248) === 240) {
+        codePoint = byte & 7;
+        length = 4;
+      } else {
+        result += REPLACEMENT;
+        index += 1;
+        continue;
+      }
+      if (index + length > bytes.length) {
+        result += REPLACEMENT;
+        break;
+      }
+      let malformed = false;
+      for (let offset = 1; offset < length; offset += 1) {
+        const continuation = bytes[index + offset] ?? 0;
+        if ((continuation & 192) !== 128) {
+          malformed = true;
+          break;
+        }
+        codePoint = codePoint << 6 | continuation & 63;
+      }
+      if (malformed || codePoint > 1114111) {
+        result += REPLACEMENT;
+        index += 1;
+        continue;
+      }
+      result += String.fromCodePoint(codePoint);
+      index += length;
+    }
+    return result;
+  }
+  var ApplicationRuntime = class {
+    constructor() {
+      /**
+       * Responses fetched a moment ago, so the same page is not asked for twice.
+       *
+       * 0.8 asks for a series and then for its chapters as two separate calls
+       * that each identify the series by id alone, and on most sites both
+       * answers live on the same page. Without this, opening a series costs two
+       * identical requests. Entries are held only for a few seconds — long
+       * enough to cover one screen opening, short enough that a reader who pulls
+       * to refresh gets a fresh page.
+       */
+      this.inFlight = /* @__PURE__ */ new Map();
+    }
+    /**
+     * Called once by the source's base class.
+     *
+     * The app hands each source its own cheerio instance at construction
+     * rather than exposing a global one, so it is captured here and reused by
+     * every parser in the source.
+     */
+    bind(requestManager, cheerio) {
+      this.requestManager = requestManager;
+      this.cheerio = cheerio;
+    }
+    manager() {
+      if (this.requestManager === void 0) {
+        throw new Error("No request manager is bound; the source was used before it finished initialising.");
+      }
+      return this.requestManager;
+    }
+    /**
+     * Performs a request and returns the response alongside its body.
+     *
+     * The tuple shape keeps the response metadata and the decoded body
+     * separate, which is what the parsers expect.
+     */
+    async scheduleRequest(init, retries = DEFAULT_RETRIES) {
+      const key = cacheKey(init);
+      if (key === void 0) {
+        return this.perform(init, retries);
+      }
+      const now = Date.now();
+      const cached = this.inFlight.get(key);
+      if (cached !== void 0 && now - cached.at < RESPONSE_CACHE_MS) {
+        return cached.response;
+      }
+      const response = this.perform(init, retries);
+      this.inFlight.set(key, { at: now, response });
+      void response.then(
+        ([settled]) => {
+          if (settled.status < 200 || settled.status >= 300) {
+            this.inFlight.delete(key);
+          }
+        },
+        () => this.inFlight.delete(key)
+      );
+      this.prune(now);
+      return response;
+    }
+    async perform(init, retries) {
+      const response = await this.manager().schedule(this.createRequest(init), retries);
+      return [response, { text: response.data ?? "", raw: response.rawData }];
+    }
+    /** Drops entries that have aged out, so the map cannot grow without bound. */
+    prune(now) {
+      for (const [key, entry] of this.inFlight) {
+        if (now - entry.at >= RESPONSE_CACHE_MS) {
+          this.inFlight.delete(key);
+        }
+      }
+    }
+    /** Performs a request and returns the body as text, checking the status first. */
+    async fetchText(init, retries = DEFAULT_RETRIES) {
+      const [response, body] = await this.scheduleRequest(init, retries);
+      assertOk(response, init.url);
+      return body.text;
+    }
+    /** Parses an HTML string into a queryable document. */
+    loadDocument(html) {
+      if (this.cheerio === void 0) {
+        throw new Error("No HTML parser is bound; the source was used before it finished initialising.");
+      }
+      return this.cheerio.load(html);
+    }
+    /** Performs a request and parses the response as an HTML document. */
+    async fetchDocument(init, retries = DEFAULT_RETRIES) {
+      return this.loadDocument(await this.fetchText(init, retries));
+    }
+    /**
+     * Turns `&amp;` and friends back into the characters they stand for.
+     *
+     * Titles and descriptions routinely arrive double-encoded, so this is
+     * applied to any text taken from an attribute rather than a text node.
+     */
+    decodeHTMLEntities(value) {
+      return decode(value);
+    }
+    /**
+     * Decodes standard or URL-safe base64 into a string.
+     *
+     * The runtime has no `atob`, and several sites hide their page manifests
+     * behind a base64 payload, so sources get their own decoder. Padding is
+     * optional and whitespace is ignored, which is how these payloads tend to
+     * arrive.
+     */
+    base64Decode(value) {
+      return utf8Decode(this.base64Bytes(value));
+    }
+    /**
+     * Decodes base64 into the bytes themselves.
+     *
+     * A payload that is not text — a ciphertext, an image — has to survive as
+     * bytes, and reading it as a string would replace everything that is not
+     * valid UTF-8 before the source ever saw it.
+     */
+    base64DecodeBytes(value) {
+      return Uint8Array.from(this.base64Bytes(value));
+    }
+    /**
+     * Turns UTF-8 bytes into a string.
+     *
+     * The runtime has no `TextDecoder`, and a source that has just decrypted
+     * something holds bytes rather than text.
+     */
+    utf8Decode(bytes) {
+      return utf8Decode(Array.from(bytes));
+    }
+    base64Bytes(value) {
+      const clean = value.replace(/[\r\n\s]/g, "").replace(/-/g, "+").replace(/_/g, "/");
+      let bits = 0;
+      let accumulator = 0;
+      const bytes = [];
+      for (const character of clean) {
+        if (character === "=") {
+          break;
+        }
+        const index = BASE64_ALPHABET.indexOf(character);
+        if (index === -1) {
+          throw new Error("The value is not valid base64.");
+        }
+        accumulator = accumulator << 6 | index;
+        bits += 6;
+        if (bits >= 8) {
+          bits -= 8;
+          bytes.push(accumulator >> bits & 255);
+        }
+      }
+      return bytes;
+    }
+    /** Performs a request and parses the body as JSON. */
+    async fetchJSON(init, retries = DEFAULT_RETRIES) {
+      const text = await this.fetchText(init, retries);
+      try {
+        return JSON.parse(text);
+      } catch {
+        throw new Error(`Expected JSON but the response could not be parsed: ${init.url}`);
+      }
+    }
+    /** Builds a runtime request from a source's description of one. */
+    createRequest(init) {
+      return App.createRequest({
+        url: init.url,
+        method: init.method ?? "GET",
+        headers: init.headers ?? {},
+        param: init.param,
+        data: encodeBody(init.body),
+        // A cookie set on the request itself is how a source asks for the
+        // ungated answer — an age gate, a language, a session. Dropping it
+        // here would send the request bare and quietly return the wrong page.
+        cookies: Object.entries(init.cookies ?? {}).map(
+          ([name, value]) => App.createCookie({ name, value, domain: hostOf(init.url), path: "/" })
+        )
+      });
+    }
+    /** Returns the body text of a response. */
+    arrayBufferToUTF8String(body) {
+      return body.text;
+    }
+    /**
+     * Asks the app to rebuild the home page.
+     *
+     * 0.8 has no way to invalidate it — the app decides when to rebuild — so
+     * this does nothing. Sources call it after a setting changes, and the new
+     * sections appear the next time the reader opens the page.
+     */
+    invalidateDiscoverSections() {
+    }
+    /**
+     * The user agent the app uses for its own requests.
+     *
+     * Matching it matters on sites that fingerprint clients, and it is cached
+     * because the lookup crosses into the host app.
+     */
+    async getDefaultUserAgent() {
+      this.userAgent ??= await this.manager().getDefaultUserAgent();
+      return this.userAgent;
+    }
+  };
+  function assertOk(response, url) {
+    if (response.status === 404) {
+      throw new Error(`Not found: ${url}`);
+    }
+    if (response.status >= 200 && response.status < 300) {
+      return;
+    }
+    if (isCloudflareChallenge(response.status, response.headers, response.data ?? "")) {
+      throw new CloudflareError(response.request);
+    }
+    throw new Error(`Request failed with status ${response.status}: ${url}`);
+  }
+  function cacheKey(init) {
+    if (init.body !== void 0) {
+      return void 0;
+    }
+    const method = (init.method ?? "GET").toUpperCase();
+    if (method !== "GET") {
+      return void 0;
+    }
+    return `${init.url} ${init.param ?? ""} ${pairs(init.headers)} ${pairs(init.cookies)}`;
+  }
+  function pairs(record) {
+    return Object.entries(record ?? {}).map(([name, value]) => `${name.toLowerCase()}=${value}`).sort().join(";");
+  }
+  function encodeBody(body) {
+    if (body === void 0 || typeof body === "string") {
+      return body;
+    }
+    return Object.entries(body).filter(([, value]) => value !== void 0 && value !== null).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`).join("&");
+  }
+  var Application = new ApplicationRuntime();
+
+  // common/Menu.ts
+  var RETAIN_LIMIT = 2e3;
+  var retained = [];
+  function retain(value) {
+    if (retained.length >= RETAIN_LIMIT) {
+      retained = retained.slice(RETAIN_LIMIT / 2);
+    }
+    retained.push(value);
+    return value;
+  }
+  function binding(get, set) {
+    return retain(App.createDUIBinding({ get, set }));
+  }
+  function selectRow(id, options) {
+    const titles = new Map(options.options.map((option) => [option.id, option.title]));
+    return retain(
+      App.createDUISelect({
+        id,
+        label: options.label,
+        options: options.options.map((option) => option.id),
+        allowsMultiselect: options.multiple ?? false,
+        // The app stores ids and asks separately for something to display.
+        labelResolver: async (optionId) => titles.get(optionId) ?? optionId,
+        value: binding(
+          async () => options.get(),
+          async (value) => {
+            options.set(
+              Array.isArray(value) ? value.filter((entry) => typeof entry === "string") : []
+            );
+          }
+        )
+      })
+    );
+  }
+  function buttonRow(id, label, onTap) {
+    return retain(App.createDUIButton({ id, label, onTap: async () => onTap() }));
+  }
+  function formRow(id, label, sections) {
+    const form = retain(App.createDUIForm({ sections: async () => retain((await sections()).map(toSection)) }));
+    return retain(App.createDUINavigationButton({ id, label, form }));
+  }
+  function toSection(section) {
+    return retain(
+      App.createDUISection({
+        id: section.id,
+        header: section.header,
+        footer: section.footer,
+        isHidden: false,
+        rows: async () => retain(section.rows)
+      })
+    );
+  }
+  function settingsMenu(title, sections) {
+    const button = formRow("content_settings", title, sections);
+    return retain(
+      App.createDUISection({
+        id: "sourceMenu",
+        isHidden: false,
+        rows: async () => [button]
+      })
+    );
+  }
+
+  // common/Settings.ts
+  var SettingsStore = class {
+    constructor(stateManager, keys) {
+      this.cache = /* @__PURE__ */ new Map();
+      this.writes = Promise.resolve();
+      this.stateManager = stateManager;
+      this.keys = keys;
+    }
+    /**
+     * Reads every declared key into memory.
+     *
+     * Safe to call repeatedly — the first call is the one that does the work,
+     * and later callers wait on it rather than starting again.
+     */
+    load() {
+      return this.hydration ??= this.hydrate();
+    }
+    // One key at a time: parallel state-store calls race in the Swift bridge.
+    async hydrate() {
+      for (const key of this.keys) {
+        try {
+          const value = await this.stateManager.retrieve(key);
+          if (value !== null && value !== void 0 && !this.cache.has(key)) {
+            this.cache.set(key, value);
+          }
+        } catch {
+        }
+      }
+    }
+    /** The raw stored value, or `undefined` when nothing is set. */
+    get(key) {
+      return this.cache.get(key);
+    }
+    /** Stores a value, taking effect immediately and persisting behind. */
+    set(key, value) {
+      this.cache.set(key, value);
+      this.writes = this.writes.then(() => this.persist(key, value));
+    }
+    async persist(key, value) {
+      try {
+        await this.stateManager.store(key, value);
+      } catch {
+      }
+    }
+    /** A stored string, or the fallback when unset or empty. */
+    string(key, fallback) {
+      const value = this.get(key);
+      if (typeof value !== "string") {
+        return fallback;
+      }
+      const trimmed = value.trim();
+      return trimmed.length > 0 ? trimmed : fallback;
+    }
+    /** A stored list of strings, keeping only the values still recognised. */
+    stringArray(key, allowed) {
+      const value = this.get(key);
+      if (!Array.isArray(value)) {
+        return [];
+      }
+      return value.filter(
+        (entry) => typeof entry === "string" && (allowed === void 0 || allowed.has(entry))
+      );
+    }
+    /** A stored value constrained to a known set of choices. */
+    choice(key, options, fallback) {
+      const value = this.get(key);
+      return options.includes(value) ? value : fallback;
+    }
+    boolean(key, fallback) {
+      const value = this.get(key);
+      return typeof value === "boolean" ? value : fallback;
+    }
+    /**
+     * A site list kept across launches, such as genres for the filters, so
+     * opening search does not cost a request each time. A failed refresh
+     * falls back to the old copy. The key must be in `settingsKeys`.
+     */
+    async remembered(key, maxAgeMs, load) {
+      const stored = this.get(key);
+      const at = typeof stored?.at === "number" ? stored.at : void 0;
+      if (at !== void 0 && Date.now() - at < maxAgeMs) {
+        return stored.value;
+      }
+      try {
+        const value = await load();
+        if (!Array.isArray(value) || value.length > 0) {
+          this.set(key, { at: Date.now(), value });
+        }
+        return value;
+      } catch (error) {
+        if (at !== void 0) {
+          return stored.value;
+        }
+        throw error;
+      }
+    }
+  };
+
+  // common/Source.ts
+  var PopmangoSource = class {
+    constructor(cheerio, options) {
+      /** Chapters of the series above, so page lookups have the full chapter. */
+      this.lastChapters = /* @__PURE__ */ new Map();
+      this.cheerio = cheerio;
+      this.domain = options.domain;
+      this.stateManager = App.createSourceStateManager();
+      this.cookieStorage = new CookieStorageInterceptor(this.stateManager);
+      this.settings = new SettingsStore(this.stateManager, options.settingsKeys ?? []);
+      const manager = (limit, sharedCookies) => App.createRequestManager({
+        requestsPerSecond: limit ? Math.max(1, Math.round(limit.numberOfRequests / Math.max(1, limit.bufferInterval))) : 4,
+        requestTimeout: (options.requestTimeout ?? 20) * 1e3,
+        interceptor: new InterceptorChain({
+          cookieStorage: this.cookieStorage,
+          interceptor: options.interceptor,
+          sharedCookies
+        })
+      });
+      this.requestManager = manager(options.rateLimit);
+      Application.bind(
+        options.apiRateLimit ? manager(options.apiRateLimit, () => this.requestManager.cookieStore?.getAllCookies()) : this.requestManager,
+        cheerio
+      );
+    }
+    /**
+     * Filters offered on the search screen.
+     *
+     * 0.8 renders these as selectable tags. A source with a sort order to
+     * offer exposes it here as a section of mutually exclusive tags, since
+     * 0.8 has no separate sort control.
+     */
+    async getFilterSections() {
+      return [];
+    }
+    /**
+     * Free-text boxes offered beside the filters.
+     *
+     * A 0.9 search form could hold anything; 0.8 renders selectable tags and
+     * these boxes, and nothing else. A filter that is not a choice from a list
+     * belongs here — what the reader types comes back in
+     * `SearchQuery.parameters` under the field's id.
+     */
+    async getSearchFieldList() {
+      return [];
+    }
+    /** Whether the site can express "everything except this tag". */
+    async supportsTagExclusion() {
+      return false;
+    }
+    /** The public URL of a series, for the share sheet. */
+    getMangaShareUrl(mangaId) {
+      return `${this.domain}/${mangaId}`;
+    }
+    /**
+     * The source's settings screen, if it has one.
+     *
+     * Rows are built with the helpers in `Menu.ts` and read and write through
+     * `this.settings`. Returning `[]` means the source has no settings, and
+     * the app is told as much.
+     */
+    getSettingsSections() {
+      return [];
+    }
+    /**
+     * A chapter rebuilt from its ids alone, for one the app opens without the
+     * list having been fetched this session.
+     *
+     * Returning one spares refetching the whole chapter list, which a source
+     * can do when `getPages` needs nothing beyond the ids. `undefined`, the
+     * default, refetches the list.
+     */
+    chapterFromIds(_mangaId, _chapterId) {
+      return void 0;
+    }
+    // ---------------------------------------------------------------------
+    // What the app calls
+    // ---------------------------------------------------------------------
+    async getMangaDetails(mangaId) {
+      const manga = await this.guard(() => this.getMangaInfo(mangaId));
+      this.lastManga = manga;
+      return toSourceManga(manga);
+    }
+    /**
+     * 0.8 asks for chapters by id alone, while a source is given the whole
+     * series so its parsers can reuse what the details page already said. The
+     * details are taken from the previous call when they are for this series —
+     * which is the normal case, since the app opens the details screen first —
+     * and fetched otherwise.
+     */
+    async getChapters(mangaId) {
+      return this.guard(async () => {
+        const manga = this.lastManga?.mangaId === mangaId ? this.lastManga : await this.getMangaInfo(mangaId);
+        this.lastManga = manga;
+        const chapters = await this.getChapterList(manga);
+        if (chapters.length === 0) {
+          throw new Error("No chapters were found. Reading progress is kept; try again later.");
+        }
+        this.lastChapters = new Map(chapters.map((chapter) => [chapter.chapterId, chapter]));
+        return chapters.map(toChapter);
+      });
+    }
+    /**
+     * 0.8 asks for pages by ids alone. The chapter object is recovered from
+     * the list fetched a moment ago; if the app skipped straight here — as it
+     * does when opening a chapter from the reading queue after a restart — the
+     * source may rebuild it from the ids (`chapterFromIds`), and otherwise the
+     * list is fetched again so the source still receives a complete chapter.
+     */
+    async getChapterDetails(mangaId, chapterId) {
+      return this.guard(async () => {
+        let chapter = this.lastChapters.get(chapterId);
+        if (chapter === void 0 || chapter.sourceManga.mangaId !== mangaId) {
+          chapter = this.chapterFromIds(mangaId, chapterId);
+        }
+        if (chapter === void 0) {
+          await this.getChapters(mangaId);
+          chapter = this.lastChapters.get(chapterId);
+        }
+        if (chapter === void 0) {
+          throw new Error(`Chapter ${chapterId} is no longer listed under ${mangaId}.`);
+        }
+        return toChapterDetails(await this.getPages(chapter));
+      });
+    }
+    async getSearchResults(query, metadata) {
+      return this.guard(async () => {
+        const page = await this.getSearchResultItems(
+          {
+            title: query.title?.trim() ? plainQuotes(query.title) : void 0,
+            includedTags: query.includedTags.map((tag) => ({ id: tag.id, title: tag.label })),
+            excludedTags: query.excludedTags.map((tag) => ({ id: tag.id, title: tag.label })),
+            parameters: Object.fromEntries(
+              Object.entries(query.parameters ?? {}).map(([key, value]) => [
+                key,
+                typeof value === "string" ? plainQuotes(value) : value
+              ])
+            )
+          },
+          metadata
+        );
+        return toPagedResults(page.items.map(toPartialFromSearch), page.metadata);
+      });
+    }
+    async getSourceMenu() {
+      await this.settings.load();
+      return settingsMenu("Settings", () => this.getSettingsSections());
+    }
+    async getSearchTags() {
+      const sections = await this.guard(() => this.getFilterSections());
+      return sections.map(toTagSection);
+    }
+    async getSearchFields() {
+      const fields = await this.guard(() => this.getSearchFieldList());
+      return fields.map(
+        (field) => App.createSearchField({ id: field.id, name: field.name, placeholder: field.placeholder })
+      );
+    }
+    /**
+     * Builds the home page.
+     *
+     * Each section is announced empty first so the app can lay the page out
+     * immediately, then filled in as its request comes back. Sections are
+     * fetched together rather than in turn, and one that fails is left empty
+     * instead of taking the whole page down with it.
+     *
+     * The app tracks a section by object identity rather than by id, so the
+     * placeholder is kept and its items are set on it — announcing a second,
+     * equal-looking section instead leaves the page with duplicates or with
+     * rows that never fill in.
+     */
+    async getHomePageSections(sectionCallback) {
+      const sections = (await this.guard(() => this.getDiscoverSections())).filter(
+        (section) => isRenderableSection(section.type)
+      );
+      this.sections = sections;
+      const placeholders = sections.map((section) => toHomeSection(section, [], false));
+      for (const placeholder of placeholders) {
+        sectionCallback(placeholder);
+      }
+      await Promise.all(
+        sections.map(async (section, index) => {
+          const placeholder = placeholders[index];
+          if (placeholder === void 0) {
+            return;
+          }
+          let items = [];
+          let hasMore = false;
+          try {
+            const page = await this.getDiscoverSectionItems(section, void 0);
+            items = page.items.map(toPartialFromDiscover);
+            hasMore = page.metadata !== void 0;
+          } catch (error) {
+            this.rememberChallenge(error);
+          }
+          placeholder.items = items;
+          placeholder.containsMoreItems = hasMore;
+          sectionCallback(placeholder);
+        })
+      );
+    }
+    async getViewMoreItems(homepageSectionId, metadata) {
+      return this.guard(async () => {
+        if (this.sections === void 0 || this.sections.length === 0) {
+          this.sections = await this.getDiscoverSections();
+        }
+        const section = this.sections.find((candidate) => candidate.id === homepageSectionId);
+        if (section === void 0) {
+          throw new Error(`Unknown home page section: ${homepageSectionId}`);
+        }
+        const page = await this.getDiscoverSectionItems(section, metadata);
+        return toPagedResults(page.items.map(toPartialFromDiscover), page.metadata);
+      });
+    }
+    /**
+     * Points the app at a page that will settle the challenge.
+     *
+     * The URL that actually failed is preferred, because a challenge is often
+     * scoped to a path rather than the whole site.
+     */
+    async getCloudflareBypassRequestAsync() {
+      if (this.pendingChallenge !== void 0) {
+        return this.pendingChallenge;
+      }
+      return App.createRequest({
+        url: this.domain,
+        method: "GET",
+        headers: { "user-agent": await Application.getDefaultUserAgent() }
+      });
+    }
+    // ---------------------------------------------------------------------
+    // Internals
+    // ---------------------------------------------------------------------
+    /**
+     * Runs a source call, noting any Cloudflare challenge on the way past.
+     *
+     * The error is still rethrown — the app shows the bypass prompt in
+     * response to it — but by then the failing request has been recorded so
+     * the prompt opens the right page.
+     */
+    async guard(work) {
+      try {
+        await this.settings.load();
+        return await work();
+      } catch (error) {
+        this.rememberChallenge(error);
+        throw error;
+      }
+    }
+    rememberChallenge(error) {
+      if (error instanceof CloudflareError) {
+        this.pendingChallenge = error.request;
+      }
+    }
+  };
+
+  // src/MangaDot/models.ts
+  var DOMAIN = "https://mangadot.net";
+  var STATE_KEYS = {
+    SEARCH_ORIGINS: "search_origins",
+    HIDDEN_TAGS: "hidden_tags",
+    SECTION_ORIGINS: "section_origins",
+    TIME_RANGE: "time_range",
+    VISIBLE_SECTIONS: "visible_sections",
+    ADULT: "adult",
+    GENRES: "genres"
+  };
+  var SETTINGS_KEYS = Object.values(STATE_KEYS);
+  var GENRES_MAX_AGE_MS = 24 * 60 * 60 * 1e3;
+  var ORIGIN_OPTIONS = [
+    { id: "JP", title: "Manga", value: "JP" },
+    { id: "KR", title: "Manhwa", value: "KR" },
+    { id: "CN", title: "Manhua", value: "CN,TW" },
+    { id: "ONESHOT", title: "Oneshot", value: "ONESHOT" }
+  ];
+  var STATUS_OPTIONS = [
+    { id: "Ongoing", title: "Ongoing" },
+    { id: "Completed", title: "Completed" },
+    { id: "Hiatus", title: "Interrupted" }
+  ];
+  var ADULT_OPTIONS = [
+    { id: "0", title: "No" },
+    { id: "1", title: "Yes" },
+    { id: "both", title: "Both" }
+  ];
+  var SORT_OPTIONS = [
+    { id: "relevance", title: "Relevance" },
+    { id: "latest", title: "Latest" },
+    { id: "alphabetical", title: "Title" },
+    { id: "chapters", title: "Chapters" },
+    { id: "views", title: "Most viewed" },
+    { id: "tracked", title: "Most tracked" },
+    { id: "rating", title: "Top rated" }
+  ];
+  var ORDER_OPTIONS = [
+    { id: "desc", title: "Descending" },
+    { id: "asc", title: "Ascending" }
+  ];
+  var TIME_RANGE_OPTIONS = [
+    { id: "all", title: "All time" },
+    { id: "daily", title: "Day" },
+    { id: "weekly", title: "Week" },
+    { id: "monthly", title: "Month" }
+  ];
+  var SECTIONS = {
+    MOST_VIEWED: "most_viewed",
+    TOP_RATED: "top_rated",
+    MOST_TRACKED: "most_tracked",
+    LATEST_UPDATES: "latest_updates",
+    RECENTLY_ADDED: "recently_added"
+  };
+  var SECTION_DEFINITIONS = {
+    [SECTIONS.MOST_VIEWED]: { id: SECTIONS.MOST_VIEWED, title: "Most Viewed", type: "featured" /* featured */ },
+    [SECTIONS.TOP_RATED]: { id: SECTIONS.TOP_RATED, title: "Top Rated", type: "prominentCarousel" /* prominentCarousel */ },
+    [SECTIONS.MOST_TRACKED]: {
+      id: SECTIONS.MOST_TRACKED,
+      title: "Most Tracked Comics",
+      type: "simpleCarousel" /* simpleCarousel */
+    },
+    [SECTIONS.LATEST_UPDATES]: {
+      id: SECTIONS.LATEST_UPDATES,
+      title: "Latest Updates",
+      type: "chapterUpdates" /* chapterUpdates */
+    },
+    [SECTIONS.RECENTLY_ADDED]: {
+      id: SECTIONS.RECENTLY_ADDED,
+      title: "Recently Added",
+      type: "simpleCarousel" /* simpleCarousel */
+    }
+  };
+  var SECTION_IDS = [
+    SECTIONS.MOST_VIEWED,
+    SECTIONS.TOP_RATED,
+    SECTIONS.MOST_TRACKED,
+    SECTIONS.LATEST_UPDATES,
+    SECTIONS.RECENTLY_ADDED
+  ];
+  var SECTION_OPTIONS = SECTION_IDS.map((id) => ({ id, title: SECTION_DEFINITIONS[id].title }));
+  var RANGED_SECTIONS = /* @__PURE__ */ new Set([
+    SECTIONS.TOP_RATED,
+    SECTIONS.MOST_TRACKED,
+    SECTIONS.RECENTLY_ADDED
+  ]);
+  var FILTERS = {
+    SORT: "sort",
+    ORDER: "order",
+    GENRE: "genre",
+    STATUS: "status",
+    ORIGIN: "origin",
+    ADULT: "adult"
+  };
+  var FIELDS = {
+    AUTHOR: "author",
+    ARTIST: "artist"
+  };
+  var FILTER_SEPARATOR = "::";
+  function filterTag(section, id, title) {
+    return { id: `${section}${FILTER_SEPARATOR}${id}`, title };
+  }
+  function splitFilterTag(tagId) {
+    const index = tagId.indexOf(FILTER_SEPARATOR);
+    if (index <= 0) {
+      return void 0;
+    }
+    return { section: tagId.slice(0, index), value: tagId.slice(index + FILTER_SEPARATOR.length) };
+  }
+  var TAG_GROUPS = [
+    { id: "genres", title: "Genres" },
+    { id: "demographic", title: "Demographic" },
+    { id: "themes", title: "Themes & content" },
+    { id: "more", title: "More" }
+  ];
+  var TAG_GROUP_OF = {
+    Shounen: "demographic",
+    Seinen: "demographic",
+    Shoujo: "demographic",
+    Josei: "demographic",
+    Kids: "demographic",
+    Action: "genres",
+    Adventure: "genres",
+    Comedy: "genres",
+    Drama: "genres",
+    Fantasy: "genres",
+    Horror: "genres",
+    Mystery: "genres",
+    Romance: "genres",
+    "Sci-Fi": "genres",
+    "Slice of Life": "genres",
+    Sports: "genres",
+    Thriller: "genres",
+    Tragedy: "genres",
+    Psychological: "genres",
+    Supernatural: "genres",
+    Mecha: "genres",
+    Historical: "genres",
+    Isekai: "themes",
+    Ecchi: "themes",
+    Harem: "themes",
+    "Martial Arts": "themes",
+    "School Life": "themes",
+    Magic: "themes",
+    Military: "themes",
+    Music: "themes",
+    Demons: "themes",
+    Vampire: "themes",
+    Game: "themes",
+    Cooking: "themes",
+    Medical: "themes",
+    Webtoon: "themes"
+  };
+  var tagGroupOf = (name) => TAG_GROUP_OF[name] ?? "more";
+
+  // src/MangaDot/network.ts
+  var challenge = async () => new CloudflareError(
+    Application.createRequest({
+      url: `${DOMAIN}/`,
+      method: "GET",
+      headers: { "user-agent": await Application.getDefaultUserAgent() }
+    })
+  );
+  var MangaDotInterceptor = class extends PaperbackInterceptor {
+    async interceptRequest(request) {
+      return {
+        ...request,
+        headers: {
+          "user-agent": await Application.getDefaultUserAgent(),
+          ...request.headers
+        }
+      };
+    }
+    async interceptResponse(_request, response, body) {
+      if (headerValue(response.headers, "cf-mitigated")?.toLowerCase() === "challenge") {
+        throw await challenge();
+      }
+      return body;
+    }
+  };
+  var apiUrl = (path, query = {}) => {
+    const url = URL(DOMAIN).addPathComponent("api");
+    for (const segment of path) {
+      url.addPathComponent(segment);
+    }
+    for (const [key, value] of Object.entries(query)) {
+      url.setQueryItem(key, value);
+    }
+    return url.build();
+  };
+  var fetchJson = async (url, headers = {}) => {
+    const [response, body] = await Application.scheduleRequest({
+      url,
+      method: "GET",
+      headers: { accept: "application/json", ...headers }
+    });
+    if (isCloudflareChallenge(response.status, response.headers, body.text)) {
+      throw await challenge();
+    }
+    if (response.status === 404) {
+      throw new Error(`Not found on MangaDot: ${url}`);
+    }
+    if (response.status < 200 || response.status >= 300) {
+      throw new Error(`MangaDot answered ${response.status}: ${url}`);
+    }
+    try {
+      return JSON.parse(body.text);
+    } catch {
+      if (/^\s*<(?:!doctype|html)/i.test(body.text)) {
+        throw await challenge();
+      }
+      throw new Error(`MangaDot's answer could not be read: ${url}`);
+    }
+  };
+  var fetchSearch = (query) => fetchJson(apiUrl(["search"], query));
+  var fetchRankedSection = (section, query) => fetchJson(apiUrl(["manga", "section", section.replace(/_/g, "-")], query));
+  var fetchSectionList = (id, query) => fetchJson(apiUrl(["manga", "section"], { id, ...query }));
+  var fetchManga = (mangaId) => fetchJson(apiUrl(["manga", mangaId]));
+  var fetchChapterList = (mangaId) => fetchJson(apiUrl(["manga", mangaId, "chapters", "list"]));
+  var fetchChapterImages = (chapterId, mangaId, trusted) => fetchJson(apiUrl([trusted ? "uploads" : "chapters", chapterId, "images"]), {
+    referer: `${DOMAIN}/manga/${mangaId}`
+  });
+  var fetchGenres = () => fetchJson(apiUrl(["manga", "genres"]));
+  var fetchPeople = (kind, name) => fetchJson(apiUrl(["manga", "people-suggest"], { kind, q: name }));
+
+  // src/MangaDot/parsers.ts
+  var toTagId = (name) => encodeURIComponent(name).replace(/[!'*~]/g, (character) => `%${character.charCodeAt(0).toString(16).toUpperCase()}`);
+  var fromTagId = (id) => {
+    try {
+      return decodeURIComponent(id);
+    } catch {
+      return id;
+    }
+  };
+  var UPDATE_NEEDED = "The source may need an update.";
+  var listOf = (value, what) => {
+    if (!Array.isArray(value)) {
+      throw new Error(`MangaDot's ${what} came back in an unexpected shape. ${UPDATE_NEEDED}`);
+    }
+    return value;
+  };
+  var cleanText = (value) => Application.decodeHTMLEntities(value ?? "").replace(/\s+/g, " ").trim();
+  var absoluteUrl = (path) => !path ? "" : /^https?:\/\//i.test(path) ? path : `${DOMAIN}${path.startsWith("/") ? "" : "/"}${path}`;
+  var parseStringArray = (value) => {
+    if (value == null) {
+      return [];
+    }
+    if (Array.isArray(value)) {
+      return value;
+    }
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed.filter((entry) => typeof entry === "string") : [];
+    } catch {
+      return value.trim() ? [value] : [];
+    }
+  };
+  var names = (value) => parseStringArray(value).map(cleanText).filter(Boolean).join(", ") || void 0;
+  var parseSiteDate = (value) => {
+    if (!value) {
+      return void 0;
+    }
+    const iso = value.trim().replace(" ", "T").replace(/\.\d+/, "").replace(/([+-]\d{2})$/, "$1:00");
+    const date = new Date(/(?:[zZ]|[+-]\d{2}:\d{2})$/.test(iso) ? iso : `${iso}Z`);
+    return Number.isNaN(date.getTime()) ? void 0 : date;
+  };
+  var parseRating = (manga) => {
+    if (manga.is_adult) {
+      return "ADULT" /* ADULT */;
+    }
+    if (manga.is_blurworthy) {
+      return "MATURE" /* MATURE */;
+    }
+    switch (manga.content_rating) {
+      case "erotica":
+        return "MATURE" /* MATURE */;
+      case "pornographic":
+        return "ADULT" /* ADULT */;
+      default:
+        return "EVERYONE" /* EVERYONE */;
+    }
+  };
+  var joinDetails = (parts) => parts.filter((part) => part !== void 0 && part.length > 0).join(" \u2022 ") || void 0;
+  var ratingText = (item) => typeof item.avg_rating === "number" ? `\u2605 ${Number(item.avg_rating.toFixed(1))}` : void 0;
+  var baseItem = (item) => ({
+    mangaId: String(item.id),
+    title: cleanText(item.title),
+    imageUrl: absoluteUrl(item.photo)
+  });
+  var toSearchResults = (items) => items.map((item) => ({
+    ...baseItem(item),
+    subtitle: names(item.authors),
+    contentRating: parseRating(item)
+  }));
+  var toFeaturedItems = (items) => items.map((item) => ({
+    type: "featuredCarouselItem",
+    ...baseItem(item),
+    subtitle: joinDetails([ratingText(item), cleanText(item.status) || void 0])
+  }));
+  var toCarouselItems = (items, type) => items.map((item) => ({
+    type,
+    ...baseItem(item),
+    subtitle: ("authors" in item ? names(item.authors) : void 0) ?? ratingText(item)
+  }));
+  var toLatestItems = (items) => items.map((item) => ({
+    type: "chapterUpdatesCarouselItem",
+    ...baseItem(item),
+    subtitle: joinDetails([
+      typeof item.chapter_count === "number" ? `${item.chapter_count} Chapters` : void 0,
+      ratingText(item)
+    ]),
+    publishDate: parseSiteDate(item.last_chapter_date)
+  }));
+  var parseMangaDetails = ({ manga }, mangaId) => {
+    if (!manga || manga.id === void 0) {
+      throw new Error(`MangaDot returned no details for ${mangaId}. ${UPDATE_NEEDED}`);
+    }
+    const primaryTitle = cleanText(manga.title);
+    const genres = (manga.genres ?? []).map(cleanText).filter(Boolean);
+    const tagGroups = TAG_GROUPS.flatMap(({ id, title }) => {
+      const tags = genres.filter((genre) => tagGroupOf(genre) === id).map((genre) => filterTag(FILTERS.GENRE, toTagId(genre), genre));
+      return tags.length > 0 ? [{ id, title, tags }] : [];
+    });
+    return {
+      mangaId,
+      mangaInfo: {
+        primaryTitle,
+        secondaryTitles: [
+          ...new Set(
+            parseStringArray(manga.alt_titles).map(cleanText).filter((title) => title && title !== primaryTitle)
+          )
+        ],
+        thumbnailUrl: absoluteUrl(manga.photo),
+        bannerUrl: manga.banner_image ? absoluteUrl(manga.banner_image) : void 0,
+        synopsis: cleanText(manga.description),
+        contentRating: parseRating(manga),
+        status: cleanText(manga.status) || "Unknown",
+        author: names(manga.authors),
+        artist: names(manga.artists),
+        // Out of ten on the site.
+        rating: typeof manga.avg_rating === "number" ? manga.avg_rating / 10 : void 0,
+        tagGroups
+      }
+    };
+  };
+  var parseChapters = (entries, sourceManga) => {
+    const hasVolumes = entries.some((entry) => typeof entry.volume_number === "number");
+    const rank = (value, missing) => typeof value === "number" && Number.isFinite(value) ? value : missing;
+    const ordered = [...entries].sort(
+      (a, b) => rank(a.volume_number, Infinity) - rank(b.volume_number, Infinity) || rank(a.chapter_number, 0) - rank(b.chapter_number, 0) || a.id - b.id
+    );
+    return ordered.map(
+      (entry, index) => ({
+        chapterId: String(entry.id),
+        sourceManga,
+        chapNum: rank(entry.chapter_number, 0),
+        title: cleanText(entry.chapter_title) || void 0,
+        group: cleanText(entry.group_name) || cleanText(entry.scanlator_name) || void 0,
+        // Zero means no volume data; undefined means an unassigned volume in a numbered series.
+        volume: typeof entry.volume_number === "number" ? entry.volume_number : hasVolumes ? void 0 : 0,
+        publishDate: parseSiteDate(entry.date_added),
+        langCode: cleanText(entry.language) || void 0,
+        sortingIndex: index + 1
+      })
+    );
+  };
+  var parseChapterPages = (response, chapter) => {
+    const pages = listOf(response?.images, "chapter images").map((image) => absoluteUrl(image?.url)).filter(Boolean);
+    if (pages.length === 0) {
+      throw new Error("This chapter has no pages.");
+    }
+    return { id: chapter.chapterId, mangaId: chapter.sourceManga.mangaId, pages };
+  };
+
+  // src/MangaDot/MangaDot.ts
+  var MangaDotInfo = sourceInfo({
+    name: "MangaDot",
+    description: "Extension that pulls content from mangadot.net.",
+    version: "1.0.0",
+    icon: "icon.png",
+    language: "English",
+    websiteBaseURL: DOMAIN,
+    // Suggestive titles are listed by default, and adult ones on request.
+    contentRating: "MATURE" /* MATURE */,
+    capabilities: ["chapters" /* CHAPTERS */, "homePage" /* HOME_PAGE */, "cloudflare" /* CLOUDFLARE */, "settings" /* SETTINGS */]
+  });
+  var ORIGIN_IDS = new Set(ORIGIN_OPTIONS.map(({ id }) => id));
+  var originParam = (ids) => ORIGIN_OPTIONS.filter(({ id }) => ids.includes(id)).map(({ value }) => value).join(",") || void 0;
+  var nextPage = (data, page) => (data.pagination?.total_pages ?? 0) > page ? { page: page + 1 } : void 0;
+  var loadGenres = async () => listOf(await fetchGenres(), "genre list").filter((genre) => typeof genre === "string" && genre.trim().length > 0).sort((a, b) => a.localeCompare(b));
+  var MangaDot = class extends PopmangoSource {
+    constructor(cheerio) {
+      super(cheerio, {
+        domain: DOMAIN,
+        settingsKeys: SETTINGS_KEYS,
+        rateLimit: { numberOfRequests: 5, bufferInterval: 1, ignoreImages: true },
+        interceptor: new MangaDotInterceptor()
+      });
+      /** Chapters the site serves from its uploads rather than its chapter store, by id. */
+      this.trustedUploads = /* @__PURE__ */ new Set();
+    }
+    getMangaShareUrl(mangaId) {
+      return `${DOMAIN}/manga/${mangaId}`;
+    }
+    // -----------------------------------------------------------------
+    // Settings
+    // -----------------------------------------------------------------
+    get searchOrigins() {
+      return this.settings.stringArray(STATE_KEYS.SEARCH_ORIGINS, ORIGIN_IDS);
+    }
+    get sectionOrigins() {
+      return this.settings.stringArray(STATE_KEYS.SECTION_ORIGINS, ORIGIN_IDS);
+    }
+    get hiddenTags() {
+      return this.settings.stringArray(STATE_KEYS.HIDDEN_TAGS);
+    }
+    get adult() {
+      return this.settings.choice(
+        STATE_KEYS.ADULT,
+        ADULT_OPTIONS.map(({ id }) => id),
+        "0"
+      );
+    }
+    get timeRange() {
+      return this.settings.choice(
+        STATE_KEYS.TIME_RANGE,
+        TIME_RANGE_OPTIONS.map(({ id }) => id),
+        "all"
+      );
+    }
+    /** The rows to show; nothing chosen means all of them. */
+    get visibleSections() {
+      const visible = this.settings.stringArray(STATE_KEYS.VISIBLE_SECTIONS, new Set(SECTION_IDS));
+      return visible.length > 0 ? visible : SECTION_IDS;
+    }
+    async getSettingsSections() {
+      const tagOptions = (await this.getGenres().catch(() => this.hiddenTags.map(fromTagId))).map(
+        (name) => ({ id: toTagId(name), title: name })
+      );
+      return [
+        {
+          id: "search",
+          header: "Search",
+          footer: "Defaults for every search. Content types narrow it to those kinds of comics, and hidden tags leave out titles that carry them, unless a search asks for the tag. Choosing nothing means everything. The site's tags are kept for a day; Refresh Tags asks for them again now.",
+          rows: [
+            selectRow("search_origins", {
+              label: "Content types",
+              options: [...ORIGIN_OPTIONS],
+              multiple: true,
+              get: () => this.searchOrigins,
+              set: (value) => this.settings.set(STATE_KEYS.SEARCH_ORIGINS, value)
+            }),
+            selectRow("hidden_tags", {
+              label: "Hidden tags",
+              options: tagOptions,
+              multiple: true,
+              get: () => this.hiddenTags,
+              set: (value) => this.settings.set(STATE_KEYS.HIDDEN_TAGS, value)
+            }),
+            buttonRow("refresh_tags", "Refresh Tags", async () => {
+              this.genres = void 0;
+              await this.getGenres(0);
+            })
+          ]
+        },
+        {
+          id: "home",
+          header: "Home page",
+          footer: "Content types narrow the rows the same way. A time range ranks Top Rated, Most Tracked and Recently Added over the last day, week or month instead of all time; those lists are shorter and come as a single page. Leave the rows unticked to show them all.",
+          rows: [
+            selectRow("section_origins", {
+              label: "Content types",
+              options: [...ORIGIN_OPTIONS],
+              multiple: true,
+              get: () => this.sectionOrigins,
+              set: (value) => this.settings.set(STATE_KEYS.SECTION_ORIGINS, value)
+            }),
+            selectRow("time_range", {
+              label: "Time range",
+              options: [...TIME_RANGE_OPTIONS],
+              get: () => [this.timeRange],
+              set: (value) => this.settings.set(STATE_KEYS.TIME_RANGE, value[0] ?? "all")
+            }),
+            selectRow("visible_sections", {
+              label: "Rows shown",
+              options: SECTION_OPTIONS,
+              multiple: true,
+              get: () => this.visibleSections,
+              set: (value) => this.settings.set(STATE_KEYS.VISIBLE_SECTIONS, value)
+            })
+          ]
+        },
+        {
+          id: "adult",
+          header: "Adult content",
+          footer: "Applies to search and the home page. A search can still choose otherwise.",
+          rows: [
+            selectRow("adult", {
+              label: "Show adult results",
+              options: [...ADULT_OPTIONS],
+              get: () => [this.adult],
+              set: (value) => this.settings.set(STATE_KEYS.ADULT, value[0] ?? "0")
+            })
+          ]
+        }
+      ];
+    }
+    // -----------------------------------------------------------------
+    // Home page
+    // -----------------------------------------------------------------
+    async getDiscoverSections() {
+      const visible = new Set(this.visibleSections);
+      return SECTION_IDS.filter((id) => visible.has(id)).map((id) => SECTION_DEFINITIONS[id]);
+    }
+    async getDiscoverSectionItems(section, metadata) {
+      const page = metadata?.page ?? 1;
+      const id = section.id;
+      const filters = { origin: originParam(this.sectionOrigins), adult: this.adult };
+      const type = section.type === "prominentCarousel" /* prominentCarousel */ ? "prominentCarouselItem" : "simpleCarouselItem";
+      if (id === SECTIONS.LATEST_UPDATES) {
+        const data2 = await fetchSectionList(SECTIONS.LATEST_UPDATES, { ...filters, limit: 100 });
+        return { items: toLatestItems(listOf(data2.items, "latest updates")) };
+      }
+      if (RANGED_SECTIONS.has(id) && this.timeRange !== "all") {
+        const data2 = await fetchSectionList(id, { ...filters, range: this.timeRange, limit: 100 });
+        return { items: toCarouselItems(listOf(data2.items, `${section.title} row`), type) };
+      }
+      const data = id === SECTIONS.MOST_VIEWED ? await fetchSearch({ ...filters, page, sortBy: "views", sortOrder: "desc" }) : await fetchRankedSection(id, { ...filters, page });
+      const items = listOf(data.manga_list, `${section.title} row`);
+      return {
+        items: section.type === "featured" /* featured */ ? toFeaturedItems(items) : toCarouselItems(items, type),
+        metadata: nextPage(data, page)
+      };
+    }
+    // -----------------------------------------------------------------
+    // Search
+    // -----------------------------------------------------------------
+    /**
+     * Offers the site's filters as tag sections.
+     *
+     * 0.8 has no sort control or single-choice picker, so those are tag
+     * sections too: where only one value makes sense, the first chosen wins.
+     * Every tag group filters the same genres parameter.
+     */
+    async getFilterSections() {
+      const section = (id, title, options) => ({
+        id,
+        title,
+        tags: options.map((option) => filterTag(id, option.id, option.title))
+      });
+      let genres = [];
+      try {
+        genres = await this.getGenres();
+      } catch (error) {
+        if (error instanceof CloudflareError) {
+          throw error;
+        }
+      }
+      return [
+        section(FILTERS.SORT, "Sort by", SORT_OPTIONS),
+        section(FILTERS.ORDER, "Order", ORDER_OPTIONS),
+        ...TAG_GROUPS.flatMap(({ id, title }) => {
+          const tags = genres.filter((genre) => tagGroupOf(genre) === id).map((genre) => filterTag(FILTERS.GENRE, toTagId(genre), genre));
+          return tags.length > 0 ? [{ id: `${FILTERS.GENRE}-${id}`, title, tags }] : [];
+        }),
+        section(FILTERS.STATUS, "Status", STATUS_OPTIONS),
+        section(FILTERS.ORIGIN, "Content type", ORIGIN_OPTIONS),
+        section(FILTERS.ADULT, "Adult results", ADULT_OPTIONS)
+      ];
+    }
+    /** 0.9 picks authors and artists from the site's suggestions; here they are typed. */
+    async getSearchFieldList() {
+      return [
+        { id: FIELDS.AUTHOR, name: "Author", placeholder: "Name, or several separated by commas" },
+        { id: FIELDS.ARTIST, name: "Artist", placeholder: "Name, or several separated by commas" }
+      ];
+    }
+    /** Tags can be ruled out as well as asked for. */
+    async supportsTagExclusion() {
+      return true;
+    }
+    async getSearchResultItems(query, metadata) {
+      const title = (query.title ?? "").trim();
+      const included = groupTags(query.includedTags);
+      const excluded = groupTags(query.excludedTags);
+      const chosen = (section) => included.get(section) ?? [];
+      const page = metadata?.page ?? 1;
+      const includedGenres = chosen(FILTERS.GENRE).map(fromTagId);
+      const excludedGenres = [...new Set([...excluded.get(FILTERS.GENRE) ?? [], ...this.hiddenTags].map(fromTagId))].filter((genre) => !includedGenres.includes(genre));
+      const requested = chosen(FILTERS.SORT)[0];
+      const sort = requested === "relevance" && !title ? "latest" : requested ?? (title ? "relevance" : "latest");
+      const order = sort === "relevance" ? "desc" : chosen(FILTERS.ORDER)[0] ?? (sort === "alphabetical" ? "asc" : "desc");
+      const [authors, artists] = await Promise.all([
+        this.matchPeople("author", textField(query, FIELDS.AUTHOR)),
+        this.matchPeople("artist", textField(query, FIELDS.ARTIST))
+      ]);
+      const origins = chosen(FILTERS.ORIGIN).length > 0 ? chosen(FILTERS.ORIGIN) : this.searchOrigins;
+      const data = await fetchSearch({
+        search: title || void 0,
+        page,
+        genres: [...includedGenres, ...excludedGenres.map((genre) => `-${genre}`)].join(",") || void 0,
+        origin: originParam(origins),
+        status: chosen(FILTERS.STATUS).join(",") || void 0,
+        author: authors.join(",") || void 0,
+        artist: artists.join(",") || void 0,
+        sortBy: sort,
+        sortOrder: order,
+        adult: chosen(FILTERS.ADULT)[0] ?? this.adult
+      });
+      const wanted = title.toLowerCase();
+      const exact = (item) => Number(wanted.length > 0 && item.title.toLowerCase() === wanted);
+      return {
+        items: toSearchResults(listOf(data.manga_list, "search results")).sort((a, b) => exact(b) - exact(a)),
+        metadata: nextPage(data, page)
+      };
+    }
+    // -----------------------------------------------------------------
+    // Series and chapters
+    // -----------------------------------------------------------------
+    async getMangaInfo(mangaId) {
+      return parseMangaDetails(await fetchManga(mangaId), mangaId);
+    }
+    async getChapterList(sourceManga) {
+      const entries = listOf(await fetchChapterList(sourceManga.mangaId), "chapter list");
+      for (const entry of entries) {
+        if (entry.uploader_upload_status === "trusted") {
+          this.trustedUploads.add(String(entry.id));
+        } else {
+          this.trustedUploads.delete(String(entry.id));
+        }
+      }
+      return parseChapters(entries, sourceManga);
+    }
+    /**
+     * A chapter's pages.
+     *
+     * Where they are served from depends on the upload, which only the chapter
+     * list says. The base class lists the chapters again before this whenever
+     * it has not seen them this session, so the list is always known here.
+     */
+    async getPages(chapter) {
+      const images = await fetchChapterImages(
+        chapter.chapterId,
+        chapter.sourceManga.mangaId,
+        this.trustedUploads.has(chapter.chapterId)
+      );
+      return parseChapterPages(images, chapter);
+    }
+    // -----------------------------------------------------------------
+    // Internals
+    // -----------------------------------------------------------------
+    /**
+     * The site's genre list, kept for a day and in memory for the session. A
+     * failed refresh keeps the old copy; a maximum age of 0 asks again now.
+     */
+    getGenres(maxAgeMs = GENRES_MAX_AGE_MS) {
+      return this.genres ??= this.settings.remembered(STATE_KEYS.GENRES, maxAgeMs, loadGenres).catch((error) => {
+        this.genres = void 0;
+        throw error;
+      });
+    }
+    /**
+     * The names to filter by.
+     *
+     * The site's own form fills these from its suggestions, so each typed name
+     * is matched to one: the same name if it is suggested, otherwise the first
+     * suggestion. The site suggests from three letters; a name it has nothing
+     * for is sent as typed.
+     */
+    async matchPeople(kind, typed) {
+      const wanted = (typed ?? "").split(",").map((name) => name.trim()).filter(Boolean);
+      return Promise.all(
+        wanted.map(async (name) => {
+          if (name.length < 3) {
+            return name;
+          }
+          try {
+            const suggestions = (await fetchPeople(kind, name)).suggestions ?? [];
+            return suggestions.find((entry) => entry.toLowerCase() === name.toLowerCase()) ?? suggestions[0] ?? name;
+          } catch (error) {
+            if (error instanceof CloudflareError) {
+              throw error;
+            }
+            return name;
+          }
+        })
+      );
+    }
+  };
+  function textField(query, field) {
+    const value = query.parameters[field];
+    return typeof value === "string" && value.trim().length > 0 ? value.trim() : void 0;
+  }
+  function groupTags(tags) {
+    const chosen = /* @__PURE__ */ new Map();
+    for (const tag of tags) {
+      const split = splitFilterTag(tag.id);
+      if (split === void 0) {
+        continue;
+      }
+      chosen.set(split.section, [...chosen.get(split.section) ?? [], split.value]);
+    }
+    return chosen;
+  }
+  return __toCommonJS(MangaDot_exports);
 })();
 this.Sources = _Sources; if (typeof exports === 'object' && typeof module !== 'undefined') {module.exports.Sources = this.Sources;}
