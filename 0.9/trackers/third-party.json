@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-30T11:40:43.303Z",
+  "generated": "2026-10-31T11:09:20.058Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -518,6 +518,10 @@
           "why": "in the Stable repository"
         },
         {
+          "id": "Webnex",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
           "id": "ZinManga",
           "why": "in the Stable repository"
         },
@@ -526,7 +530,7 @@
           "why": "taken from Inkdex"
         }
       ],
-      "commit": "8a421b9212ae7bee6418a838566629501a91f82a"
+      "commit": "e229c5fcce1d7be25282278ea7b8d8f0b015f34f"
     },
     {
       "repo": "itskodama/paperback-extensions",
@@ -600,7 +604,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "d23ee61bf52779aa356aff230648a116b647fc1e"
+      "commit": "4c86549a0b3b7dc5debbd336e46e71677c00216f"
     },
     {
       "repo": "feliivk/felii-extensions",
