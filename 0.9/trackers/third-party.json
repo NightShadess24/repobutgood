@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-31T11:09:20.058Z",
+  "generated": "2026-11-01T12:07:20.304Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -7,6 +7,7 @@
     "MangaUpdates": "mangaupdates.com",
     "Kenmei": "kenmei.co",
     "LeagueOfComicGeeks": "leagueofcomicgeeks.com",
+    "Comick": "comick.dev",
     "MangaBaka": "mangabaka.org"
   },
   "upstreams": [
@@ -458,7 +459,9 @@
       "sourceCode": "https://github.com/kittycatgit/kitty-extensions-0.9",
       "url": "https://github.com/kittycatgit/kitty-extensions-0.9",
       "appVersion": "0.9",
-      "added": [],
+      "added": [
+        "Comick"
+      ],
       "ported": [],
       "skipped": [
         {
@@ -530,7 +533,7 @@
           "why": "taken from Inkdex"
         }
       ],
-      "commit": "e229c5fcce1d7be25282278ea7b8d8f0b015f34f"
+      "commit": "7a08ac660f8a166e89badd14a1bcd64002d0d068"
     },
     {
       "repo": "itskodama/paperback-extensions",
@@ -604,7 +607,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "4c86549a0b3b7dc5debbd336e46e71677c00216f"
+      "commit": "50738ac752b89790235aa3b59c557f1aa0a93314"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -1033,7 +1036,7 @@
         },
         {
           "id": "Comick",
-          "why": "in the Stable repository"
+          "why": "already from Kittykat"
         },
         {
           "id": "DoujinDesu",
