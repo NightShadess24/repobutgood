@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-31T11:22:46.864Z",
+  "generated": "2026-11-01T12:20:36.613Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -2091,6 +2091,10 @@
           "why": "already from Netsky Generic"
         },
         {
+          "id": "Comick",
+          "why": "already from Nopools"
+        },
+        {
           "id": "DankeFursLesen",
           "why": "in the Stable repository"
         },
@@ -2155,7 +2159,7 @@
           "why": "already from Netsky Generic"
         }
       ],
-      "commit": "e229c5fcce1d7be25282278ea7b8d8f0b015f34f"
+      "commit": "7a08ac660f8a166e89badd14a1bcd64002d0d068"
     },
     {
       "repo": "itskodama/paperback-extensions",
@@ -2231,7 +2235,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "4c86549a0b3b7dc5debbd336e46e71677c00216f"
+      "commit": "50738ac752b89790235aa3b59c557f1aa0a93314"
     },
     {
       "repo": "feliivk/felii-extensions",
