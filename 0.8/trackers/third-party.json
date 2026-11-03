@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-02T14:03:32.701Z",
+  "generated": "2026-11-03T13:20:01.971Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -2099,6 +2099,14 @@
           "why": "in the Stable repository"
         },
         {
+          "id": "DivaScans",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
+          "id": "FanFiction",
+          "why": "in the Stable repository"
+        },
+        {
           "id": "HiperDex",
           "why": "already from Netsky Generic"
         },
@@ -2139,12 +2147,20 @@
           "why": "in the Stable repository"
         },
         {
+          "id": "SoraRaw",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
           "id": "TCBScans",
           "why": "in the Stable repository"
         },
         {
           "id": "ToonTop",
           "why": "in the Stable repository"
+        },
+        {
+          "id": "Toonz",
+          "why": "18+ (in the NSFW repository)"
         },
         {
           "id": "Webnex",
@@ -2159,7 +2175,7 @@
           "why": "already from Netsky Generic"
         }
       ],
-      "commit": "7a08ac660f8a166e89badd14a1bcd64002d0d068"
+      "commit": "e76bbb835a1063a9c5ed4d3ecbc6d6ddf597715d"
     },
     {
       "repo": "itskodama/paperback-extensions",
@@ -2235,7 +2251,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "e8d90f9dc899164a7a2e5a50ec4324d772dac08a"
+      "commit": "4212023e3bae4fadc951b88171d115f012008a96"
     },
     {
       "repo": "feliivk/felii-extensions",
