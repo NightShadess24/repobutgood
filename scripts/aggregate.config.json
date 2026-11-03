@@ -433,9 +433,7 @@
   },
   "replacedByOwn": {
     "$comment": "Sources made in this repository (src/) whose copies in other repositories are left out: those sites changed and only the version here reads them now",
-    "ids": [
-      "DrakeScans"
-    ]
+    "ids": ["DrakeScans"]
   },
   "ratingOverrides": {
     "$comment": "Content ratings decided here: these sources' repositories rate them 18+ though they're mostly not, so they stay in the SFW repositories (rated Mature)",
