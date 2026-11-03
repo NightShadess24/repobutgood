@@ -296,7 +296,8 @@ async function checkAll(sources) {
   const realFetch = globalThis.fetch;
   globalThis.fetch = (url, init = {}) => {
     try {
-      const parsed = new URL(String(url));
+      const href = typeof url === "string" ? url : url instanceof URL ? url.href : url.url;
+      const parsed = new URL(href);
       const seen = pathsSeen.get(bareHost(parsed.hostname)) ?? [];
       seen.push(parsed.pathname);
       if (seen.length > 100) seen.shift();
