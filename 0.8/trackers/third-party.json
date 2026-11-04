@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-03T13:20:01.971Z",
+  "generated": "2026-11-04T13:32:31.764Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -1909,7 +1909,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "287471c937dd173b1d29ce50e8f376f00e4cea95"
+      "commit": "06166a6619d64db2e9739674d5118892713e45e5"
     },
     {
       "repo": "karrot0/KakarotExtension",
@@ -2087,6 +2087,10 @@
       "ported": [],
       "skipped": [
         {
+          "id": "BaeToon",
+          "why": "in the Stable repository"
+        },
+        {
           "id": "CoffeeManga",
           "why": "already from Netsky Generic"
         },
@@ -2103,7 +2107,19 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "DivineDaoLibrary",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
+          "id": "ExiledRebels",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
           "id": "FanFiction",
+          "why": "in the Stable repository"
+        },
+        {
+          "id": "Foxaholic",
           "why": "in the Stable repository"
         },
         {
@@ -2116,6 +2132,18 @@
         },
         {
           "id": "KaynScan",
+          "why": "in the Stable repository"
+        },
+        {
+          "id": "KnoxT",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
+          "id": "LGBToon",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
+          "id": "LagoonScans",
           "why": "in the Stable repository"
         },
         {
@@ -2139,11 +2167,19 @@
           "why": "in the Stable repository"
         },
         {
+          "id": "SanaScans",
+          "why": "in the Stable repository"
+        },
+        {
           "id": "ScytheScans",
           "why": "in the Stable repository"
         },
         {
           "id": "SilentQuill",
+          "why": "in the Stable repository"
+        },
+        {
+          "id": "SirenScans",
           "why": "in the Stable repository"
         },
         {
@@ -2167,6 +2203,14 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "WebtoonClub",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
+          "id": "XNovel",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
           "id": "ZinManga",
           "why": "already from Netsky Generic"
         },
@@ -2175,7 +2219,7 @@
           "why": "already from Netsky Generic"
         }
       ],
-      "commit": "e76bbb835a1063a9c5ed4d3ecbc6d6ddf597715d"
+      "commit": "2f70bd6cef14e06b82559b89e47d4d425e105265"
     },
     {
       "repo": "itskodama/paperback-extensions",
@@ -2251,7 +2295,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "4212023e3bae4fadc951b88171d115f012008a96"
+      "commit": "193db3659da65e184bbbfcc7de7325efaa586f14"
     },
     {
       "repo": "feliivk/felii-extensions",
