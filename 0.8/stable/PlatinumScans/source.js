@@ -1459,11 +1459,11 @@ var _Sources = (() => {
     }
   });
 
-  // src/UToon/UToon.ts
-  var UToon_exports = {};
-  __export(UToon_exports, {
-    UToon: () => UToon,
-    UToonInfo: () => UToonInfo
+  // src/PlatinumScans/PlatinumScans.ts
+  var PlatinumScans_exports = {};
+  __export(PlatinumScans_exports, {
+    PlatinumScans: () => PlatinumScans,
+    PlatinumScansInfo: () => PlatinumScansInfo
   });
   var import_types3 = __toESM(require_lib());
 
@@ -17025,27 +17025,28 @@ Please go to the homepage of <${this.baseUrl}> and press the cloud icon.`);
     }
   };
 
-  // src/UToon/UToon.ts
-  var DOMAIN = "https://utoon.net";
-  var UToonInfo = {
-    version: getExportVersion("0.0.0"),
-    name: "UToon",
+  // src/PlatinumScans/PlatinumScans.ts
+  var DOMAIN = "https://platinumscans.com";
+  var PlatinumScansInfo = {
+    version: getExportVersion("0.0.1"),
+    name: "PlatinumScans",
     description: `Extension that pulls manga from ${DOMAIN}`,
     author: "Netsky",
     authorWebsite: "http://github.com/TheNetsky",
     icon: "icon.png",
-    contentRating: import_types3.ContentRating.MATURE,
+    contentRating: import_types3.ContentRating.EVERYONE,
     websiteBaseURL: DOMAIN,
     sourceTags: [],
     intents: import_types3.SourceIntents.MANGA_CHAPTERS | import_types3.SourceIntents.HOMEPAGE_SECTIONS | import_types3.SourceIntents.CLOUDFLARE_BYPASS_REQUIRED | import_types3.SourceIntents.SETTINGS_UI
   };
-  var UToon = class extends Madara {
+  var PlatinumScans = class extends Madara {
     constructor() {
       super(...arguments);
       this.baseUrl = DOMAIN;
       this.chapterEndpoint = 1;
+      this.hasAdvancedSearchPage = false;
     }
   };
-  return __toCommonJS(UToon_exports);
+  return __toCommonJS(PlatinumScans_exports);
 })();
 this.Sources = _Sources; if (typeof exports === 'object' && typeof module !== 'undefined') {module.exports.Sources = this.Sources;}
