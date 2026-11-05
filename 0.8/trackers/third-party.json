@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-04T13:32:31.764Z",
+  "generated": "2026-11-05T13:52:02.211Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -24,7 +24,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "6509139612c0a0b3529263e2cfc5d540dbaccb96"
+      "commit": "25653c852decca341990b75be186a907922efb12"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -164,7 +164,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "42a27a19c482b85c6344e5e5f9686abac3e18111"
+      "commit": "184b501a16748fc71aa3e35e071ba645169ac4f5"
     },
     {
       "repo": "timkuel/PaperBackExtension",
@@ -2295,7 +2295,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "193db3659da65e184bbbfcc7de7325efaa586f14"
+      "commit": "1b54c519ff081fe9e2b9a671bc2fafd1e0bba83e"
     },
     {
       "repo": "feliivk/felii-extensions",
