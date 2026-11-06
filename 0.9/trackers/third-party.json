@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-05T13:36:44.007Z",
+  "generated": "2026-11-06T13:16:05.913Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -371,7 +371,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "f6d6d416aca51d58783d562c3d83466d642da9be"
+      "commit": "67325f81b212fbe9ade512d583bd8eec821508eb"
     },
     {
       "repo": "Catta1997/Sinon-Paperback-Extensions",
@@ -529,6 +529,10 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "MangaK",
+          "why": "taken from Kakarot"
+        },
+        {
           "id": "ManhwaRead",
           "why": "in the Stable repository"
         },
@@ -593,7 +597,7 @@
           "why": "taken from Inkdex"
         }
       ],
-      "commit": "2f70bd6cef14e06b82559b89e47d4d425e105265"
+      "commit": "924cb0365eb258d9553b5683070ac67c26330147"
     },
     {
       "repo": "itskodama/paperback-extensions",
@@ -667,7 +671,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "1b54c519ff081fe9e2b9a671bc2fafd1e0bba83e"
+      "commit": "284d30f721b881c719b1d5883a977075c65d3621"
     },
     {
       "repo": "feliivk/felii-extensions",
