@@ -2080,6 +2080,8 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     TIME_RANGE: "time_range",
     VISIBLE_SECTIONS: "visible_sections",
     ADULT: "adult",
+    CHAPTER_LANGUAGES: "chapter_languages",
+    CHAPTER_UPLOADS: "chapter_uploads",
     GENRES: "genres"
   };
   var SETTINGS_KEYS = Object.values(STATE_KEYS);
@@ -2100,6 +2102,83 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     { id: "1", title: "Yes" },
     { id: "both", title: "Both" }
   ];
+  var LANGUAGE_OPTIONS = [
+    { id: "ar", title: "Arabic" },
+    { id: "bg", title: "Bulgarian" },
+    { id: "my", title: "Burmese" },
+    { id: "zh", title: "Chinese" },
+    { id: "zh-hk", title: "Chinese (Hong Kong)" },
+    { id: "cs", title: "Czech" },
+    { id: "da", title: "Danish" },
+    { id: "nl", title: "Dutch" },
+    { id: "en", title: "English" },
+    { id: "tl", title: "Filipino" },
+    { id: "fi", title: "Finnish" },
+    { id: "fr", title: "French" },
+    { id: "ka", title: "Georgian" },
+    { id: "de", title: "German" },
+    { id: "el", title: "Greek" },
+    { id: "he", title: "Hebrew" },
+    { id: "hi", title: "Hindi" },
+    { id: "hu", title: "Hungarian" },
+    { id: "id", title: "Indonesian" },
+    { id: "it", title: "Italian" },
+    { id: "ja", title: "Japanese" },
+    { id: "ko", title: "Korean" },
+    { id: "la", title: "Latin" },
+    { id: "lt", title: "Lithuanian" },
+    { id: "ms", title: "Malay" },
+    { id: "mn", title: "Mongolian" },
+    { id: "no", title: "Norwegian" },
+    { id: "pl", title: "Polish" },
+    { id: "pt", title: "Portuguese" },
+    { id: "pt-br", title: "Portuguese (Brazil)" },
+    { id: "ro", title: "Romanian" },
+    { id: "ru", title: "Russian" },
+    { id: "es", title: "Spanish" },
+    { id: "es-la", title: "Spanish (Latin America)" },
+    { id: "sv", title: "Swedish" },
+    { id: "th", title: "Thai" },
+    { id: "tr", title: "Turkish" },
+    { id: "uk", title: "Ukrainian" },
+    { id: "vi", title: "Vietnamese" }
+  ];
+  var DEFAULT_LANGUAGES = ["en"];
+  var UPLOAD_OPTIONS = [
+    { id: "group", title: "One group per series" },
+    { id: "best", title: "Best upload per chapter" },
+    { id: "all", title: "Every upload" }
+  ];
+  var OFFICIAL_GROUPS = /* @__PURE__ */ new Set([
+    "official",
+    "official?",
+    "animate international",
+    "comikey",
+    "crunchyroll",
+    "dark horse manga",
+    "fakku",
+    "j-novel club",
+    "k-manga",
+    "k manga",
+    "kodansha usa",
+    "kodansha comics",
+    "manga plus",
+    "mangaplus",
+    "manga up!",
+    "one peace books",
+    "seven seas entertainment",
+    "square enix manga",
+    "viz manga",
+    "viz media",
+    "viz shonen jump",
+    "yen press",
+    "manta",
+    "tapas",
+    "tappytoon",
+    "webtoon",
+    "line webtoon",
+    "toomics"
+  ]);
   var SORT_OPTIONS = [
     { id: "relevance", title: "Relevance" },
     { id: "latest", title: "Latest" },
@@ -2121,6 +2200,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   ];
   var SECTIONS = {
     MOST_VIEWED: "most_viewed",
+    TRENDING: "trending",
     TOP_RATED: "top_rated",
     MOST_TRACKED: "most_tracked",
     LATEST_UPDATES: "latest_updates",
@@ -2128,6 +2208,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   };
   var SECTION_DEFINITIONS = {
     [SECTIONS.MOST_VIEWED]: { id: SECTIONS.MOST_VIEWED, title: "Most Viewed", type: "featured" /* featured */ },
+    [SECTIONS.TRENDING]: { id: SECTIONS.TRENDING, title: "Trending", type: "simpleCarousel" /* simpleCarousel */ },
     [SECTIONS.TOP_RATED]: { id: SECTIONS.TOP_RATED, title: "Top Rated", type: "prominentCarousel" /* prominentCarousel */ },
     [SECTIONS.MOST_TRACKED]: {
       id: SECTIONS.MOST_TRACKED,
@@ -2147,6 +2228,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   };
   var SECTION_IDS = [
     SECTIONS.MOST_VIEWED,
+    SECTIONS.TRENDING,
     SECTIONS.TOP_RATED,
     SECTIONS.MOST_TRACKED,
     SECTIONS.LATEST_UPDATES,
@@ -2417,6 +2499,96 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       }
     };
   };
+  var NO_GROUP = "no group";
+  var lowerText = (value) => cleanText(value).toLowerCase();
+  var toUpload = (entry) => {
+    const group = lowerText(entry.group_name);
+    const scanlator = lowerText(entry.scanlator_name);
+    const by = entry.group_id && group !== NO_GROUP ? `group:${entry.group_id}` : scanlator && scanlator !== NO_GROUP ? `scanlator:${scanlator}` : `uploader:${entry.uploader_id ?? entry.uploader_username ?? ""}`;
+    const credited = [group, scanlator, ...(entry.groups ?? []).map((credit) => lowerText(credit?.name))];
+    return {
+      entry,
+      by,
+      official: credited.some((name) => OFFICIAL_GROUPS.has(name)),
+      addedAt: parseSiteDate(entry.date_added)?.getTime() ?? 0
+    };
+  };
+  var markChapters = (uploads) => {
+    const numbered = uploads.filter(
+      ({ entry }) => typeof entry.chapter_number === "number" && Number.isFinite(entry.chapter_number)
+    );
+    const volumeOf = /* @__PURE__ */ new Map();
+    let restarts = false;
+    for (const { entry, by } of numbered) {
+      const seen = `${by}|${entry.chapter_number}`;
+      const volume = String(entry.volume_number ?? "");
+      restarts = restarts || volumeOf.has(seen) && volumeOf.get(seen) !== volume;
+      volumeOf.set(seen, volume);
+    }
+    for (const upload of numbered) {
+      const whole = Math.floor(upload.entry.chapter_number);
+      upload.chapter = restarts ? `${upload.entry.volume_number ?? ""}|${whole}` : String(whole);
+    }
+  };
+  var firstOfEach = (uploads) => {
+    const takenBy = /* @__PURE__ */ new Map();
+    const listed = /* @__PURE__ */ new Set();
+    const kept = [];
+    for (const { entry, by, chapter } of uploads) {
+      if (chapter !== void 0) {
+        const part = `${chapter}|${entry.chapter_number}`;
+        if ((takenBy.get(chapter) ?? by) !== by || listed.has(part)) {
+          continue;
+        }
+        takenBy.set(chapter, by);
+        listed.add(part);
+      }
+      kept.push(entry);
+    }
+    return kept;
+  };
+  var newestFirst = (a, b) => b.addedAt - a.addedAt || b.entry.id - a.entry.id;
+  var bestOfEach = (uploads) => firstOfEach([...uploads].sort((a, b) => Number(b.official) - Number(a.official) || newestFirst(a, b)));
+  var oneGroup = (uploads) => {
+    const standing = /* @__PURE__ */ new Map();
+    for (const upload of uploads) {
+      const record = standing.get(upload.by) ?? { official: false, chapters: /* @__PURE__ */ new Set(), latest: 0 };
+      record.official = record.official || upload.official;
+      if (upload.chapter !== void 0) {
+        record.chapters.add(upload.chapter);
+      }
+      record.latest = Math.max(record.latest, upload.addedAt);
+      standing.set(upload.by, record);
+    }
+    const rank = new Map(
+      [...standing].sort(
+        ([, a], [, b]) => Number(b.official) - Number(a.official) || b.chapters.size - a.chapters.size || b.latest - a.latest
+      ).map(([by], index) => [by, index])
+    );
+    return firstOfEach(
+      [...uploads].sort((a, b) => (rank.get(a.by) ?? 0) - (rank.get(b.by) ?? 0) || newestFirst(a, b))
+    );
+  };
+  var pickUploads = (entries, languages, choice) => {
+    const languageOf = (entry) => lowerText(entry.language) || "en";
+    const wanted = new Set(languages);
+    const chosen = wanted.size === 0 ? entries : entries.filter((entry) => wanted.has(languageOf(entry)));
+    const shown = chosen.length > 0 ? chosen : entries;
+    if (choice === "all") {
+      return shown;
+    }
+    const byLanguage = /* @__PURE__ */ new Map();
+    for (const entry of shown) {
+      const language = languageOf(entry);
+      const uploads = byLanguage.get(language) ?? [];
+      uploads.push(toUpload(entry));
+      byLanguage.set(language, uploads);
+    }
+    return [...byLanguage.values()].flatMap((uploads) => {
+      markChapters(uploads);
+      return choice === "group" ? oneGroup(uploads) : bestOfEach(uploads);
+    });
+  };
   var parseChapters = (entries, sourceManga) => {
     const hasVolumes = entries.some((entry) => typeof entry.volume_number === "number");
     const rank = (value, missing) => typeof value === "number" && Number.isFinite(value) ? value : missing;
@@ -2450,7 +2622,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   var MangaDotInfo = sourceInfo({
     name: "MangaDot",
     description: "Extension that pulls content from mangadot.net.",
-    version: "1.0.0",
+    version: "1.1.0",
     icon: "icon.png",
     language: "English",
     websiteBaseURL: DOMAIN,
@@ -2459,6 +2631,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     capabilities: ["chapters" /* CHAPTERS */, "homePage" /* HOME_PAGE */, "cloudflare" /* CLOUDFLARE */, "settings" /* SETTINGS */]
   });
   var ORIGIN_IDS = new Set(ORIGIN_OPTIONS.map(({ id }) => id));
+  var LANGUAGE_IDS = new Set(LANGUAGE_OPTIONS.map(({ id }) => id));
   var originParam = (ids) => ORIGIN_OPTIONS.filter(({ id }) => ids.includes(id)).map(({ value }) => value).join(",") || void 0;
   var nextPage = (data, page) => (data.pagination?.total_pages ?? 0) > page ? { page: page + 1 } : void 0;
   var loadGenres = async () => listOf(await fetchGenres(), "genre list").filter((genre) => typeof genre === "string" && genre.trim().length > 0).sort((a, b) => a.localeCompare(b));
@@ -2506,6 +2679,17 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     get visibleSections() {
       const visible = this.settings.stringArray(STATE_KEYS.VISIBLE_SECTIONS, new Set(SECTION_IDS));
       return visible.length > 0 ? visible : SECTION_IDS;
+    }
+    /** English until languages are chosen; choosing none lists them all. */
+    get chapterLanguages() {
+      return this.settings.get(STATE_KEYS.CHAPTER_LANGUAGES) === void 0 ? DEFAULT_LANGUAGES : this.settings.stringArray(STATE_KEYS.CHAPTER_LANGUAGES, LANGUAGE_IDS);
+    }
+    get chapterUploads() {
+      return this.settings.choice(
+        STATE_KEYS.CHAPTER_UPLOADS,
+        UPLOAD_OPTIONS.map(({ id }) => id),
+        "group"
+      );
     }
     async getSettingsSections() {
       const tagOptions = (await this.getGenres().catch(() => this.hiddenTags.map(fromTagId))).map(
@@ -2565,6 +2749,26 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
           ]
         },
         {
+          id: "chapters",
+          header: "Chapters",
+          footer: "A chapter is often uploaded several times, in several languages and by several groups. One group per series keeps each series with the group that has the most of it, filling gaps from the next; best upload takes the newest, chapter by chapter. Official releases come first in both. Choosing no language lists them all, and a series with nothing in yours lists every language.",
+          rows: [
+            selectRow("chapter_languages", {
+              label: "Languages",
+              options: LANGUAGE_OPTIONS,
+              multiple: true,
+              get: () => this.chapterLanguages,
+              set: (value) => this.settings.set(STATE_KEYS.CHAPTER_LANGUAGES, value)
+            }),
+            selectRow("chapter_uploads", {
+              label: "Uploads",
+              options: [...UPLOAD_OPTIONS],
+              get: () => [this.chapterUploads],
+              set: (value) => this.settings.set(STATE_KEYS.CHAPTER_UPLOADS, value[0] ?? "group")
+            })
+          ]
+        },
+        {
           id: "adult",
           header: "Adult content",
           footer: "Applies to search and the home page. A search can still choose otherwise.",
@@ -2594,6 +2798,10 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       if (id === SECTIONS.LATEST_UPDATES) {
         const data2 = await fetchSectionList(SECTIONS.LATEST_UPDATES, { ...filters, limit: 100 });
         return { items: toLatestItems(listOf(data2.items, "latest updates")) };
+      }
+      if (id === SECTIONS.TRENDING) {
+        const data2 = await fetchSectionList(SECTIONS.TRENDING, { ...filters, limit: 30 });
+        return { items: toCarouselItems(listOf(data2.items, "trending row"), type) };
       }
       if (RANGED_SECTIONS.has(id) && this.timeRange !== "all") {
         const data2 = await fetchSectionList(id, { ...filters, range: this.timeRange, limit: 100 });
@@ -2703,7 +2911,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
           this.trustedUploads.delete(String(entry.id));
         }
       }
-      return parseChapters(entries, sourceManga);
+      return parseChapters(pickUploads(entries, this.chapterLanguages, this.chapterUploads), sourceManga);
     }
     /**
      * A chapter's pages.
