@@ -2120,9 +2120,13 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     HIDDEN_THEMES: "kagane_hidden_themes",
     SHOW_SOURCE_IN_TITLE: "kagane_show_source_in_title",
     SHOW_SPOILER_TAGS: "kagane_show_spoiler_tags",
-    VISIBLE_SECTIONS: "kagane_visible_sections"
+    VISIBLE_SECTIONS: "kagane_visible_sections",
+    HIDDEN_TAG_IDS: "kagane_hidden_tag_ids",
+    GENRE_LIST: "kagane_genre_list",
+    SOURCE_LIST: "kagane_source_list"
   };
   var SETTINGS_KEYS = Object.values(STATE_KEYS);
+  var LIST_MAX_AGE_MS = 24 * 60 * 60 * 1e3;
   var CONTENT_RATING_OPTIONS = [
     { id: "Safe", title: "Safe" },
     { id: "Suggestive", title: "Suggestive" },
@@ -2565,6 +2569,17 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   }
   var integrity;
   var pendingIntegrity;
+  async function mint(site) {
+    try {
+      return await getJson(`${site}/api/integrity`, {});
+    } catch (error) {
+      if (error instanceof CloudflareError) {
+        throw error;
+      }
+      await Application.scheduleRequest({ url: `${site}/`, method: "GET" }).catch(() => void 0);
+      return getJson(`${site}/api/integrity`, {});
+    }
+  }
   async function integrityToken(site, force) {
     if (!force && integrity !== void 0 && integrity.site === site && Date.now() < integrity.expiresAt) {
       return integrity.token;
@@ -2574,8 +2589,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     }
     pendingIntegrity = (async () => {
       try {
-        await Application.scheduleRequest({ url: `${site}/`, method: "GET" }).catch(() => void 0);
-        const minted = await getJson(`${site}/api/integrity`, {});
+        const minted = await mint(site);
         integrity = { token: minted.token, expiresAt: minted.exp * 1e3 - TOKEN_MARGIN_MS, site };
         return minted.token;
       } catch (error) {
@@ -3362,7 +3376,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   var KaganeInfo = sourceInfo({
     name: "Kagane",
     description: "Extension that pulls manga, manhwa, manhua and comics from kagane.cx.",
-    version: "5.0.3",
+    version: "5.0.4",
     icon: "icon.png",
     language: "Multi",
     websiteBaseURL: DOMAIN,
@@ -3378,7 +3392,10 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       super(cheerio, {
         domain: DOMAIN,
         settingsKeys: SETTINGS_KEYS,
-        rateLimit: { numberOfRequests: 3, bufferInterval: 1 },
+        // Pages come through the app's throttle too; at 3 a second a 60-page chapter
+        // took 20 seconds to ask for. The site's own API keeps its 3.
+        rateLimit: { numberOfRequests: 6, bufferInterval: 1 },
+        apiRateLimit: { numberOfRequests: 3, bufferInterval: 1 },
         interceptor: new KaganeInterceptor(() => this.mirror)
       });
       this.pageCounts = /* @__PURE__ */ new Map();
@@ -3387,7 +3404,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       return `${this.site}/series/${mangaId}`;
     }
     async getSettingsSections() {
-      const genres = await fetchGenres(this.site).catch(() => []);
+      const genres = await this.genreList().catch(() => []);
       const sections = [
         {
           id: "site",
@@ -3521,8 +3538,8 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     // 0.8 has no sort or single-choice control, so those are tag sections; the first pick wins.
     async getFilterSections() {
       const [genres, sources] = await Promise.all([
-        fetchGenres(this.site).catch(() => []),
-        fetchSources(this.site).catch(() => [])
+        this.genreList().catch(() => []),
+        this.sourceList().catch(() => [])
       ]);
       const section = (id, title, options) => ({
         id,
@@ -3708,7 +3725,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     }
     async view(full = false) {
       const showSource = this.settings.boolean(STATE_KEYS.SHOW_SOURCE_IN_TITLE, false);
-      const sources = showSource ? await fetchSources(this.site).catch(() => []) : [];
+      const sources = showSource ? await this.sourceList().catch(() => []) : [];
       return {
         cover: (imageId, wantFull) => coverUrl(this.site, imageId, wantFull ?? full),
         sourceNames: showSource ? new Map(sources.map((source) => [source.source_id, source.title])) : void 0,
@@ -3768,8 +3785,57 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     }
     async hiddenTagIds() {
       const themes = new Set(this.settings.stringArray(STATE_KEYS.HIDDEN_THEMES));
-      const typed = (await this.typedTags(this.settings.string(STATE_KEYS.HIDDEN_TAGS, ""))).included.flat();
+      const text = this.settings.string(STATE_KEYS.HIDDEN_TAGS, "");
+      const typed = text ? await this.typedHiddenTagIds(text) : [];
       return [...typed, ...HIDDEN_THEMES.filter((theme) => themes.has(theme.id)).flatMap((theme) => theme.tagIds)];
+    }
+    // Every browse applies the hidden tags, and resolving names takes the whole 1.8 MB tag
+    // list. So the ids they resolve to are kept for a day, shared by the rows of one home
+    // page, and looked up again only when the text changes.
+    typedHiddenTagIds(text) {
+      if (this.hiddenTags?.text !== text) {
+        const ids = this.resolveHiddenTags(text);
+        this.hiddenTags = { text, ids };
+        ids.catch(() => {
+          if (this.hiddenTags?.ids === ids) {
+            this.hiddenTags = void 0;
+          }
+        });
+      }
+      return this.hiddenTags.ids;
+    }
+    async resolveHiddenTags(text) {
+      const stored = this.settings.get(STATE_KEYS.HIDDEN_TAG_IDS);
+      const kept = stored?.text === text && Array.isArray(stored.ids) && stored.ids.every((id) => typeof id === "string") ? stored.ids : void 0;
+      if (kept !== void 0 && typeof stored?.at === "number" && Date.now() - stored.at < LIST_MAX_AGE_MS) {
+        return kept;
+      }
+      try {
+        const ids = (await this.typedTags(text)).included.flat();
+        this.settings.set(STATE_KEYS.HIDDEN_TAG_IDS, { text, ids, at: Date.now() });
+        return ids;
+      } catch (error) {
+        if (kept !== void 0) {
+          return kept;
+        }
+        throw error;
+      }
+    }
+    // Kept for a day across launches, like the repository's other sources' lists; every
+    // mirror serves the same ones. Only the fields used are kept.
+    genreList() {
+      return this.settings.remembered(
+        STATE_KEYS.GENRE_LIST,
+        LIST_MAX_AGE_MS,
+        async () => (await fetchGenres(this.site)).map(({ id, genre_name, genre_type }) => ({ id, genre_name, genre_type }))
+      );
+    }
+    sourceList() {
+      return this.settings.remembered(
+        STATE_KEYS.SOURCE_LIST,
+        LIST_MAX_AGE_MS,
+        async () => (await fetchSources(this.site)).map(({ source_id, source_type, title }) => ({ source_id, source_type, title }))
+      );
     }
     async resolveId(kind, name) {
       return name !== void 0 ? resolveName(this.site, kind, name) : void 0;
