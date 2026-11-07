@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-06T13:16:05.913Z",
+  "generated": "2026-11-07T11:59:49.609Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -485,6 +485,10 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "Elftoon",
+          "why": "taken from Kakarot"
+        },
+        {
           "id": "ExiledRebels",
           "why": "18+ (in the NSFW repository)"
         },
@@ -495,6 +499,10 @@
         {
           "id": "Foxaholic",
           "why": "in the Stable repository"
+        },
+        {
+          "id": "Hentai2read",
+          "why": "taken from Kakarot"
         },
         {
           "id": "HiperDex",
@@ -533,6 +541,10 @@
           "why": "taken from Kakarot"
         },
         {
+          "id": "Mangaball",
+          "why": "taken from Kakarot"
+        },
+        {
           "id": "ManhwaRead",
           "why": "in the Stable repository"
         },
@@ -547,6 +559,10 @@
         {
           "id": "SanaScans",
           "why": "in the Stable repository"
+        },
+        {
+          "id": "ScribbleHub",
+          "why": "taken from Kakarot"
         },
         {
           "id": "ScytheScans",
@@ -597,7 +613,7 @@
           "why": "taken from Inkdex"
         }
       ],
-      "commit": "924cb0365eb258d9553b5683070ac67c26330147"
+      "commit": "a4404f54a0a0763dc5b1534d3e179732342ed170"
     },
     {
       "repo": "itskodama/paperback-extensions",
@@ -671,7 +687,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "284d30f721b881c719b1d5883a977075c65d3621"
+      "commit": "b0aa1a0a4fc8ce3d3cc1c3ae6d3d4659b6bb38d7"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -935,12 +951,12 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "MangaTown",
-          "why": "in the Stable repository"
-        },
-        {
           "id": "MangaDot",
           "why": "already here"
+        },
+        {
+          "id": "MangaTown",
+          "why": "in the Stable repository"
         },
         {
           "id": "Mangago",
@@ -995,7 +1011,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "184b501a16748fc71aa3e35e071ba645169ac4f5"
+      "commit": "79231985f9cf13cb5a7c2ec5f01bcfbb9d4ebe6d"
     },
     {
       "repo": "timkuel/PaperBackExtension",
