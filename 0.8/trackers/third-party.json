@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-07T12:13:25.237Z",
+  "generated": "2026-11-08T12:22:24.765Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -2085,161 +2085,8 @@
       "appVersion": "0.9",
       "added": [],
       "ported": [],
-      "skipped": [
-        {
-          "id": "BaeToon",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "CoffeeManga",
-          "why": "already from Netsky Generic"
-        },
-        {
-          "id": "Comick",
-          "why": "already from Nopools"
-        },
-        {
-          "id": "DankeFursLesen",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "DivaScans",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "DivineDaoLibrary",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "Elftoon",
-          "why": "already from Kakarot"
-        },
-        {
-          "id": "ExiledRebels",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "FanFiction",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "Foxaholic",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "Hentai2read",
-          "why": "already from Netsky Community"
-        },
-        {
-          "id": "HiperDex",
-          "why": "already from Netsky Generic"
-        },
-        {
-          "id": "Kavita",
-          "why": "needs a server you run yourself"
-        },
-        {
-          "id": "KaynScan",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "KnoxT",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "LGBToon",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "LagoonScans",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "Manga18Club",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "MangaHub",
-          "why": "already from Timkuel"
-        },
-        {
-          "id": "MangaK",
-          "why": "already from Ivan"
-        },
-        {
-          "id": "Mangaball",
-          "why": "already from Kakarot"
-        },
-        {
-          "id": "ManhwaRead",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "ManhwaToon",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "OniSaga",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "SanaScans",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "ScribbleHub",
-          "why": "already from Kakarot"
-        },
-        {
-          "id": "ScytheScans",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "SilentQuill",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "SirenScans",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "SoraRaw",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "TCBScans",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "ToonTop",
-          "why": "in the Stable repository"
-        },
-        {
-          "id": "Toonz",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "Webnex",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "WebtoonClub",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "XNovel",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "ZinManga",
-          "why": "already from Netsky Generic"
-        },
-        {
-          "id": "manga3asq",
-          "why": "already from Netsky Generic"
-        }
-      ],
-      "commit": "a4404f54a0a0763dc5b1534d3e179732342ed170"
+      "skipped": [],
+      "error": "couldn't be fetched"
     },
     {
       "repo": "itskodama/paperback-extensions",
@@ -2315,7 +2162,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "b0aa1a0a4fc8ce3d3cc1c3ae6d3d4659b6bb38d7"
+      "commit": "1656b44b3eccd71643840c63dd90dfd3a8786eaa"
     },
     {
       "repo": "feliivk/felii-extensions",
