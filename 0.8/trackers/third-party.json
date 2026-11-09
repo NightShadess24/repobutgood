@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-08T12:22:24.765Z",
+  "generated": "2026-11-09T14:24:59.897Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -200,7 +200,7 @@
           "why": "taken from Timkuel"
         }
       ],
-      "commit": "c6fd488350275ab16627694e861e7b15edcc0ef4"
+      "commit": "29c36c95bb551a8856bb7c0ff48611e68a2ab52a"
     },
     {
       "repo": "karrot0/kakarotextension0.8",
@@ -1238,7 +1238,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "01148ddd98f5e990b337ac3d19c6d237d17f8f7b"
+      "commit": "b549fedb64093177513eccd1314537d121245c80"
     },
     {
       "repo": "CookieSylvia/cookies-extensions",
@@ -2162,7 +2162,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "1656b44b3eccd71643840c63dd90dfd3a8786eaa"
+      "commit": "ed21e4f56a8a28bf4e13f18e8fac363af4e58043"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -2310,7 +2310,7 @@
           "why": "already from Netsky"
         }
       ],
-      "commit": "01148ddd98f5e990b337ac3d19c6d237d17f8f7b"
+      "commit": "b549fedb64093177513eccd1314537d121245c80"
     },
     {
       "repo": "Elrulia/paperback-extension",
