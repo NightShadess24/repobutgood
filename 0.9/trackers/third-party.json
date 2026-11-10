@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-09T14:11:35.300Z",
+  "generated": "2026-11-10T13:47:05.719Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -289,7 +289,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "06166a6619d64db2e9739674d5118892713e45e5"
+      "commit": "5a6e90a497ff6651dd8c895037331c7e77c15507"
     },
     {
       "repo": "karrot0/KakarotExtension",
@@ -535,7 +535,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "ed21e4f56a8a28bf4e13f18e8fac363af4e58043"
+      "commit": "e5b71ef71edd1b3c7a88bd6ba746639fb4371d88"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -701,7 +701,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "ae752c6bd36675513181fdb87852119854334e20"
+      "commit": "279f93053e0a4e439bd12f0f58d35ffc7e94e35c"
     },
     {
       "repo": "acepilot147/pb-extensions",
@@ -895,7 +895,7 @@
           "why": "already from Elrulia"
         }
       ],
-      "commit": "29c36c95bb551a8856bb7c0ff48611e68a2ab52a"
+      "commit": "2702d6b5ecb1424300a2b2e3f1023c301d816429"
     },
     {
       "repo": "karrot0/kakarotextension0.8",
