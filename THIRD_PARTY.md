@@ -35,6 +35,9 @@ hidden web page (`executeInWebView`, which 0.8 doesn't have), and trackers.
 MyAnimeList on 0.9 is made in this repository instead (`src/MyAnimeList`),
 adapted from Paperback's 0.8 MyAnimeList tracker (Paperback-iOS/extensions,
 GPL-3.0).
+Asura Scans is made here too (`src/AsuraScans`): Kodama's source
+(itskodama/paperback-extensions, GPL-3.0) with the Cloudflare check added, which
+the site turned on in November 2026 and the original answers with HTTP 403.
 
 The lists, with each repository's license, are in
 `scripts/aggregate.config.json`; the homepage credits each source and links to
