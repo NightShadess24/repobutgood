@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-13T13:24:46.150Z",
+  "generated": "2026-11-13T15:45:04.124Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -478,7 +478,7 @@
       "skipped": [
         {
           "id": "AsuraScans",
-          "why": "in the Stable repository"
+          "why": "already here"
         },
         {
           "id": "LNORI",
@@ -550,7 +550,7 @@
       "skipped": [
         {
           "id": "AsuraScans",
-          "why": "taken from Kodama"
+          "why": "already here"
         },
         {
           "id": "HiveToons",
@@ -608,7 +608,7 @@
       "skipped": [
         {
           "id": "AsuraScans",
-          "why": "taken from Kodama"
+          "why": "already here"
         },
         {
           "id": "BatoTo",
@@ -1186,7 +1186,7 @@
         },
         {
           "id": "AsuraScans",
-          "why": "already from Kodama"
+          "why": "already here"
         },
         {
           "id": "MangaK",
@@ -1234,7 +1234,7 @@
       "skipped": [
         {
           "id": "AsuraScans",
-          "why": "already from Kodama"
+          "why": "already here"
         },
         {
           "id": "BatoTo",
@@ -2180,7 +2180,7 @@
         },
         {
           "id": "AsuraScans",
-          "why": "already from Kodama"
+          "why": "already here"
         },
         {
           "id": "ElarcPage",
