@@ -24,6 +24,15 @@ export const siteUrl = (): string => `https://${siteHost()}`;
 export const checkPage = (): string => `${siteUrl()}/@waf/challenge?return=%2F`;
 export const NO_IMAGE = "https://comix.to/images/no-poster.png";
 
+// Answers that mean comix's own server had trouble (not a block or a check):
+// the same request usually works moments later, so it's tried again.
+export const SERVER_TROUBLE = [500, 502, 504, 520, 521, 522, 523, 524];
+
+export const serverTroubleText = (what: string, status: number): string =>
+  `comix's server didn't answer for ${what} (HTTP ${status}), even after 3 tries. ` +
+  `That's on comix's end: try again in a few minutes, or switch Site Address to ` +
+  `${siteHost() === "comix.to" ? "comix.ws" : "comix.to"} in Comix's settings.`;
+
 // comix.to or comix.ws (or www.), with or without a leading dot.
 export const isComixDomain = (domain: string): boolean =>
   /(^|\.)comix\.(to|ws)$/i.test(String(domain ?? "").replace(/^\./, ""));

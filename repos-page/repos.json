@@ -1,0 +1,289 @@
+{
+  "_help": [
+    "The repositories listed on the Repositories page (repos-page/index.html).",
+    "Each one: name (shown on the page and in Paperback), url (the link Paperback adds, the one its author gives),",
+    "github (owner/repo, optional), raw (optional: the same files on raw.githubusercontent.com, read when the page can't read url).",
+    "The page reads each repository's sources live from its versioning.json, so nothing here needs updating when they add or remove sources.",
+    "To add a repository, copy an entry into the right app version (0.9 or 0.8) and change it; to remove one, delete its entry."
+  ],
+  "0.9": [
+    {
+      "name": "Inkdex",
+      "url": "https://inkdex.github.io/extensions/0.9/stable",
+      "github": "inkdex/extensions",
+      "raw": "https://raw.githubusercontent.com/inkdex/extensions/master/0.9/stable"
+    },
+    {
+      "name": "Kakarot",
+      "url": "https://karrot0.github.io/KakarotExtension/0.9/stable",
+      "github": "karrot0/KakarotExtension",
+      "raw": "https://raw.githubusercontent.com/karrot0/KakarotExtension/gh-pages/0.9/stable"
+    },
+    {
+      "name": "Sinon",
+      "url": "https://catta1997.github.io/Sinon-Paperback-Extensions/0.9/stable",
+      "github": "Catta1997/Sinon-Paperback-Extensions",
+      "raw": "https://raw.githubusercontent.com/Catta1997/Sinon-Paperback-Extensions/gh-pages/0.9/stable"
+    },
+    {
+      "name": "Kittykat",
+      "url": "https://paperback.samipmainali.dev/kitty",
+      "github": "kittycatgit/kitty-extensions-0.9"
+    },
+    {
+      "name": "Kodama",
+      "url": "https://itskodama.github.io/paperback-extensions/0.9/stable",
+      "github": "itskodama/paperback-extensions",
+      "raw": "https://raw.githubusercontent.com/itskodama/paperback-extensions/gh-pages/0.9/stable"
+    },
+    {
+      "name": "Pirate Vodka",
+      "url": "https://read.pirate.vodka",
+      "github": "LucifersCircle/pirate.vodka-extensions",
+      "raw": "https://raw.githubusercontent.com/LucifersCircle/pirate.vodka-extensions/gh-pages"
+    },
+    {
+      "name": "Felii",
+      "url": "https://feliivk.github.io/felii-extensions/0.9",
+      "github": "feliivk/felii-extensions",
+      "raw": "https://raw.githubusercontent.com/feliivk/felii-extensions/main/0.9"
+    },
+    {
+      "name": "Kinso",
+      "url": "https://xdkinso.github.io/kinso-extensions-v0.8",
+      "github": "xdKinso/kinso-extensions-v0.8"
+    },
+    {
+      "name": "Paperback (official)",
+      "url": "https://paperback-ios.github.io/extensions-default/0.9",
+      "github": "Paperback-iOS/extensions-default",
+      "raw": "https://raw.githubusercontent.com/Paperback-iOS/extensions-default/gh-pages/0.9"
+    },
+    {
+      "name": "Netsky",
+      "url": "https://thenetsky.github.io/netskys-extensions/0.9",
+      "github": "TheNetsky/netskys-extensions",
+      "raw": "https://raw.githubusercontent.com/TheNetsky/netskys-extensions/gh-pages/0.9"
+    },
+    {
+      "name": "Elrulia",
+      "url": "https://elrulia.github.io/paperback-extension/0.9/stable",
+      "github": "Elrulia/paperback-extension",
+      "raw": "https://raw.githubusercontent.com/Elrulia/paperback-extension/gh-pages/0.9/stable"
+    },
+    {
+      "name": "Nyzzik",
+      "url": "https://paperback.nyzz.me",
+      "github": "nyzzik/extensions",
+      "raw": "https://raw.githubusercontent.com/nyzzik/extensions/gh-pages"
+    },
+    {
+      "name": "CorruptBytes",
+      "url": "https://michaelasper.github.io/paperback-corruptbytes",
+      "github": "michaelasper/paperback-corruptbytes"
+    }
+  ],
+  "0.8": [
+    {
+      "name": "Ace",
+      "url": "https://acepilot147.github.io/pb-extensions/0.8",
+      "github": "acepilot147/pb-extensions",
+      "raw": "https://raw.githubusercontent.com/acepilot147/pb-extensions/gh-pages/0.8"
+    },
+    {
+      "name": "Felii",
+      "url": "https://feliivk.github.io/felii-extensions/0.8",
+      "github": "feliivk/felii-extensions",
+      "raw": "https://raw.githubusercontent.com/feliivk/felii-extensions/main/0.8"
+    },
+    {
+      "name": "PoppingMango",
+      "url": "https://poppingmangosources.github.io/popmango-paperback-sources/all",
+      "github": "PoppingMangoSources/popmango-paperback-sources",
+      "raw": "https://raw.githubusercontent.com/PoppingMangoSources/popmango-paperback-sources/gh-pages/all"
+    },
+    {
+      "name": "Timkuel",
+      "url": "https://timkuel.github.io/PaperBackExtension/0.8",
+      "github": "timkuel/PaperBackExtension"
+    },
+    {
+      "name": "HailXD",
+      "url": "https://hailxd.github.io/pb-extensions/0.8",
+      "github": "HailXD/pb-extensions",
+      "raw": "https://raw.githubusercontent.com/HailXD/pb-extensions/main/0.8"
+    },
+    {
+      "name": "Kakarot",
+      "url": "https://karrot0.github.io/kakarotextension0.8/0.8-stable",
+      "github": "karrot0/kakarotextension0.8",
+      "raw": "https://raw.githubusercontent.com/karrot0/kakarotextension0.8/gh-pages/0.8-stable"
+    },
+    {
+      "name": "Nopools",
+      "url": "https://naufaljct48.github.io/nopools-ext/omakase",
+      "github": "naufaljct48/nopools-ext",
+      "raw": "https://raw.githubusercontent.com/naufaljct48/nopools-ext/gh-pages/omakase"
+    },
+    {
+      "name": "Ryukajinokami",
+      "url": "https://ryukajinokami.github.io/paperback-extensions",
+      "github": "ryukajinokami/paperback-extensions"
+    },
+    {
+      "name": "Numby",
+      "url": "https://g2asell2019.github.io/numby-extensions/0.8",
+      "github": "g2asell2019/numby-extensions",
+      "raw": "https://raw.githubusercontent.com/g2asell2019/numby-extensions/gh-pages/0.8"
+    },
+    {
+      "name": "Gabe",
+      "url": "https://gabrielcwt.github.io/gabe-extensions/0.8",
+      "github": "gabrielcwt/gabe-extensions",
+      "raw": "https://raw.githubusercontent.com/gabrielcwt/gabe-extensions/gh-pages/0.8"
+    },
+    {
+      "name": "Netsky Community",
+      "url": "https://thenetsky.github.io/community-extensions/0.8",
+      "github": "TheNetsky/community-extensions",
+      "raw": "https://raw.githubusercontent.com/TheNetsky/community-extensions/gh-pages/0.8"
+    },
+    {
+      "name": "Ivan",
+      "url": "https://ivanmatthew.github.io/ivans-paperback-extensions/paperback-0.8",
+      "github": "ivanmatthew/ivans-paperback-extensions",
+      "raw": "https://raw.githubusercontent.com/ivanmatthew/ivans-paperback-extensions/gh-pages/paperback-0.8"
+    },
+    {
+      "name": "Awwrch",
+      "url": "https://awwrch.github.io/extension/main",
+      "github": "awwrch/extension",
+      "raw": "https://raw.githubusercontent.com/awwrch/extension/gh-pages/main"
+    },
+    {
+      "name": "Seyden Community",
+      "url": "https://seyden.github.io/community-extensions/0.8",
+      "github": "Seyden/community-extensions",
+      "raw": "https://raw.githubusercontent.com/Seyden/community-extensions/gh-pages/0.8"
+    },
+    {
+      "name": "Paperback (official)",
+      "url": "https://paperback-ios.github.io/extensions-default/0.8",
+      "github": "Paperback-iOS/extensions-default",
+      "raw": "https://raw.githubusercontent.com/Paperback-iOS/extensions-default/gh-pages/0.8"
+    },
+    {
+      "name": "Paperback Trackers",
+      "url": "https://paperback-ios.github.io/extensions/main",
+      "github": "Paperback-iOS/extensions",
+      "raw": "https://raw.githubusercontent.com/Paperback-iOS/extensions/gh-pages/main"
+    },
+    {
+      "name": "Netsky Generic: Madara",
+      "url": "https://thenetsky.github.io/extensions-generic-0.8/madara",
+      "github": "TheNetsky/extensions-generic-0.8",
+      "raw": "https://raw.githubusercontent.com/TheNetsky/extensions-generic-0.8/gh-pages/madara"
+    },
+    {
+      "name": "Netsky Generic: MangaStream",
+      "url": "https://thenetsky.github.io/extensions-generic-0.8/mangastream",
+      "github": "TheNetsky/extensions-generic-0.8",
+      "raw": "https://raw.githubusercontent.com/TheNetsky/extensions-generic-0.8/gh-pages/mangastream"
+    },
+    {
+      "name": "Netsky Generic: MangaBox",
+      "url": "https://thenetsky.github.io/extensions-generic-0.8/mangabox",
+      "github": "TheNetsky/extensions-generic-0.8",
+      "raw": "https://raw.githubusercontent.com/TheNetsky/extensions-generic-0.8/gh-pages/mangabox"
+    },
+    {
+      "name": "Netsky Generic: MangaCatalog",
+      "url": "https://thenetsky.github.io/extensions-generic-0.8/mangacatalog",
+      "github": "TheNetsky/extensions-generic-0.8",
+      "raw": "https://raw.githubusercontent.com/TheNetsky/extensions-generic-0.8/gh-pages/mangacatalog"
+    },
+    {
+      "name": "Netsky Generic: BuddyComplex",
+      "url": "https://thenetsky.github.io/extensions-generic-0.8/buddycomplex",
+      "github": "TheNetsky/extensions-generic-0.8",
+      "raw": "https://raw.githubusercontent.com/TheNetsky/extensions-generic-0.8/gh-pages/buddycomplex"
+    },
+    {
+      "name": "Netsky Generic: Liliana",
+      "url": "https://thenetsky.github.io/extensions-generic-0.8/liliana",
+      "github": "TheNetsky/extensions-generic-0.8",
+      "raw": "https://raw.githubusercontent.com/TheNetsky/extensions-generic-0.8/gh-pages/liliana"
+    },
+    {
+      "name": "Netsky Generic: HeanCMS",
+      "url": "https://thenetsky.github.io/extensions-generic-0.8/hean",
+      "github": "TheNetsky/extensions-generic-0.8",
+      "raw": "https://raw.githubusercontent.com/TheNetsky/extensions-generic-0.8/gh-pages/hean"
+    },
+    {
+      "name": "Netsky Generic: NepNep",
+      "url": "https://thenetsky.github.io/extensions-generic-0.8/nepnep",
+      "github": "TheNetsky/extensions-generic-0.8",
+      "raw": "https://raw.githubusercontent.com/TheNetsky/extensions-generic-0.8/gh-pages/nepnep"
+    },
+    {
+      "name": "Netsky",
+      "url": "https://thenetsky.github.io/netskys-extensions/0.8",
+      "github": "TheNetsky/netskys-extensions",
+      "raw": "https://raw.githubusercontent.com/TheNetsky/netskys-extensions/gh-pages/0.8"
+    },
+    {
+      "name": "Cookie",
+      "url": "https://cookiesylvia.github.io/cookies-extensions/0.8",
+      "github": "CookieSylvia/cookies-extensions",
+      "raw": "https://raw.githubusercontent.com/CookieSylvia/cookies-extensions/gh-pages/0.8"
+    },
+    {
+      "name": "Seyden Generic: Madara",
+      "url": "https://seyden.github.io/extensions-generic-0.8/madara",
+      "github": "Seyden/extensions-generic-0.8",
+      "raw": "https://raw.githubusercontent.com/Seyden/extensions-generic-0.8/gh-pages/madara"
+    },
+    {
+      "name": "Seyden Generic: MangaStream",
+      "url": "https://seyden.github.io/extensions-generic-0.8/mangastream",
+      "github": "Seyden/extensions-generic-0.8",
+      "raw": "https://raw.githubusercontent.com/Seyden/extensions-generic-0.8/gh-pages/mangastream"
+    },
+    {
+      "name": "Hoang (Vietnamese)",
+      "url": "https://hoang3402.github.io/extensions-vn",
+      "github": "hoang3402/extensions-vn",
+      "raw": "https://raw.githubusercontent.com/hoang3402/extensions-vn/gh-pages"
+    },
+    {
+      "name": "VietSource",
+      "url": "https://dutch25.github.io/VietSource",
+      "github": "dutch25/VietSource",
+      "raw": "https://raw.githubusercontent.com/dutch25/VietSource/gh-pages"
+    },
+    {
+      "name": "Real Extensions",
+      "url": "https://shadorig.github.io/real-extensions/sources",
+      "github": "shadorig/real-extensions",
+      "raw": "https://raw.githubusercontent.com/shadorig/real-extensions/main/sources"
+    },
+    {
+      "name": "Kittykat",
+      "url": "https://paperback.samipmainali.dev/kitty-0.8",
+      "github": "kittycatgit/kitty-extensions-0.8"
+    },
+    {
+      "name": "Ben",
+      "url": "https://benjamin5896.github.io/bens-paperback-extensions/paperback-0.8",
+      "github": "benjamin5896/bens-paperback-extensions",
+      "raw": "https://raw.githubusercontent.com/benjamin5896/bens-paperback-extensions/main/paperback-0.8"
+    },
+    {
+      "name": "Vodraz",
+      "url": "https://thevodraz.github.io/paperback-extensions",
+      "github": "TheVodraz/paperback-extensions",
+      "raw": "https://raw.githubusercontent.com/TheVodraz/paperback-extensions/main"
+    }
+  ]
+}

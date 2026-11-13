@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="en" data-theme="noir">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Repositories · NightShadess24 Extensions</title>
+    <link rel="icon" href="https://paperback.moe/pb-logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!--
+      The Repositories page: every Paperback repository the site gathers
+      sources from, each with its own "Add to Paperback" link and its list of
+      sources. The repositories are listed in repos.json (next to this file);
+      each one's sources are read live from its versioning.json when the page
+      opens, so the page never needs rebuilding when they change.
+      Published to gh-pages /repos/ by .github/workflows/repos-page.yaml.
+    -->
+    <style>
+      :root {
+        --bg: #1b1b1d;
+        --surface: #232326;
+        --surface-2: #2a2a2e;
+        --border: #36363b;
+        --text: #f2f2f2;
+        --muted: #a3a3aa;
+        --faint: #6b6b72;
+        --gold: #c9a45c;
+        --blue: #5d9dfe;
+        --red: #f56c6c;
+        --amber: #e6a23c;
+        --serif: "Cormorant Garamond", "Times New Roman", serif;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", Roboto,
+          "Helvetica Neue", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: var(--blue);
+        text-decoration: none;
+      }
+      [hidden] {
+        display: none !important;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        height: 52px;
+        padding: 0 16px;
+        background: var(--bg);
+        border-bottom: 1px solid #2c2c30;
+      }
+
+      main {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 8px 16px 64px;
+      }
+      .hero {
+        text-align: center;
+        padding: 44px 0 6px;
+      }
+      .hero h1 {
+        margin: 0;
+        font-family: var(--serif);
+        font-size: clamp(38px, 8vw, 56px);
+        font-weight: 600;
+        line-height: 1.05;
+      }
+      .hero p {
+        margin: 12px auto 0;
+        max-width: 32rem;
+        color: var(--muted);
+        line-height: 1.55;
+        font-size: 15px;
+      }
+
+      /* v9 / v8 */
+      .version-switch {
+        display: flex;
+        width: max-content;
+        margin: 24px auto 0;
+        padding: 3px;
+        border: 1px solid #4a4a50;
+        border-radius: 999px;
+      }
+      .version-tab {
+        min-width: 64px;
+        padding: 5px 16px;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--muted);
+        font-family: var(--serif);
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        cursor: pointer;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease;
+      }
+      .version-tab:hover {
+        color: var(--text);
+      }
+      .version-tab[aria-pressed="true"] {
+        background: var(--gold);
+        color: var(--bg);
+      }
+
+      /* Search and order */
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 26px 0 10px;
+      }
+      .search {
+        flex: 1 1 240px;
+        min-width: 0;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--surface);
+        color: var(--text);
+        font: inherit;
+        font-size: 16px;
+      }
+      .search::placeholder {
+        color: var(--faint);
+      }
+      .search:focus {
+        outline: none;
+        border-color: var(--gold);
+      }
+      .order {
+        display: flex;
+        flex: none;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+      }
+      .order button {
+        padding: 0 14px;
+        border: 0;
+        background: var(--surface);
+        color: var(--muted);
+        font: inherit;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .order button + button {
+        border-left: 1px solid var(--border);
+      }
+      .order button[aria-pressed="true"] {
+        background: var(--surface-2);
+        color: var(--gold);
+        font-weight: 600;
+      }
+      .summary {
+        margin: 0 0 14px;
+        color: var(--faint);
+        font-size: 13px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* One repository */
+      .repos {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .repo {
+        padding: 16px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-top: 3px solid #e9e9e9;
+        border-radius: 4px;
+      }
+      .repo__head {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .repo__title {
+        flex: 1;
+        min-width: 0;
+      }
+      .repo__name {
+        margin: 0;
+        font-family: var(--serif);
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.15;
+        overflow-wrap: anywhere;
+      }
+      .repo__gh {
+        display: inline-block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 13px;
+        overflow-wrap: anywhere;
+      }
+      .repo__gh:hover {
+        color: var(--gold);
+      }
+      .repo__count {
+        flex: none;
+        padding-top: 4px;
+        color: var(--gold);
+        font-size: 14px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+      .repo__count--wait {
+        color: var(--faint);
+        font-weight: 400;
+      }
+      .repo__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 16px;
+        border-radius: 4px;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .btn--add {
+        flex: 1 1 auto;
+        border: 0;
+        background: var(--gold);
+        color: var(--bg);
+        letter-spacing: 0.04em;
+      }
+      .btn--add:hover {
+        background: #d6b46e;
+      }
+      .btn--copy {
+        border: 1px solid #4a4a50;
+        background: transparent;
+        color: var(--text);
+      }
+      .btn--copy:hover {
+        border-color: var(--muted);
+      }
+      .repo__url {
+        display: block;
+        margin-top: 10px;
+        color: var(--faint);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+      .repo__note {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+      .repo__note--bad {
+        color: #e8a0a0;
+      }
+
+      /* Its sources */
+      .repo__sources {
+        margin-top: 12px;
+        border-top: 1px solid var(--border);
+      }
+      .repo__sources > summary {
+        padding: 12px 0 2px;
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        list-style: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      .repo__sources > summary::-webkit-details-marker {
+        display: none;
+      }
+      .repo__sources > summary::before {
+        content: "›";
+        display: inline-block;
+        width: 1em;
+        color: var(--gold);
+        font-size: 18px;
+        line-height: 1;
+        transition: transform 0.15s ease;
+      }
+      .repo__sources[open] > summary::before {
+        transform: rotate(90deg);
+      }
+      .sources {
+        margin: 8px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .source {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 7px 0;
+      }
+      .source + .source {
+        border-top: 1px solid #2c2c30;
+      }
+      .source__icon {
+        flex: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 7px;
+        background: var(--surface-2);
+        object-fit: cover;
+      }
+      .source__icon--none {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--faint);
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .source__body {
+        flex: 1;
+        min-width: 0;
+      }
+      .source__line {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 2px 8px;
+      }
+      .source__name {
+        font-size: 15px;
+        overflow-wrap: anywhere;
+      }
+      .source__version {
+        color: var(--faint);
+        font-size: 12px;
+        font-variant-numeric: tabular-nums;
+      }
+      .source__desc {
+        margin-top: 1px;
+        color: var(--faint);
+        font-size: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tag {
+        display: inline-block;
+        padding: 0 6px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 18px;
+        white-space: nowrap;
+      }
+      .tag--adult {
+        background: var(--red);
+        color: #fff;
+      }
+      .tag--mature {
+        background: var(--amber);
+        color: #fff;
+      }
+      .tag--info {
+        background: #3a3a40;
+        color: #e6e6e6;
+      }
+      mark {
+        background: none;
+        color: var(--gold);
+        font-weight: 700;
+      }
+
+      .empty {
+        padding: 36px 0;
+        color: var(--muted);
+        text-align: center;
+      }
+      footer {
+        margin-top: 40px;
+        color: var(--faint);
+        font-size: 13px;
+        line-height: 1.6;
+        text-align: center;
+      }
+      footer a {
+        color: var(--muted);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 24px;
+        z-index: 20;
+        padding: 10px 16px;
+        border-radius: 6px;
+        background: #f2f2f2;
+        color: #1b1b1d;
+        font-size: 14px;
+        font-weight: 600;
+        transform: translate(-50%, 20px);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.15s ease,
+          transform 0.15s ease;
+      }
+      .toast--on {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    </style>
+    <!-- The background and the Aggregated / Separate switch, shared with the homepage -->
+    <link rel="stylesheet" href="site.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <nav class="mode-switch" aria-label="View">
+        <a class="js-aggregated" href="../0.9/stable/">Aggregated</a>
+        <a href="./" aria-current="page">Separate</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>Repositories</h1>
+        <p>
+          Every repository this site gathers sources from, to add to Paperback on its own. Their
+          source lists are read straight from each repository, so they're always current.
+        </p>
+      </section>
+
+      <nav class="version-switch" aria-label="Paperback version">
+        <button class="version-tab" type="button" data-version="0.9" title="Paperback 0.9">
+          v9
+        </button>
+        <button class="version-tab" type="button" data-version="0.8" title="Paperback 0.8">
+          v8
+        </button>
+      </nav>
+
+      <div class="controls">
+        <input
+          class="search"
+          type="search"
+          placeholder="Search repositories or sources"
+          aria-label="Search repositories or sources"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <div class="order" role="group" aria-label="Order">
+          <button type="button" data-order="name">A–Z</button>
+          <button type="button" data-order="count">Most sources</button>
+        </div>
+      </div>
+      <p class="summary" aria-live="polite"></p>
+
+      <ul class="repos"></ul>
+      <p class="empty" hidden></p>
+
+      <footer>
+        <p>
+          The list of repositories is
+          <a
+            href="https://github.com/NightShadess24/repobutgood/blob/0.9/stable/repos-page/repos.json"
+            >repos-page/repos.json</a
+          >. Add or remove one there and this page updates itself.
+        </p>
+      </footer>
+    </main>
+    <div class="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var VERSIONS = ["0.9", "0.8"];
+        var LANGUAGE =
+          /^(english|indonesia|indonesian|arabic|spanish|español|french|italian|portuguese|japanese|raw|vietnamese|korean|thai|turkish|german|russian|polish|chinese|multi-?language)\b/i;
+
+        var list = document.querySelector(".repos");
+        var empty = document.querySelector(".empty");
+        var summary = document.querySelector(".summary");
+        var search = document.querySelector(".search");
+        var toast = document.querySelector(".toast");
+        var versionTabs = Array.prototype.slice.call(document.querySelectorAll(".version-tab"));
+        var orderButtons = Array.prototype.slice.call(document.querySelectorAll(".order button"));
+
+        // Browser storage can be missing or throw (private browsing).
+        function remember(key, value) {
+          try {
+            localStorage.setItem("repos-page:" + key, value);
+          } catch (e) {}
+        }
+        function recall(key) {
+          try {
+            return localStorage.getItem("repos-page:" + key);
+          } catch (e) {
+            return null;
+          }
+        }
+
+        var hashVersion = { "#v9": "0.9", "#v8": "0.8" }[location.hash];
+        var state = {
+          version:
+            hashVersion || (VERSIONS.indexOf(recall("version")) >= 0 ? recall("version") : "0.9"),
+          order: recall("order") === "count" ? "count" : "name",
+          query: "",
+        };
+        // Every repository: { version, name, url, github, raw, card, status, sources, ... }
+        var repos = [];
+
+        function el(tag, className, text) {
+          var node = document.createElement(tag);
+          if (className) node.className = className;
+          if (text !== undefined && text !== null) node.textContent = text;
+          return node;
+        }
+        function trimSlash(url) {
+          return String(url || "")
+            .trim()
+            .replace(/\/+$/, "");
+        }
+        function addRepoLink(name, url) {
+          return (
+            "paperback://addRepo?displayName=" +
+            encodeURIComponent(name) +
+            "&url=" +
+            encodeURIComponent(url)
+          );
+        }
+        function plural(n, word) {
+          return n + " " + word + (n === 1 ? "" : "s");
+        }
+
+        // ── Reading a repository's sources ───────────────────────────────
+        function getJson(url) {
+          var controller = "AbortController" in window ? new AbortController() : null;
+          var timer = setTimeout(function () {
+            if (controller) controller.abort();
+          }, 15000);
+          return fetch(url, {
+            cache: "no-cache",
+            signal: controller ? controller.signal : undefined,
+          })
+            .then(function (response) {
+              if (!response.ok) throw new Error("HTTP " + response.status);
+              return response.json();
+            })
+            .finally(function () {
+              clearTimeout(timer);
+            });
+        }
+        // The repository's own link first (which is also a check that it
+        // works), then its copy on raw.githubusercontent.com.
+        function loadRepo(repo) {
+          var bases = [repo.url];
+          if (repo.raw) bases.push(trimSlash(repo.raw));
+          var attempt = function (i) {
+            if (i >= bases.length) return Promise.reject(new Error("unreadable"));
+            return getJson(bases[i] + "/versioning.json").then(
+              function (data) {
+                if (!data || !Array.isArray(data.sources)) throw new Error("no sources");
+                return { data: data, base: bases[i], fallback: i > 0 };
+              },
+              function () {
+                return attempt(i + 1);
+              },
+            );
+          };
+          return attempt(0);
+        }
+
+        function isTracker(s) {
+          var flags = Array.isArray(s.capabilities)
+            ? s.capabilities.reduce(function (all, f) {
+                return all | Number(f);
+              }, 0)
+            : Number(s.capabilities != null ? s.capabilities : s.intents);
+          return isFinite(flags) && flags > 0 && (flags & 2) !== 0 && (flags & 1) === 0;
+        }
+        var languageNames = null;
+        try {
+          languageNames = new Intl.DisplayNames(["en"], { type: "language" });
+        } catch (e) {}
+        function languageOf(s) {
+          var code = String(s.language || "").trim();
+          if (code && !/^(en|multi|all)$/i.test(code)) {
+            try {
+              return (languageNames && languageNames.of(code)) || code;
+            } catch (e) {
+              return code;
+            }
+          }
+          var labels = (s.badges || [])
+            .map(function (b) {
+              return b && b.label;
+            })
+            .concat(
+              (s.tags || []).map(function (t) {
+                return t && t.text;
+              }),
+            );
+          for (var i = 0; i < labels.length; i++) {
+            if (labels[i] && LANGUAGE.test(labels[i]) && !/^english$/i.test(labels[i]))
+              return labels[i];
+          }
+          return "";
+        }
+        // 0.9 entries have `description`, 0.8 ones `desc`; 0.9 icons are in
+        // <id>/static/, 0.8 ones in <id>/includes/.
+        function normalize(s, repo, base) {
+          var id = String(s.id || "");
+          var icon = s.icon ? String(s.icon) : "";
+          var folder = repo.version === "0.8" ? "includes" : "static";
+          return {
+            id: id,
+            name: String(s.name || id).trim(),
+            version: s.version ? String(s.version) : "",
+            description: String(s.description || s.desc || "").trim(),
+            rating: String(s.contentRating || "").toUpperCase(),
+            language: languageOf(s),
+            tracker: isTracker(s),
+            icon:
+              id && icon
+                ? base +
+                  "/" +
+                  encodeURIComponent(id) +
+                  "/" +
+                  folder +
+                  "/" +
+                  encodeURIComponent(icon)
+                : "",
+          };
+        }
+
+        // ── Drawing ──────────────────────────────────────────────────────
+        function highlight(node, text, query) {
+          node.textContent = "";
+          var i = query ? text.toLowerCase().indexOf(query) : -1;
+          if (i < 0) {
+            node.textContent = text;
+            return;
+          }
+          node.appendChild(document.createTextNode(text.slice(0, i)));
+          node.appendChild(el("mark", "", text.slice(i, i + query.length)));
+          node.appendChild(document.createTextNode(text.slice(i + query.length)));
+        }
+
+        function sourceItem(source) {
+          var item = el("li", "source");
+          var icon;
+          if (source.icon) {
+            icon = el("img", "source__icon");
+            icon.alt = "";
+            icon.loading = "lazy";
+            icon.decoding = "async";
+            icon.referrerPolicy = "no-referrer";
+            icon.src = source.icon;
+            icon.addEventListener("error", function () {
+              var letter = el("span", "source__icon source__icon--none", source.name.charAt(0));
+              icon.replaceWith(letter);
+            });
+          } else {
+            icon = el("span", "source__icon source__icon--none", source.name.charAt(0));
+          }
+          item.appendChild(icon);
+          var body = el("div", "source__body");
+          var line = el("div", "source__line");
+          var name = el("span", "source__name", source.name);
+          line.appendChild(name);
+          if (source.version) line.appendChild(el("span", "source__version", source.version));
+          if (source.rating === "ADULT") line.appendChild(el("span", "tag tag--adult", "18+"));
+          else if (source.rating === "MATURE")
+            line.appendChild(el("span", "tag tag--mature", "Mature"));
+          if (source.tracker) line.appendChild(el("span", "tag tag--info", "Tracker"));
+          if (source.language) line.appendChild(el("span", "tag tag--info", source.language));
+          body.appendChild(line);
+          if (source.description) body.appendChild(el("div", "source__desc", source.description));
+          item.appendChild(body);
+          source.item = item;
+          source.nameNode = name;
+          return item;
+        }
+
+        function buildCard(repo) {
+          var card = el("li", "repo");
+          var head = el("div", "repo__head");
+          var title = el("div", "repo__title");
+          title.appendChild(el("h2", "repo__name", repo.name));
+          if (repo.github) {
+            var gh = el("a", "repo__gh", repo.github);
+            gh.href = "https://github.com/" + repo.github;
+            gh.target = "_blank";
+            gh.rel = "noopener";
+            title.appendChild(gh);
+          }
+          head.appendChild(title);
+          var count = el("span", "repo__count repo__count--wait", "Loading…");
+          head.appendChild(count);
+          card.appendChild(head);
+
+          var actions = el("div", "repo__actions");
+          var add = el("a", "btn btn--add", "Add to Paperback");
+          add.href = addRepoLink(repo.name, repo.url);
+          actions.appendChild(add);
+          var copy = el("button", "btn btn--copy", "Copy URL");
+          copy.type = "button";
+          copy.addEventListener("click", function () {
+            copyText(repo.url);
+          });
+          actions.appendChild(copy);
+          card.appendChild(actions);
+          card.appendChild(el("code", "repo__url", repo.url));
+
+          var note = el("p", "repo__note");
+          note.hidden = true;
+          card.appendChild(note);
+
+          var details = el("details", "repo__sources");
+          details.hidden = true;
+          var summaryNode = el("summary", "", "Sources");
+          details.appendChild(summaryNode);
+          var sourceList = el("ul", "sources");
+          details.appendChild(sourceList);
+          card.appendChild(details);
+          details.addEventListener("toggle", function () {
+            if (!repo.forcedOpen) repo.userOpen = details.open;
+          });
+
+          repo.card = card;
+          repo.countNode = count;
+          repo.noteNode = note;
+          repo.details = details;
+          repo.summaryNode = summaryNode;
+          repo.sourceList = sourceList;
+          repo.searchText = [repo.name, repo.github || "", repo.url].join(" ").toLowerCase();
+          return card;
+        }
+
+        function fillCard(repo) {
+          if (repo.status === "ok") {
+            repo.countNode.className = "repo__count";
+            repo.countNode.textContent = plural(repo.sources.length, "source");
+            repo.sources.forEach(function (source) {
+              repo.sourceList.appendChild(sourceItem(source));
+            });
+            repo.details.hidden = repo.sources.length === 0;
+            if (repo.fallback) {
+              repo.noteNode.hidden = false;
+              repo.noteNode.textContent =
+                "Sources read from the repository on GitHub: its link couldn't be checked from this page.";
+            }
+          } else {
+            repo.countNode.className = "repo__count repo__count--wait";
+            repo.countNode.textContent = "–";
+            repo.noteNode.hidden = false;
+            repo.noteNode.className = "repo__note repo__note--bad";
+            repo.noteNode.textContent =
+              "Couldn't read this repository's sources from this page. Adding it to Paperback may still work.";
+          }
+        }
+
+        // ── Search, order, version ───────────────────────────────────────
+        function render() {
+          var query = state.query;
+          var shown = repos.filter(function (repo) {
+            return repo.version === state.version;
+          });
+          var visible = 0;
+          var sourceTotal = 0;
+          var loading = 0;
+
+          shown.forEach(function (repo) {
+            var nameMatch = !query || repo.searchText.indexOf(query) >= 0;
+            var matching = 0;
+            (repo.sources || []).forEach(function (source) {
+              var hit =
+                !!query &&
+                (source.name.toLowerCase().indexOf(query) >= 0 ||
+                  source.id.toLowerCase().indexOf(query) >= 0);
+              if (hit) matching++;
+              // Searching for a source: only the matching ones, unless the
+              // repository itself matched.
+              source.item.hidden = !!query && !nameMatch && !hit;
+              highlight(source.nameNode, source.name, hit ? query : "");
+            });
+            repo.matching = matching;
+            repo.card.hidden = !(nameMatch || matching > 0);
+            if (repo.status === "ok") {
+              repo.summaryNode.textContent =
+                query && !nameMatch
+                  ? plural(matching, "matching source")
+                  : "Show " + plural(repo.sources.length, "source");
+              // Open the ones found by a source; put the rest back how they were.
+              repo.forcedOpen = !!query && matching > 0;
+              repo.details.open = repo.forcedOpen || !!repo.userOpen;
+            }
+            if (!repo.card.hidden) {
+              visible++;
+              // The sources shown: when found by a source, only the matching ones.
+              if (repo.sources) sourceTotal += nameMatch ? repo.sources.length : matching;
+              if (!repo.status) loading++;
+            }
+          });
+
+          var byName = function (a, b) {
+            return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" });
+          };
+          shown.sort(function (a, b) {
+            if (state.order === "count") {
+              var ca = a.sources ? a.sources.length : -1;
+              var cb = b.sources ? b.sources.length : -1;
+              if (ca !== cb) return cb - ca;
+            }
+            return byName(a, b);
+          });
+          var fragment = document.createDocumentFragment();
+          shown.forEach(function (repo) {
+            fragment.appendChild(repo.card);
+          });
+          list.textContent = "";
+          list.appendChild(fragment);
+
+          summary.textContent =
+            visible +
+            (visible === 1 ? " repository" : " repositories") +
+            " · " +
+            plural(sourceTotal, "source") +
+            (loading ? " · loading " + loading + "…" : "");
+          empty.hidden = visible > 0 || !repos.length;
+          empty.textContent = query ? "Nothing found for “" + search.value.trim() + "”." : "";
+        }
+
+        function setVersion(version) {
+          state.version = version;
+          remember("version", version);
+          versionTabs.forEach(function (tab) {
+            tab.setAttribute("aria-pressed", String(tab.dataset.version === version));
+          });
+          var hash = version === "0.8" ? "#v8" : "#v9";
+          if (history.replaceState) history.replaceState(null, "", hash);
+          // Aggregated opens the homepage on the same app version.
+          document.querySelector(".js-aggregated").href = "../0.9/stable/" + hash;
+          render();
+        }
+        function setOrder(order) {
+          state.order = order;
+          remember("order", order);
+          orderButtons.forEach(function (button) {
+            button.setAttribute("aria-pressed", String(button.dataset.order === order));
+          });
+          render();
+        }
+        versionTabs.forEach(function (tab) {
+          tab.addEventListener("click", function () {
+            setVersion(tab.dataset.version);
+          });
+        });
+        orderButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            setOrder(button.dataset.order);
+          });
+        });
+        var searchTimer;
+        search.addEventListener("input", function () {
+          clearTimeout(searchTimer);
+          searchTimer = setTimeout(function () {
+            state.query = search.value.trim().toLowerCase();
+            render();
+          }, 120);
+        });
+
+        // ── Copy ─────────────────────────────────────────────────────────
+        var toastTimer;
+        function showToast(text) {
+          toast.textContent = text;
+          toast.classList.add("toast--on");
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(function () {
+            toast.classList.remove("toast--on");
+          }, 1600);
+        }
+        function copyText(text) {
+          var fallback = function () {
+            var area = el("textarea");
+            area.value = text;
+            area.setAttribute("readonly", "");
+            area.style.position = "fixed";
+            area.style.opacity = "0";
+            document.body.appendChild(area);
+            area.select();
+            var ok = false;
+            try {
+              ok = document.execCommand("copy");
+            } catch (e) {}
+            area.remove();
+            showToast(ok ? "URL copied" : "Couldn't copy");
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function () {
+              showToast("URL copied");
+            }, fallback);
+          } else {
+            fallback();
+          }
+        }
+
+        // ── Start ────────────────────────────────────────────────────────
+        setOrder(state.order);
+        setVersion(state.version);
+        summary.textContent = "Loading repositories…";
+
+        getJson("repos.json")
+          .then(function (config) {
+            VERSIONS.forEach(function (version) {
+              (config[version] || []).forEach(function (entry) {
+                if (!entry || !entry.url || !entry.name) return;
+                var repo = {
+                  version: version,
+                  name: String(entry.name),
+                  url: trimSlash(entry.url),
+                  github: entry.github ? String(entry.github) : "",
+                  raw: entry.raw ? String(entry.raw) : "",
+                };
+                buildCard(repo);
+                repos.push(repo);
+              });
+            });
+            render();
+
+            // The open version first, a few at a time.
+            var queue = repos.slice().sort(function (a, b) {
+              return (a.version === state.version ? 0 : 1) - (b.version === state.version ? 0 : 1);
+            });
+            var pending = null;
+            var redraw = function () {
+              if (pending) return;
+              pending = setTimeout(function () {
+                pending = null;
+                render();
+              }, 60);
+            };
+            var next = function () {
+              var repo = queue.shift();
+              if (!repo) return null;
+              return loadRepo(repo)
+                .then(
+                  function (result) {
+                    repo.status = "ok";
+                    repo.fallback = result.fallback;
+                    repo.sources = result.data.sources
+                      .filter(function (s) {
+                        return s && (s.id || s.name);
+                      })
+                      .map(function (s) {
+                        return normalize(s, repo, result.base);
+                      })
+                      .sort(function (a, b) {
+                        return a.name.localeCompare(b.name, undefined, { sensitivity: "base" });
+                      });
+                  },
+                  function () {
+                    repo.status = "failed";
+                    repo.sources = null;
+                  },
+                )
+                .then(function () {
+                  fillCard(repo);
+                  redraw();
+                  return next();
+                });
+            };
+            for (var i = 0; i < 6; i++) next();
+          })
+          .catch(function () {
+            summary.textContent = "";
+            empty.hidden = false;
+            empty.textContent = "Couldn't load the list of repositories. Try reloading the page.";
+          });
+      })();
+    </script>
+  </body>
+</html>

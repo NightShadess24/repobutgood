@@ -15,7 +15,7 @@
 import { CloudflareError } from "@paperback/types";
 
 import type { ChapterItem, ChapterPageItems, MangaItem, ResultManga } from "../models";
-import { checkPage, siteUrl } from "../models";
+import { checkPage, SERVER_TROUBLE, serverTroubleText, siteUrl } from "../models";
 import { fastDecryptComixPayload } from "../signed/ComixFastDecrypt";
 import { fastGenerateHash } from "../signed/ComixFastSigner";
 import { logEvent } from "./log";
@@ -55,18 +55,40 @@ export function markSigningOutdated(reason: string): void {
   );
 }
 
+// What a request was for, in words ("this title's chapter list").
+const describePath = (path: string): string =>
+  /^\/manga\/[^/]+\/chapters$/.test(path)
+    ? "this title's chapter list"
+    : path.startsWith("/chapters/")
+      ? "this chapter's pages"
+      : /^\/manga\/[^/]+$/.test(path)
+        ? "this title"
+        : `the list (${path})`;
+
 export async function fetchApi<T>(pathAndQuery: string): Promise<T> {
   const url = `${siteUrl()}/api/v1${pathAndQuery}`;
-  const [response, buffer] = await Application.scheduleRequest({
-    url: signed(url),
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      "x-requested-with": "XMLHttpRequest",
-      referer: `${siteUrl()}/`,
-    },
-  });
-  const text = Application.arrayBufferToUTF8String(buffer);
+  const what = describePath(pathAndQuery.split("?")[0]!);
+  let response;
+  let text = "";
+  // comix's server sometimes fails a request (502 and the like) and answers
+  // the same one moments later: up to two more tries, each freshly signed.
+  for (let attempt = 0; ; attempt++) {
+    const [answer, buffer] = await Application.scheduleRequest({
+      url: signed(url),
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "x-requested-with": "XMLHttpRequest",
+        referer: `${siteUrl()}/`,
+      },
+    });
+    response = answer;
+    text = Application.arrayBufferToUTF8String(buffer);
+    if (!SERVER_TROUBLE.includes(response.status)) break;
+    if (attempt >= 2) throw new Error(serverTroubleText(what, response.status));
+    logEvent("comix server", `HTTP ${response.status} on ${what}; trying again`);
+    await Application.sleep(3 * (attempt + 1));
+  }
   const status = response.status;
   if (status === 403 && /captcha_required|@waf\/challenge/.test(text)) {
     throw new CaptchaRequired(`HTTP 403 on ${pathAndQuery.split("?")[0]}: ${text.slice(0, 80)}`);

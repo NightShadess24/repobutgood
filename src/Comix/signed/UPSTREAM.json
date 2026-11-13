@@ -1,11 +1,11 @@
 {
   "repository": "https://github.com/acepilot147/pb-extensions",
   "branch": "0.8",
-  "commit": "78f4fd52b2cf6d92c0066a30032b985e4b9ef1ed",
-  "date": "2026-10-14",
-  "subject": "v1.9.29: key rotation (kuh. -> pgr.) + cloud button opens the security check",
+  "commit": "2883b012c47c2529732fa8baf63f9270d7a58b66",
+  "date": "2026-10-24",
+  "subject": "[verified] v1.9.33: remove key refresh cooldown and skip unrelated script origins",
   "files": {
-    "ComixFastSigner": "e6e162c8d88fbd9ba3f523ffadd419a23d0d1e6e7f785ac57fb33f6803c995a4",
-    "ComixFastDecrypt": "6b671ff26ed406c1fe5f997a5eccd1f7d9ca95e58595d117f3c85e7e182df849"
+    "ComixFastSigner": "131330419bdd125ba27211651abca324bbc2f09f7f15f7d077f2baf232611142",
+    "ComixFastDecrypt": "b770302e9b7cbaee279578789a9aa120a3028c937b6f57be983fde58bb73ab0b"
   }
 }

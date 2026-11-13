@@ -6,6 +6,8 @@ import * as cheerio from "cheerio";
 
 import {
   checkPage,
+  SERVER_TROUBLE,
+  serverTroubleText,
   siteUrl,
   type ChapterItem,
   type ChapterPageItems,
@@ -766,6 +768,7 @@ return (async function () {
   }
 
   var path = "/manga/" + ${id} + "/chapters";
+  var SERVER_TROUBLE = ${JSON.stringify(SERVER_TROUBLE)};
   var maxPages = REFRESH ? 1 : 100000;
   var stopAt = Date.now() + BUDGET;
   var stop = function (reason) {
@@ -785,10 +788,23 @@ return (async function () {
       }
       lastRequest = Date.now();
       var TOO_SLOW = {};
-      var resp = await Promise.race([
-        orCheck(axios.get(path, { params: { page: page, limit: 20, "order[number]": "desc" } })),
-        sleep(15000).then(function () { return TOO_SLOW; }),
-      ]);
+      var resp;
+      // comix's server sometimes fails a request (502 and the like) and
+      // answers the same one moments later: up to two more tries.
+      for (var attempt = 0; ; attempt++) {
+        try {
+          resp = await Promise.race([
+            orCheck(axios.get(path, { params: { page: page, limit: 20, "order[number]": "desc" } })),
+            sleep(15000).then(function () { return TOO_SLOW; }),
+          ]);
+          break;
+        } catch (e) {
+          var failed = e && e.response && e.response.status;
+          if (attempt >= 2 || SERVER_TROUBLE.indexOf(failed) === -1) throw e;
+          await sleep(3000 * (attempt + 1));
+          lastRequest = Date.now();
+        }
+      }
       if (resp === TOO_SLOW) {
         return stop("comix took over 15 s to answer") ||
           JSON.stringify({ ok: false, status: 504, error: "comix took over 15 s to answer" });
@@ -877,6 +893,9 @@ export async function chapterListViaWebView(
         method: "GET",
         headers: { "user-agent": await appUserAgent() },
       });
+    }
+    if (typeof status === "number" && SERVER_TROUBLE.includes(status)) {
+      throw new Error(serverTroubleText("this title's chapter list", status));
     }
     throw new Error(`Comix chapter list failed for ${mangaId}: ${result.error}`);
   }
