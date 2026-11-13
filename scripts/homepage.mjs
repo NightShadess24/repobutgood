@@ -11,6 +11,11 @@
 // repository is built into the page, the others are read from their
 // versioning.json (0.9 and 0.8 write it differently; both are read).
 //
+// The top bar switches between this page ("Aggregated") and the
+// Repositories page ("Separate": repos-page/, published to /repos/, every
+// repository the site gathers sources from, to add on its own). Both pages
+// share their background and that switch (repos-page/site.css).
+//
 // Runs after `paperback-cli bundle`.
 // Usage: node scripts/homepage.mjs [bundleFolder]
 
@@ -70,6 +75,18 @@ function deployedSiteRoot() {
 }
 const siteRoot = deployedSiteRoot();
 const baseUrlOf = (ref) => (siteRoot ? siteRoot + ref : "");
+const reposPageUrl = siteRoot ? `${siteRoot}repos/` : "../../repos/";
+
+// The look shared with the Repositories page (repos-page/site.css), with its
+// pictures inlined.
+const sharedDir = path.join(import.meta.dirname, "..", "repos-page");
+const siteCss = fs
+  .readFileSync(path.join(sharedDir, "site.css"), "utf8")
+  .replace(
+    /url\("([\w-]+\.svg)"\)/g,
+    (_, file) =>
+      `url("data:image/svg+xml,${encodeURIComponent(fs.readFileSync(path.join(sharedDir, file), "utf8"))}")`,
+  );
 
 const escapeHtml = (value) =>
   String(value)
@@ -724,12 +741,15 @@ ul { margin-top: 0; }
   [data-theme="classic"] body { padding: 3.6rem 1rem 1.5rem; }
 }
 </style>
+<style>
+${siteCss}
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/><feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo"/><feComposite in="SourceGraphic" in2="goo" operator="atop"/></filter></svg>
 
 <!-- Noir: top bar, banners, filter tabs above the sources -->
-<div class="topbar noir-only js-repo-name">${escapeHtml(name)}</div>
+<div class="topbar noir-only"><nav class="mode-switch" aria-label="View"><a href="./" aria-current="page">Aggregated</a><a class="js-separate" href="${escapeHtml(reposPageUrl)}">Separate</a></nav></div>
 
 <main>
 <!-- Classic: header -->
@@ -748,8 +768,7 @@ ul { margin-top: 0; }
 </header>
 
 <div class="noir-only">
-<a class="banner js-add-repo" href="${escapeHtml(addRepoLink(name, baseUrl))}"><span class="banner__label">Paperback</span><span class="banner__text">Add this repository</span><span class="banner__chevron">›</span></a>
-<section class="hero">
+<a class="banner js-add-repo" href="${escapeHtml(addRepoLink(name, baseUrl))}"><span class="banner__label">Paperback</span><span class="banner__text">Add this repository</span><span class="banner__chevron">›</span></a><section class="hero">
 <h1 class="js-repo-name">${escapeHtml(name)}</h1>
 <div class="baseUrlBar"><code class="js-base-url">${escapeHtml(baseUrl)}</code><button class="copyButton" type="button">Copy URL</button></div>
 </section>
@@ -1376,6 +1395,17 @@ ${sources.map(sourceItem).join("\n")}
     splash(before, activeVersionTab());
     document.querySelectorAll(".repo-group").forEach(function (group) { group.hidden = group.dataset.version !== version; });
     markRows();
+    // "Separate" opens the Repositories page on the same app version.
+    document.querySelectorAll(".js-separate").forEach(function (link) {
+      link.href = link.href.split("#")[0] + (version === "0.8" ? "#v8" : "#v9");
+    });
+  }
+  // The repository a version tab opens: the last one chosen there, else its first.
+  function repoFor(version) {
+    var remembered = null;
+    try { remembered = sessionStorage.getItem("repo-choice-" + version); } catch (e) {}
+    return REPOS.filter(function (r) { return r.version === version && r.ref === remembered && (r.place !== "secret" || revealed); })[0] ||
+      REPOS.filter(function (r) { return r.version === version && r.place === "top"; })[0];
   }
   function choose(ref) {
     selected = ref;
@@ -1391,10 +1421,7 @@ ${sources.map(sourceItem).join("\n")}
     tab.addEventListener("click", function () {
       var version = tab.dataset.version;
       if (repoOf(selected) && repoOf(selected).version === version) return;
-      var remembered = null;
-      try { remembered = sessionStorage.getItem("repo-choice-" + version); } catch (e) {}
-      var target = REPOS.filter(function (r) { return r.version === version && r.ref === remembered && (r.place !== "secret" || revealed); })[0] ||
-        REPOS.filter(function (r) { return r.version === version && r.place === "top"; })[0];
+      var target = repoFor(version);
       if (target) choose(target.ref);
     });
   });
@@ -1470,6 +1497,12 @@ ${sources.map(sourceItem).join("\n")}
     var saved = sessionStorage.getItem("repo-choice");
     if (REPOS.some(function (repo) { return repo.ref === saved && (repo.place !== "secret" || revealed); })) selected = saved;
   } catch (e) {}
+  // Coming from the Repositories page: #v8 / #v9 opens that app version.
+  var wanted = { "#v9": "0.9", "#v8": "0.8" }[location.hash];
+  if (wanted) {
+    if ((repoOf(selected) || {}).version !== wanted && repoFor(wanted)) selected = repoFor(wanted).ref;
+    if (history.replaceState) history.replaceState(null, "", location.pathname + location.search);
+  }
   choose(selected);
   REPOS.forEach(function (repo) { if (repo.ref !== CURRENT) load(repo.ref); });
 })();
