@@ -186,12 +186,16 @@
       /* One repository */
       .repos {
         display: grid;
+        /* minmax(0, …): a card never grows past the screen to fit a long line
+           (on a phone that made the whole page zoom out). */
+        grid-template-columns: minmax(0, 1fr);
         gap: 12px;
         margin: 0;
         padding: 0;
         list-style: none;
       }
       .repo {
+        min-width: 0;
         padding: 16px;
         background: var(--surface);
         border: 1px solid var(--border);
@@ -375,9 +379,8 @@
         margin-top: 1px;
         color: var(--faint);
         font-size: 12px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        line-height: 1.4;
+        overflow-wrap: anywhere;
       }
       .tag {
         display: inline-block;
