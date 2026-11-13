@@ -1,7 +1,11 @@
 /*
   The look shared by the homepage and the Repositories page: a midnight-blue
-  background with blue roses (roses-top.svg, roses-bottom.svg), and the
-  Aggregated / Separate switch at the top of both pages.
+  background with blue roses (roses-top.svg, roses-bottom.svg) and drifting
+  petals (petals.svg), the Aggregated / Separate switch at the top between
+  two small roses (rose-small.svg), the mascot above the page title
+  (mascot.svg) with a garland under it (rose-divider.svg), and its little
+  sibling above the footer (mascot-bud.svg). All the pictures are original
+  drawings.
 
   The Repositories page links this file; scripts/homepage.mjs puts it into
   the homepage when it is built, with the two pictures inlined. Rules start
@@ -37,6 +41,66 @@
     linear-gradient(180deg, #0c1333 0%, #070b1f 55%, #050817 100%);
   opacity: 0.95;
 }
+/* Petals drifting down: one tile (320px tall) of travel, then it repeats. */
+[data-theme="noir"] body::after {
+  content: "";
+  position: fixed;
+  top: -320px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url("petals.svg") 0 0 / 260px 320px repeat;
+  opacity: 0.4;
+  animation: petals-drift 32s linear infinite;
+}
+@keyframes petals-drift {
+  to {
+    transform: translateY(320px);
+  }
+}
+
+/* The mascot above the page title, a garland of roses under it, and the
+   mascot's little sibling above the footer. */
+[data-theme="noir"] .hero::before {
+  content: "";
+  display: block;
+  width: 96px;
+  height: 96px;
+  margin: -20px auto 8px;
+  background: url("mascot.svg") center / contain no-repeat;
+  animation: mascot-bob 3.4s ease-in-out infinite;
+}
+[data-theme="noir"] .hero::after {
+  content: "";
+  display: block;
+  width: min(300px, 82%);
+  height: 72px;
+  margin: 14px auto 0;
+  background: url("rose-divider.svg") center / contain no-repeat;
+}
+[data-theme="noir"] footer::before {
+  content: "";
+  display: block;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 6px;
+  background: url("mascot-bud.svg") center / contain no-repeat;
+  animation: mascot-bob 3.4s ease-in-out -1.7s infinite;
+}
+@keyframes mascot-bob {
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="noir"] body::after,
+  [data-theme="noir"] .hero::before,
+  [data-theme="noir"] footer::before {
+    animation: none;
+  }
+}
 
 [data-theme="noir"] .topbar {
   display: flex;
@@ -47,6 +111,23 @@
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(120, 150, 255, 0.18);
+}
+/* A small rose on each side of the switch (left out on the narrowest phones,
+   where they wouldn't fit). */
+[data-theme="noir"] .topbar::before,
+[data-theme="noir"] .topbar::after {
+  content: "";
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0 5px;
+  background: url("rose-small.svg") center / contain no-repeat;
+}
+@media (max-width: 370px) {
+  [data-theme="noir"] .topbar::before,
+  [data-theme="noir"] .topbar::after {
+    display: none;
+  }
 }
 [data-theme="noir"] .banner {
   background: rgba(5, 9, 26, 0.86);
@@ -66,7 +147,7 @@
   background: rgba(4, 7, 22, 0.55);
 }
 [data-theme="noir"] .mode-switch a {
-  padding: 5px 16px;
+  padding: 5px 14px;
   border-radius: 999px;
   color: #b8c3e6;
   font-family: "Cormorant Garamond", "Times New Roman", serif;
