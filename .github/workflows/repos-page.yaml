@@ -1,0 +1,53 @@
+name: Repositories Page
+
+# Publishes the Repositories page (repos-page/: every repository this site
+# gathers sources from, each with its own "Add to Paperback" link) to
+# GitHub Pages under /repos/. The page reads each repository's sources live,
+# so it only needs publishing again when repos-page/ changes.
+on:
+  push:
+    branches:
+      - "0.9/stable"
+    paths:
+      - "repos-page/**"
+      - ".github/workflows/repos-page.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repos-page
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy the Repositories page
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v6
+      - name: Deploy to GitHub Pages
+        id: deploy
+        continue-on-error: true
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: repos-page
+          destination_dir: repos
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+      # Bundle and Deploy may be pushing to gh-pages at the same time (a push
+      # to 0.9/stable starts both); try again once it is in.
+      - name: Wait before trying again
+        if: steps.deploy.outcome == 'failure'
+        run: sleep $((20 + RANDOM % 40))
+      - name: Deploy to GitHub Pages (second try)
+        if: steps.deploy.outcome == 'failure'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: repos-page
+          destination_dir: repos
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
