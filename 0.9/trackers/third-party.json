@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-12T14:08:53.820Z",
+  "generated": "2026-11-13T13:24:46.150Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -448,7 +448,7 @@
           "why": "not English (in the Languages repository)"
         }
       ],
-      "commit": "6aa605168289f0d2f24a0255b461b6949b68d4d1"
+      "commit": "b88e2f1e51496a8654c6cc7533f80d8d192a06e3"
     },
     {
       "repo": "kittycatgit/kitty-extensions-0.9",
@@ -489,7 +489,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "3557bf8d657065e825a734f22cfbeebe12bceeab"
+      "commit": "0ddcfacfe734d398d7f930bd1c1f59a1483527b7"
     },
     {
       "repo": "LucifersCircle/pirate.vodka-extensions",
@@ -535,7 +535,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "332ae1d0a408536ae895d10d867e1f603c9bdf97"
+      "commit": "25a0692627e63cced67f036318de2cb2b7169683"
     },
     {
       "repo": "feliivk/felii-extensions",
