@@ -2096,8 +2096,8 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   };
 
   // src/Kagane/models.ts
-  var MIRRORS = ["kagane.cx", "kagane.org", "kagane.si", "kagane.moe", "kagane.net"];
-  var DEFAULT_MIRROR = "kagane.cx";
+  var MIRRORS = ["kagane.moe", "kagane.org"];
+  var DEFAULT_MIRROR = "kagane.moe";
   var DOMAIN = `https://${DEFAULT_MIRROR}`;
   var IMAGE_CDN = "kstatic.to";
   function isTrustedHost(host) {
@@ -2305,7 +2305,10 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     }
     async interceptRequest(request) {
       const site = `https://${mirrorOf(request.url) ?? this.mirror()}`;
-      const url = isTrustedHost(hostOf(request.url).toLowerCase()) ? await freshPageUrl(`https://${this.mirror()}`, request.url).catch(() => request.url) : request.url;
+      const url = isTrustedHost(hostOf(request.url).toLowerCase()) ? await freshPageUrl(`https://${this.mirror()}`, request.url).catch((error) => {
+        if (error instanceof CloudflareError) throw error;
+        return request.url;
+      }) : request.url;
       return {
         ...request,
         url,
@@ -2645,9 +2648,9 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     return host !== void 0 && isTrustedHost(host) ? candidate : site;
   }
   function pageUrl(cacheUrl, chapterId, fileName, token) {
-    return URL(cacheUrl).addPathComponent("api").addPathComponent("v2").addPathComponent("books").addPathComponent("page").addPathComponent(chapterId).addPathComponent(fileName).setQueryItem("token", token).setQueryItem("is_datasaver", "false").build();
+    return URL(cacheUrl).addPathComponent("api").addPathComponent("v2").addPathComponent("books").addPathComponent("page").addPathComponent("original").addPathComponent(chapterId).addPathComponent(fileName).setQueryItem("token", token).build();
   }
-  var PAGE_PATH = /\/api\/v2\/books\/page\/([0-9a-f-]{36})\/([^/?#]+)\?(?:[^#]*&)?token=([^&#]+)/i;
+  var PAGE_PATH = /^(https:\/\/[^/?#]+)\/api\/v2\/books\/page\/(?:original\/)?([0-9a-f-]{36})\/([^/?#]+)\?(?:[^#]*&)?token=([^&#]+)/i;
   var PAGE_TOKEN_MARGIN_MS = 3e4;
   var renewals = /* @__PURE__ */ new Map();
   var RENEWAL_LIMIT = 8;
@@ -2662,17 +2665,19 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   }
   async function freshPageUrl(site, url, now = Date.now()) {
     const match = PAGE_PATH.exec(url);
-    const [, chapterId, fileName, token] = match ?? [];
-    if (chapterId === void 0 || fileName === void 0 || token === void 0) {
+    const [, cacheUrl, chapterId, fileName, token] = match ?? [];
+    if (cacheUrl === void 0 || chapterId === void 0 || fileName === void 0 || token === void 0) {
       return url;
     }
-    const expiresAt = tokenExpiry(decodeURIComponent(token));
+    const decodedToken = decodeURIComponent(token);
+    const expiresAt = tokenExpiry(decodedToken);
     if (expiresAt === void 0 || expiresAt - PAGE_TOKEN_MARGIN_MS > now) {
-      return url;
+      return pageUrl(cacheUrl, chapterId, fileName, decodedToken);
     }
-    const pending = renewals.get(chapterId);
+    const key = `${site}:${chapterId}`;
+    const pending = renewals.get(key);
     let session = pending !== void 0 ? await pending.catch(() => void 0) : void 0;
-    const newer = renewals.get(chapterId);
+    const newer = renewals.get(key);
     if (newer !== void 0 && newer !== pending) {
       session = await newer.catch(() => void 0);
     }
@@ -2684,14 +2689,14 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
         expiresAt: tokenExpiry(opened.access_token) ?? now + 2 * PAGE_TOKEN_MARGIN_MS,
         files: new Set((opened.manifest?.pages ?? []).map((page) => `${page.page_id}.${page.ext ?? "jxl"}`))
       }));
-      renewals.delete(chapterId);
-      renewals.set(chapterId, renewal);
-      for (const key of renewals.keys()) {
+      renewals.delete(key);
+      renewals.set(key, renewal);
+      for (const key2 of renewals.keys()) {
         if (renewals.size <= RENEWAL_LIMIT) break;
-        renewals.delete(key);
+        renewals.delete(key2);
       }
       renewal.catch(() => {
-        if (renewals.get(chapterId) === renewal) renewals.delete(chapterId);
+        if (renewals.get(key) === renewal) renewals.delete(key);
       });
       session = await renewal;
     }
@@ -3375,8 +3380,8 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   // src/Kagane/Kagane.ts
   var KaganeInfo = sourceInfo({
     name: "Kagane",
-    description: "Extension that pulls manga, manhwa, manhua and comics from kagane.cx.",
-    version: "5.0.4",
+    description: "Extension that pulls manga, manhwa, manhua and comics from kagane.moe.",
+    version: "5.0.5",
     icon: "icon.png",
     language: "Multi",
     websiteBaseURL: DOMAIN,
@@ -3399,6 +3404,15 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
         interceptor: new KaganeInterceptor(() => this.mirror)
       });
       this.pageCounts = /* @__PURE__ */ new Map();
+    }
+    // The base source stores a fixed domain; verification must follow the saved mirror.
+    async getCloudflareBypassRequestAsync() {
+      await this.settings.load();
+      return Application.createRequest({
+        url: `${this.site}/`,
+        method: "GET",
+        headers: { "user-agent": await Application.getDefaultUserAgent() }
+      });
     }
     getMangaShareUrl(mangaId) {
       return `${this.site}/series/${mangaId}`;
