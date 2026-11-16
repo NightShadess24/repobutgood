@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-15T13:00:44.305Z",
+  "generated": "2026-11-16T13:56:11.452Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -448,7 +448,7 @@
           "why": "not English (in the Languages repository)"
         }
       ],
-      "commit": "b88e2f1e51496a8654c6cc7533f80d8d192a06e3"
+      "commit": "2a3c74cce21e33067326d2cc77c0a1e1f256a120"
     },
     {
       "repo": "kittycatgit/kitty-extensions-0.9",
@@ -535,7 +535,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "b50b19982267195366704d465c98e13dd269ccfc"
+      "commit": "d078586301a00614a99aa243b8f8f601e33b700d"
     },
     {
       "repo": "feliivk/felii-extensions",
