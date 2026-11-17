@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-16T13:56:11.452Z",
+  "generated": "2026-11-17T14:48:03.736Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -535,7 +535,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "d078586301a00614a99aa243b8f8f601e33b700d"
+      "commit": "9f3075599508615df78e0eae1e73a3195beb7de8"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -771,12 +771,12 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "Chikari",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
           "id": "Kagane",
           "why": "already from Pirate Vodka"
+        },
+        {
+          "id": "Chikari",
+          "why": "18+ (in the NSFW repository)"
         },
         {
           "id": "KingOfShojo",
@@ -787,12 +787,12 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "MangaBerri",
-          "why": "in the Stable repository"
-        },
-        {
           "id": "LuaComic",
           "why": "18+ (in the NSFW repository)"
+        },
+        {
+          "id": "MangaBerri",
+          "why": "in the Stable repository"
         },
         {
           "id": "MangaCherri",
@@ -801,6 +801,10 @@
         {
           "id": "MangaDot",
           "why": "already here"
+        },
+        {
+          "id": "MangaHere",
+          "why": "in the Stable repository"
         },
         {
           "id": "MangaTown",
@@ -815,19 +819,19 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "QiScans",
-          "why": "already here"
-        },
-        {
           "id": "ReiManga",
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "RinkoComics",
+          "id": "RokariComics",
           "why": "in the Stable repository"
         },
         {
-          "id": "RokariComics",
+          "id": "QiScans",
+          "why": "already here"
+        },
+        {
+          "id": "RinkoComics",
           "why": "in the Stable repository"
         },
         {
@@ -859,7 +863,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "3450da3ccb96c63b8bf25d68558c9ba5d73b4fb2"
+      "commit": "d7c1261ed1aff9bea41140a61fbf8b47960a8328"
     },
     {
       "repo": "timkuel/PaperBackExtension",
@@ -1902,7 +1906,7 @@
         },
         {
           "id": "MangaHere",
-          "why": "in the Stable repository"
+          "why": "already from PoppingMango"
         },
         {
           "id": "MangaKatana",
