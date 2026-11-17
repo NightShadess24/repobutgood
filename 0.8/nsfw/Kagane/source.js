@@ -2505,15 +2505,11 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       URL(api(site)).addPathComponent("series").addPathComponent(seriesId).addPathComponent("books").addPathComponent("index").setQueryItem("fields", "List").build()
     );
   }
-  function coverUrl(site, imageId, full = false) {
+  function coverUrl(site, imageId) {
     if (!imageId) {
       return URL(site).addPathComponent("image").addPathComponent("none.webp").build();
     }
-    const url = URL(api(site)).addPathComponent("image").addPathComponent(imageId);
-    if (!full) {
-      url.addPathComponent("compressed");
-    }
-    return url.build();
+    return URL(api(site)).addPathComponent("image").addPathComponent(imageId).addPathComponent("compressed").build();
   }
   function sessionList(load) {
     const cache = /* @__PURE__ */ new Map();
@@ -2818,7 +2814,9 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     const secondaryTitles = unique(
       (details.series_alternate_titles ?? []).map((entry) => entry.title.trim()).filter((title) => title.length > 0 && title !== details.title.trim())
     );
-    const coverId = details.main_cover_id ?? details.series_covers?.[0]?.image_id;
+    const covers = details.series_covers ?? [];
+    const mainCover = covers.find((cover) => cover.cover_id === details.main_cover_id) ?? covers.find((cover) => cover.is_main === true) ?? covers[0];
+    const coverId = mainCover?.image_id;
     const genres = (details.genres ?? []).filter((genre) => view.showSpoilerTags || genre.is_spoiler !== true).map((genre) => filterTag(FILTERS.GENRE, genre.genre_id, genre.genre_name));
     const tags = (details.tags ?? []).filter((tag) => view.showSpoilerTags || tag.is_spoiler !== true).map((tag) => filterTag(TAG_SECTION, tag.tag_id, tag.tag_name.trim()));
     const tagGroups = [
@@ -2852,7 +2850,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       mangaInfo: {
         primaryTitle,
         secondaryTitles,
-        thumbnailUrl: view.cover(coverId ?? void 0, true),
+        thumbnailUrl: view.cover(coverId),
         synopsis: (details.description ?? "").replace(/\r/g, "").trim(),
         author: authors.join(", ") || void 0,
         artist: artists.join(", ") || void 0,
@@ -3381,7 +3379,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   var KaganeInfo = sourceInfo({
     name: "Kagane",
     description: "Extension that pulls manga, manhwa, manhua and comics from kagane.moe.",
-    version: "5.0.5",
+    version: "5.0.6",
     icon: "icon.png",
     language: "Multi",
     websiteBaseURL: DOMAIN,
@@ -3679,7 +3677,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       throw new Error("Too few titles matched every typed tag. Narrow the search or match any tag.");
     }
     async getMangaInfo(mangaId) {
-      const [details, view] = await Promise.all([fetchSeries(this.site, mangaId), this.view(true)]);
+      const [details, view] = await Promise.all([fetchSeries(this.site, mangaId), this.view()]);
       return toSourceManga2(mangaId, details, view);
     }
     async getChapterList(sourceManga) {
@@ -3737,11 +3735,11 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       const chosen = this.settings.stringArray(STATE_KEYS.VISIBLE_SECTIONS, new Set(SECTION_IDS));
       return chosen.length > 0 ? chosen : SECTION_IDS;
     }
-    async view(full = false) {
+    async view() {
       const showSource = this.settings.boolean(STATE_KEYS.SHOW_SOURCE_IN_TITLE, false);
       const sources = showSource ? await this.sourceList().catch(() => []) : [];
       return {
-        cover: (imageId, wantFull) => coverUrl(this.site, imageId, wantFull ?? full),
+        cover: (imageId) => coverUrl(this.site, imageId),
         sourceNames: showSource ? new Map(sources.map((source) => [source.source_id, source.title])) : void 0,
         showSpoilerTags: this.settings.boolean(STATE_KEYS.SHOW_SPOILER_TAGS, false)
       };
