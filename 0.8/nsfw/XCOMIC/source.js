@@ -2662,7 +2662,7 @@ query get_chapterNode($id: ID!) {
   var YEAR_FIELD = "year";
 
   // src/XCOMIC/network.ts
-  var RETRYABLE_STATUS = /* @__PURE__ */ new Set([403, 408, 500, 502, 503, 504, 521, 522, 523, 524]);
+  var RETRYABLE_STATUS = /* @__PURE__ */ new Set([400, 403, 408, 500, 502, 503, 504, 521, 522, 523, 524]);
   function mirrorOrigin(url) {
     const origin = originOf(url);
     return MIRROR_IDS.includes(origin) ? origin : void 0;
@@ -3217,7 +3217,7 @@ query get_chapterNode($id: ID!) {
   var XCOMICInfo = sourceInfo({
     name: "XCOMIC",
     description: "Extension that pulls content from xcomic.me.",
-    version: "1.1.3",
+    version: "1.1.4",
     icon: "icon.png",
     language: "English",
     websiteBaseURL: DOMAIN,
