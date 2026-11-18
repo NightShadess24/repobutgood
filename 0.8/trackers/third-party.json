@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-17T15:01:00.309Z",
+  "generated": "2026-11-18T14:40:13.721Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -72,15 +72,15 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "Chikari",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
           "id": "Cocomic",
           "why": "18+ (in the NSFW repository)"
         },
         {
           "id": "Kagane",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "Chikari",
           "why": "18+ (in the NSFW repository)"
         },
         {
@@ -124,19 +124,19 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "ReiManga",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
-          "id": "RokariComics",
-          "why": "in the Stable repository"
-        },
-        {
           "id": "QiScans",
           "why": "in the Stable repository"
         },
         {
+          "id": "ReiManga",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
           "id": "RinkoComics",
+          "why": "in the Stable repository"
+        },
+        {
+          "id": "RokariComics",
           "why": "in the Stable repository"
         },
         {
@@ -160,15 +160,15 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "XCOMIC",
+          "id": "YaoiMe",
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "YaoiMe",
+          "id": "XCOMIC",
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "d7c1261ed1aff9bea41140a61fbf8b47960a8328"
+      "commit": "9830ea2432182f2483d9b52c51131545988478f4"
     },
     {
       "repo": "timkuel/PaperBackExtension",
@@ -482,12 +482,16 @@
       "ported": [],
       "skipped": [
         {
-          "id": "ToonilyMe",
-          "why": "18+ (in the NSFW repository)"
+          "id": "MangaBuddy",
+          "why": "in the Stable repository"
         },
         {
           "id": "RizzFables",
           "why": "in the Stable repository"
+        },
+        {
+          "id": "ToonTop",
+          "why": "18+ (in the NSFW repository)"
         },
         {
           "id": "FlameComics",
@@ -500,13 +504,9 @@
         {
           "id": "MangaK",
           "why": "in the Stable repository"
-        },
-        {
-          "id": "MangaBuddy",
-          "why": "in the Stable repository"
         }
       ],
-      "commit": "fb0fc30cdd65363315449590c01737d1eb97bc27"
+      "commit": "aa342382f907f756f256c5a5ba24e768d6154ccf"
     },
     {
       "repo": "awwrch/extension",
@@ -1087,7 +1087,7 @@
         },
         {
           "id": "ToonilyMe",
-          "why": "taken from Ivan"
+          "why": "18+ (in the NSFW repository)"
         },
         {
           "id": "TrueManga",
@@ -2166,7 +2166,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "9f3075599508615df78e0eae1e73a3195beb7de8"
+      "commit": "913ab85a68206bc848788901901812b3de2e68c8"
     },
     {
       "repo": "feliivk/felii-extensions",
