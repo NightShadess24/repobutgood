@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-18T14:26:06.260Z",
+  "generated": "2026-11-19T14:47:41.434Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -535,7 +535,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "913ab85a68206bc848788901901812b3de2e68c8"
+      "commit": "2c92d59e21415313c85e39554dae7619c6558078"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -1043,7 +1043,7 @@
           "why": "not English (in the Languages repository)"
         }
       ],
-      "commit": "eb5793a5524f1fdc1f9c9057be866353aa4c635c"
+      "commit": "65c4d73eaeb1e94827cb49192b20e59cb5a12aca"
     },
     {
       "repo": "ryukajinokami/paperback-extensions",
