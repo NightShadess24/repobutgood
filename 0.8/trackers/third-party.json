@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-18T14:40:13.721Z",
+  "generated": "2026-11-19T15:01:46.031Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -348,7 +348,7 @@
           "why": "not English (in the Languages repository)"
         }
       ],
-      "commit": "eb5793a5524f1fdc1f9c9057be866353aa4c635c"
+      "commit": "65c4d73eaeb1e94827cb49192b20e59cb5a12aca"
     },
     {
       "repo": "ryukajinokami/paperback-extensions",
@@ -486,7 +486,11 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "RizzFables",
+          "id": "FlameComics",
+          "why": "in the Stable repository"
+        },
+        {
+          "id": "MangaK",
           "why": "in the Stable repository"
         },
         {
@@ -494,19 +498,15 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "FlameComics",
-          "why": "in the Stable repository"
-        },
-        {
           "id": "AsuraScans",
           "why": "in the Stable repository"
         },
         {
-          "id": "MangaK",
+          "id": "RizzFables",
           "why": "in the Stable repository"
         }
       ],
-      "commit": "aa342382f907f756f256c5a5ba24e768d6154ccf"
+      "commit": "5d24888e0827878cabe007ca8e4b23b9ec447237"
     },
     {
       "repo": "awwrch/extension",
@@ -2166,7 +2166,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "913ab85a68206bc848788901901812b3de2e68c8"
+      "commit": "2c92d59e21415313c85e39554dae7619c6558078"
     },
     {
       "repo": "feliivk/felii-extensions",
