@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-19T14:47:41.434Z",
+  "generated": "2026-11-20T14:16:59.979Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -535,7 +535,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "2c92d59e21415313c85e39554dae7619c6558078"
+      "commit": "8d5c0757c33d76939d7c8ba1978f1d5317fe597d"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -1181,8 +1181,12 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "RizzFables",
-          "why": "in the Stable repository"
+          "id": "MangaK",
+          "why": "already from Kakarot"
+        },
+        {
+          "id": "AsuraScans",
+          "why": "already here"
         },
         {
           "id": "ToonTop",
@@ -1193,15 +1197,11 @@
           "why": "already here"
         },
         {
-          "id": "AsuraScans",
-          "why": "already here"
-        },
-        {
-          "id": "MangaK",
-          "why": "already from Kakarot"
+          "id": "RizzFables",
+          "why": "in the Stable repository"
         }
       ],
-      "commit": "aa342382f907f756f256c5a5ba24e768d6154ccf"
+      "commit": "4ac2f7dc9f2b9e72852d5fbcaace8f543f5f2ce4"
     },
     {
       "repo": "awwrch/extension",
