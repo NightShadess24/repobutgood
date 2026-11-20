@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-19T15:01:46.031Z",
+  "generated": "2026-11-20T14:29:38.583Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -486,11 +486,11 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "FlameComics",
+          "id": "MangaK",
           "why": "in the Stable repository"
         },
         {
-          "id": "MangaK",
+          "id": "AsuraScans",
           "why": "in the Stable repository"
         },
         {
@@ -498,7 +498,7 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "AsuraScans",
+          "id": "FlameComics",
           "why": "in the Stable repository"
         },
         {
@@ -506,7 +506,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "5d24888e0827878cabe007ca8e4b23b9ec447237"
+      "commit": "4ac2f7dc9f2b9e72852d5fbcaace8f543f5f2ce4"
     },
     {
       "repo": "awwrch/extension",
@@ -2166,7 +2166,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "2c92d59e21415313c85e39554dae7619c6558078"
+      "commit": "8d5c0757c33d76939d7c8ba1978f1d5317fe597d"
     },
     {
       "repo": "feliivk/felii-extensions",
