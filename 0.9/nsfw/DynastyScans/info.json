@@ -1,0 +1,1 @@
+{"name":"Dynasty Scans","description":"Extension that pulls manga from dynasty-scans.com.","version":"2.0.102","icon":"icon.png","language":"en","contentRating":"ADULT","capabilities":[1,64,4,16],"badges":[{"label":"0.8 port","textColor":"#ffffff","backgroundColor":"#6b7280"}],"developers":[{"name":"Netsky","website":"https://github.com/TheNetsky"}],"id":"DynastyScans"}
