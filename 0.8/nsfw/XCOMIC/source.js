@@ -2014,8 +2014,6 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   // src/XCOMIC/models.ts
   var MIRRORS = [
     { id: "https://xcomic.me", title: "xcomic.me" },
-    { id: "https://xcomic.net", title: "xcomic.net" },
-    { id: "https://yona.to", title: "yona.to" },
     { id: "https://comik.to", title: "comik.to" }
   ];
   var MIRROR_IDS = MIRRORS.map((mirror) => mirror.id);
@@ -3217,7 +3215,7 @@ query get_chapterNode($id: ID!) {
   var XCOMICInfo = sourceInfo({
     name: "XCOMIC",
     description: "Extension that pulls content from xcomic.me.",
-    version: "1.1.4",
+    version: "1.1.5",
     icon: "icon.png",
     language: "English",
     websiteBaseURL: DOMAIN,
@@ -3244,7 +3242,7 @@ query get_chapterNode($id: ID!) {
         {
           id: "mirror",
           header: "Mirror",
-          footer: "All four sites share one catalogue. When the chosen one is down, requests move to another on their own.",
+          footer: "Both sites share one catalogue. When the chosen one is down, requests move to another on their own.",
           rows: [
             selectRow("base_url", {
               label: "Preferred mirror",
@@ -3687,7 +3685,7 @@ query get_chapterNode($id: ID!) {
     }
     /** Turns a pasted link to a comic, an edition or a title into the one result it names. */
     async resolvePastedUrl(title, filters) {
-      const match = /^https?:\/\/(?:www\.)?(?:xcomic\.(?:me|net)|yona\.to|comik\.to)\/(source|comic|title)\/([a-zA-Z0-9]+)/i.exec(
+      const match = /^https?:\/\/(?:www\.)?(?:xcomic\.me|comik\.to)\/(source|comic|title)\/([a-zA-Z0-9]+)/i.exec(
         title
       );
       const kind = match?.[1];
