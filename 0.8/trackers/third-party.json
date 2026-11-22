@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-21T13:59:30.812Z",
+  "generated": "2026-11-22T13:48:56.338Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -104,11 +104,11 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "MangaDot",
+          "id": "MangaHere",
           "why": "in the Stable repository"
         },
         {
-          "id": "MangaHere",
+          "id": "MangaDot",
           "why": "in the Stable repository"
         },
         {
@@ -128,10 +128,6 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "ReiManga",
-          "why": "18+ (in the NSFW repository)"
-        },
-        {
           "id": "RinkoComics",
           "why": "in the Stable repository"
         },
@@ -148,6 +144,10 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
+          "id": "ReiManga",
+          "why": "18+ (in the NSFW repository)"
+        },
+        {
           "id": "Toonkotsu",
           "why": "in the Stable repository"
         },
@@ -160,15 +160,15 @@
           "why": "in the Stable repository"
         },
         {
-          "id": "YaoiMe",
+          "id": "XCOMIC",
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "XCOMIC",
+          "id": "YaoiMe",
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "9830ea2432182f2483d9b52c51131545988478f4"
+      "commit": "fdf9b63f4fa22fab991e8892de1afedb61fd590f"
     },
     {
       "repo": "timkuel/PaperBackExtension",
@@ -2166,7 +2166,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "4a23145bf1e0b3da27653d24f24cce7e6cf2073b"
+      "commit": "f74afa7f774ad171d259aa80e02cb0bae8fa57ad"
     },
     {
       "repo": "feliivk/felii-extensions",
