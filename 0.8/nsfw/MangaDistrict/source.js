@@ -724,20 +724,21 @@ const date_1 = require("../utils/date");
 const CARD_PAGE_SIZE = 30;
 class MangaDistrictParser {
     constructor(baseUrl, options = {}) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
         this.baseUrl = baseUrl;
         this.options = {
-            archivePath: (_a = options.archivePath) !== null && _a !== void 0 ? _a : 'series',
-            seriesPath: (_b = options.seriesPath) !== null && _b !== void 0 ? _b : 'series',
-            genrePath: (_c = options.genrePath) !== null && _c !== void 0 ? _c : 'publication-genre',
-            sourceName: (_d = options.sourceName) !== null && _d !== void 0 ? _d : 'MangaDistrict',
-            langCode: (_e = options.langCode) !== null && _e !== void 0 ? _e : 'en',
-            hentai: (_f = options.hentai) !== null && _f !== void 0 ? _f : true,
-            acceptWordPressReaderImages: (_g = options.acceptWordPressReaderImages) !== null && _g !== void 0 ? _g : false,
-            modernChapterContainerClass: (_h = options.modernChapterContainerClass) !== null && _h !== void 0 ? _h : '',
-            modernChapterDateClass: (_j = options.modernChapterDateClass) !== null && _j !== void 0 ? _j : '',
-            modernAuthorLabel: (_k = options.modernAuthorLabel) !== null && _k !== void 0 ? _k : '',
-            modernArtistLabel: (_l = options.modernArtistLabel) !== null && _l !== void 0 ? _l : ''
+            readerImageOrigins: (_a = options.readerImageOrigins) !== null && _a !== void 0 ? _a : [],
+            archivePath: (_b = options.archivePath) !== null && _b !== void 0 ? _b : 'series',
+            seriesPath: (_c = options.seriesPath) !== null && _c !== void 0 ? _c : 'series',
+            genrePath: (_d = options.genrePath) !== null && _d !== void 0 ? _d : 'publication-genre',
+            sourceName: (_e = options.sourceName) !== null && _e !== void 0 ? _e : 'MangaDistrict',
+            langCode: (_f = options.langCode) !== null && _f !== void 0 ? _f : 'en',
+            hentai: (_g = options.hentai) !== null && _g !== void 0 ? _g : true,
+            acceptWordPressReaderImages: (_h = options.acceptWordPressReaderImages) !== null && _h !== void 0 ? _h : false,
+            modernChapterContainerClass: (_j = options.modernChapterContainerClass) !== null && _j !== void 0 ? _j : '',
+            modernChapterDateClass: (_k = options.modernChapterDateClass) !== null && _k !== void 0 ? _k : '',
+            modernAuthorLabel: (_l = options.modernAuthorLabel) !== null && _l !== void 0 ? _l : '',
+            modernArtistLabel: (_m = options.modernArtistLabel) !== null && _m !== void 0 ? _m : ''
         };
     }
     parseMangaList(html, page) {
@@ -848,7 +849,7 @@ class MangaDistrictParser {
         });
     }
     parseSearchTags(html) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e, _f;
         const seen = {};
         const genrePath = this.escapeRegExp(this.options.genrePath);
         const tagPattern = new RegExp(`<a[^>]+href=["'][^"']*/${genrePath}/([^/"'#?]+)/?["'][^>]*>([\\s\\S]*?)<\\/a>`, 'gi');
@@ -864,10 +865,17 @@ class MangaDistrictParser {
                 seen[id] = { id, label };
             }
         }
-        const modernTagPattern = /<label[^>]+class=["'][^"']*ori-fcheck[^"']*["'][^>]*>[\s\S]*?<input[^>]+value=["']([^"']+)["'][^>]*>[\s\S]*?<span[^>]+class=["'][^"']*ori-flabel[^"']*["'][^>]*>([\s\S]*?)<\/span>[\s\S]*?<\/label>/gi;
-        while ((match = modernTagPattern.exec(html)) !== null) {
+        const checkboxPattern = /<input[^>]+value=["']([^"']+)["'][^>]+name=["']genre\[\]["'][^>]*>\s*<label[^>]*>([\s\S]*?)<\/label>/gi;
+        while ((match = checkboxPattern.exec(html)) !== null) {
             const id = this.cleanText((_c = match[1]) !== null && _c !== void 0 ? _c : '');
             const label = this.cleanHtml((_d = match[2]) !== null && _d !== void 0 ? _d : '');
+            if (id && label)
+                seen[id] = { id, label };
+        }
+        const modernTagPattern = /<label[^>]+class=["'][^"']*ori-fcheck[^"']*["'][^>]*>[\s\S]*?<input[^>]+value=["']([^"']+)["'][^>]*>[\s\S]*?<span[^>]+class=["'][^"']*ori-flabel[^"']*["'][^>]*>([\s\S]*?)<\/span>[\s\S]*?<\/label>/gi;
+        while ((match = modernTagPattern.exec(html)) !== null) {
+            const id = this.cleanText((_e = match[1]) !== null && _e !== void 0 ? _e : '');
+            const label = this.cleanHtml((_f = match[2]) !== null && _f !== void 0 ? _f : '');
             if (id.length > 0 && label.length > 0) {
                 seen[id] = { id, label };
             }
@@ -926,9 +934,10 @@ class MangaDistrictParser {
     }
     parseMangaCards(html) {
         var _a, _b, _c;
-        const legacyBlocks = html.split(/<div[^>]+class=["'][^"']*page-item-detail[^"']*manga[^"']*["'][^>]*>/i).slice(1);
+        const legacyBlocks = html.split(/<div[^>]+class=["'][^"']*page-item-detail[^"']*["'][^>]*>/i).slice(1);
         const modernBlocks = (_a = html.match(/<a[^>]+class=["'][^"']*ori-cat-card[^"']*["'][^>]*>[\s\S]*?<\/a>/gi)) !== null && _a !== void 0 ? _a : [];
-        const blocks = [...legacyBlocks, ...modernBlocks];
+        const searchBlocks = html.split(/<div[^>]+class=["'][^"']*c-tabs-item__content[^"']*["'][^>]*>/i).slice(1);
+        const blocks = [...legacyBlocks, ...modernBlocks, ...searchBlocks];
         const seen = {};
         const results = [];
         for (const rawBlock of blocks) {
@@ -1164,6 +1173,8 @@ class MangaDistrictParser {
         if (lower.includes('/thumbnail/') || lower.includes('/logo') || lower.includes('/favicon') || lower.includes('/banner')) {
             return false;
         }
+        if (this.options.readerImageOrigins.some(origin => lower.startsWith(`${origin.toLowerCase()}/manga_`)))
+            return true;
         if (this.options.acceptWordPressReaderImages)
             return lower.includes('/wp-content/uploads/');
         if (lower.includes('/assets/publication/media/') || lower.includes('/wp-content/'))
@@ -1180,9 +1191,9 @@ class MangaDistrictParser {
         return (anchor === null || anchor === void 0 ? void 0 : anchor[1]) ? this.cleanHtml(anchor[1]) : '';
     }
     chapterNumber(chapterId, title) {
-        const titleMatch = /chapter\s+(\d+(?:\.\d+)?)/i.exec(title);
+        const titleMatch = /chap(?:ter|itre)\s+(\d+(?:[.,]\d+)?)/i.exec(title);
         if (titleMatch === null || titleMatch === void 0 ? void 0 : titleMatch[1]) {
-            return Number(titleMatch[1]);
+            return Number(titleMatch[1].replace(',', '.'));
         }
         const slugMatch = /chap(?:ter|itre)-(\d+(?:-\d+)?)/i.exec(chapterId);
         if (!(slugMatch === null || slugMatch === void 0 ? void 0 : slugMatch[1])) {
@@ -1321,7 +1332,7 @@ exports.MangaDistrictParser = MangaDistrictParser;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BUILD_VERSION = void 0;
 // This file is generated by scripts/generate-version.js.
-exports.BUILD_VERSION = '2026.8.11.21';
+exports.BUILD_VERSION = '2026.11.22.23';
 
 },{}],63:[function(require,module,exports){
 "use strict";
