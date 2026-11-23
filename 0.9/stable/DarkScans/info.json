@@ -1,1 +1,0 @@
-{"name":"DarkScans","description":"Extension that pulls manga from https://darkscans.net","version":"3.2.302","icon":"icon.png","language":"en","contentRating":"MATURE","capabilities":[1,64,4,16,32],"badges":[{"label":"0.8 port","textColor":"#ffffff","backgroundColor":"#6b7280"}],"developers":[{"name":"Netsky","website":"http://github.com/TheNetsky"}],"id":"DarkScans"}
