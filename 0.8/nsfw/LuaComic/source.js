@@ -1878,6 +1878,17 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     chapterFromIds(_mangaId, _chapterId) {
       return void 0;
     }
+    /**
+     * The series a chapter list is built from, for one the app asks chapters
+     * of without having opened it this session.
+     *
+     * A library update does that for every title, so a source whose chapter
+     * list needs nothing beyond the id can return one here and spare a details
+     * request per title. `undefined`, the default, fetches the details.
+     */
+    mangaForChapterList(_mangaId) {
+      return void 0;
+    }
     // ---------------------------------------------------------------------
     // What the app calls
     // ---------------------------------------------------------------------
@@ -1891,12 +1902,16 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
      * series so its parsers can reuse what the details page already said. The
      * details are taken from the previous call when they are for this series —
      * which is the normal case, since the app opens the details screen first —
-     * and fetched otherwise.
+     * and otherwise fetched, unless the source can do without them
+     * (`mangaForChapterList`).
      */
     async getChapters(mangaId) {
       return this.guard(async () => {
-        const manga = this.lastManga?.mangaId === mangaId ? this.lastManga : await this.getMangaInfo(mangaId);
-        this.lastManga = manga;
+        let manga = this.lastManga?.mangaId === mangaId ? this.lastManga : this.mangaForChapterList(mangaId);
+        if (manga === void 0) {
+          manga = await this.getMangaInfo(mangaId);
+          this.lastManga = manga;
+        }
         const chapters = await this.getChapterList(manga);
         if (chapters.length === 0) {
           throw new Error("No chapters were found. Reading progress is kept; try again later.");
