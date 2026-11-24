@@ -1688,6 +1688,18 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       })
     );
   }
+  function inputRow(id, options) {
+    return retain(
+      App.createDUIInputField({
+        id,
+        label: options.label,
+        value: binding(
+          async () => options.get(),
+          async (value) => options.set(typeof value === "string" ? plainQuotes(value) : "")
+        )
+      })
+    );
+  }
   function switchRow(id, options) {
     return retain(
       App.createDUISwitch({
@@ -1899,6 +1911,17 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     chapterFromIds(_mangaId, _chapterId) {
       return void 0;
     }
+    /**
+     * The series a chapter list is built from, for one the app asks chapters
+     * of without having opened it this session.
+     *
+     * A library update does that for every title, so a source whose chapter
+     * list needs nothing beyond the id can return one here and spare a details
+     * request per title. `undefined`, the default, fetches the details.
+     */
+    mangaForChapterList(_mangaId) {
+      return void 0;
+    }
     // ---------------------------------------------------------------------
     // What the app calls
     // ---------------------------------------------------------------------
@@ -1912,12 +1935,16 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
      * series so its parsers can reuse what the details page already said. The
      * details are taken from the previous call when they are for this series —
      * which is the normal case, since the app opens the details screen first —
-     * and fetched otherwise.
+     * and otherwise fetched, unless the source can do without them
+     * (`mangaForChapterList`).
      */
     async getChapters(mangaId) {
       return this.guard(async () => {
-        const manga = this.lastManga?.mangaId === mangaId ? this.lastManga : await this.getMangaInfo(mangaId);
-        this.lastManga = manga;
+        let manga = this.lastManga?.mangaId === mangaId ? this.lastManga : this.mangaForChapterList(mangaId);
+        if (manga === void 0) {
+          manga = await this.getMangaInfo(mangaId);
+          this.lastManga = manga;
+        }
         const chapters = await this.getChapterList(manga);
         if (chapters.length === 0) {
           throw new Error("No chapters were found. Reading progress is kept; try again later.");
@@ -2428,8 +2455,14 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     VISIBLE_SECTIONS: "toonkotsu_visible_sections",
     DEDUPLICATE_CHAPTERS: "toonkotsu_deduplicate_chapters",
     UPLOAD_CHOICE: "toonkotsu_upload_choice",
-    SHOW_UPLOAD_SIZE: "toonkotsu_show_upload_size"
+    SHOW_UPLOAD_SIZE: "toonkotsu_show_upload_size",
+    HIDDEN_GROUPS: "toonkotsu_hidden_groups",
+    PREFERRED_GROUPS: "toonkotsu_preferred_groups"
   };
+  var CHAPTER_LIST_OPTIONS = [
+    { id: "group", title: "One per Group" },
+    { id: "chapter", title: "One per Chapter" }
+  ];
   var UPLOAD_CHOICE_OPTIONS = [
     { id: "best", title: "Best quality" },
     { id: "smallest", title: "Smallest download" }
@@ -2936,21 +2969,41 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     return [...sections.values()].filter((values) => values.size > 1).length >= 3;
   };
   var sizeLabel = (mb) => mb && mb > 0 ? `${Number(mb.toFixed(mb >= 100 ? 0 : 1))} MB` : void 0;
-  var parseChapters = ({ chapters }, sourceManga, { mainOnly, showSize, choice = "best" }) => {
+  var groupNames = (release, shown) => [release.group?.slug, shown].map((name) => name?.trim().toLowerCase() ?? "").filter(Boolean);
+  var parseChapters = ({ chapters }, sourceManga, { mainOnly, showSize, choice = "best", hiddenGroups = [], preferredGroups = [] }) => {
     const smallest = choice === "smallest";
-    const releases = chapters.flatMap(
-      (entry, position) => (mainOnly && !smallest ? [entry] : [entry, ...entry.alts ?? []]).map((release, index) => ({
-        ...release,
-        n: entry.n,
-        vol: entry.vol,
-        label: release.label ?? entry.label,
-        at: release.at ?? entry.at,
-        canonicalId: entry.id,
-        catalogueDefault: index === 0,
-        position
-      }))
+    const hidden = new Set(hiddenGroups);
+    const preference = /* @__PURE__ */ new Map();
+    preferredGroups.forEach((name, index) => {
+      if (!preference.has(name)) {
+        preference.set(name, index);
+      }
+    });
+    const uploads = chapters.flatMap(
+      (entry, position) => [entry, ...entry.alts ?? []].map((upload) => {
+        const label = upload.label ?? entry.label;
+        const shownGroup = parseLabel({ id: upload.id, label, group: upload.group }, entry.n).group;
+        const names = groupNames(upload, shownGroup);
+        return {
+          ...upload,
+          n: entry.n,
+          vol: entry.vol,
+          label,
+          at: upload.at ?? entry.at,
+          canonicalId: entry.id,
+          position,
+          shownGroup,
+          names,
+          // Its place in Preferred Groups; Infinity when it has none.
+          preferred: names.reduce((best, name) => Math.min(best, preference.get(name) ?? Infinity), Infinity)
+        };
+      })
     );
-    const bySeason = hasChapterNumberResets(releases, parseChapterSeason);
+    const bySeason = hasChapterNumberResets(uploads, parseChapterSeason);
+    const releases = uploads.filter((release) => !release.names.some((name) => hidden.has(name)));
+    if (releases.length === 0 && chapters.length > 0) {
+      throw new Error("Every upload of this series is by a group in Hidden Groups.");
+    }
     const chapterKey = (release) => JSON.stringify([
       parseChapterNumber2(release.vol) ?? release.vol?.toString().trim().toLowerCase() ?? "",
       bySeason ? parseChapterSeason(release) ?? 1 : "",
@@ -2958,22 +3011,24 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
     ]);
     const selected = /* @__PURE__ */ new Map();
     const compareSize = (a, b) => smallest ? (a.mb ?? Infinity) - (b.mb ?? Infinity) || (b.w ?? 0) - (a.w ?? 0) : (b.w ?? 0) - (a.w ?? 0) || (b.mb ?? 0) - (a.mb ?? 0);
-    const compareReleases = (a, b) => Number(!!a.partial) - Number(!!b.partial) || compareSize(a, b) || Number(b.catalogueDefault) - Number(a.catalogueDefault) || a.position - b.position || a.id - b.id;
+    const compareReleases = (a, b) => Number(!!a.partial) - Number(!!b.partial) || compareSize(a, b) || (b.at ?? 0) - (a.at ?? 0) || b.id - a.id;
     const complete = new Set(releases.filter((release) => !release.partial).map(chapterKey));
+    const compareForChapter = (a, b) => a.preferred - b.preferred || compareReleases(a, b);
     for (const release of releases) {
       const key = chapterKey(release);
       if (release.partial && complete.has(key)) {
         continue;
       }
-      const { group } = parseLabel(release, release.n);
       const groupKey = JSON.stringify([
         key,
-        // Deduplicating to the smallest keeps one upload of a chapter, whoever made it.
-        mainOnly && smallest ? "" : release.group?.slug ?? group?.toLowerCase() ?? "",
-        showSize ? sizeLabel(release.mb) ?? "" : ""
+        // One per Chapter keeps one upload of a chapter, whoever made it
+        // and whatever its size; Upload Size then only labels its title.
+        mainOnly ? "" : release.group?.slug ?? release.shownGroup?.toLowerCase() ?? "",
+        !mainOnly && showSize ? sizeLabel(release.mb) ?? "" : ""
       ]);
       const current = selected.get(groupKey);
-      if (!current || compareReleases(release, current.release) < 0) {
+      const better = mainOnly ? compareForChapter : compareReleases;
+      if (!current || better(release, current.release) < 0) {
         selected.set(groupKey, { release, order: current?.order ?? selected.size });
       }
     }
@@ -3083,7 +3138,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   var ToonkotsuInfo = sourceInfo({
     name: "Toonkotsu",
     description: "Extension that pulls content from toonkotsu.com.",
-    version: "1.0.3",
+    version: "1.0.4",
     icon: "icon.png",
     language: "English",
     websiteBaseURL: DOMAIN,
@@ -3126,8 +3181,17 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       const visible = this.settings.stringArray(STATE_KEYS.VISIBLE_SECTIONS, new Set(SECTION_IDS));
       return visible.length > 0 ? visible : SECTION_IDS;
     }
+    /** One per Chapter rather than One per Group. */
     get deduplicateChapters() {
       return this.settings.boolean(STATE_KEYS.DEDUPLICATE_CHAPTERS, false);
+    }
+    /** Group names typed with commas between them, in lower case, each once, in the order given. */
+    groupList(key) {
+      return [
+        ...new Set(
+          this.settings.string(key, "").split(",").map((name) => name.trim().toLowerCase()).filter(Boolean)
+        )
+      ];
     }
     get uploadChoice() {
       return this.settings.choice(
@@ -3182,12 +3246,23 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
         {
           id: "chapters",
           header: "Chapters",
-          footer: "Deduplicate Chapters lists only the upload the site shows first for each chapter, not one from every group. Upload Choice picks among a chapter's uploads: Best Quality keeps each group's widest, Smallest Download its lightest, which is less to download and decrypt; with Deduplicate Chapters on, Smallest Download keeps the lightest upload of each chapter from any group. Upload Size adds each upload's size to its title and lists a group's uploads of different sizes separately. Changing these lists other uploads of the same chapters, so chapters read under one choice can show as unread under another.",
+          footer: "One per Chapter keeps one upload of each chapter, taken from your Preferred Groups in list order, otherwise the best of any group. Hidden Groups' uploads are left out either way. Separate group names with commas; they aren't case sensitive. Upload Choice says which upload is best, complete ones first: Best Quality the widest, then the largest; Smallest Download the lightest, which is less to download and decrypt. Equal uploads go to the newer one. Upload Size adds each upload's size to its title; under One per Group it also lists a group's uploads of different sizes separately. Changing these lists other uploads of the same chapters, so chapters read under one choice can show as unread under another.",
           rows: [
-            switchRow("deduplicate_chapters", {
-              label: "Deduplicate Chapters",
-              get: () => this.deduplicateChapters,
-              set: (value) => this.settings.set(STATE_KEYS.DEDUPLICATE_CHAPTERS, value)
+            selectRow("chapter_list", {
+              label: "Chapter List",
+              options: CHAPTER_LIST_OPTIONS,
+              get: () => [this.deduplicateChapters ? "chapter" : "group"],
+              set: (value) => this.settings.set(STATE_KEYS.DEDUPLICATE_CHAPTERS, value[0] === "chapter")
+            }),
+            inputRow("hidden_groups", {
+              label: "Hidden Groups",
+              get: () => this.settings.string(STATE_KEYS.HIDDEN_GROUPS, ""),
+              set: (value) => this.settings.set(STATE_KEYS.HIDDEN_GROUPS, value)
+            }),
+            inputRow("preferred_groups", {
+              label: "Preferred Groups",
+              get: () => this.settings.string(STATE_KEYS.PREFERRED_GROUPS, ""),
+              set: (value) => this.settings.set(STATE_KEYS.PREFERRED_GROUPS, value)
             }),
             selectRow("upload_choice", {
               label: "Upload Choice",
@@ -3446,7 +3521,9 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       return parseChapters(await fetchSeries(sourceManga.mangaId), sourceManga, {
         mainOnly: this.deduplicateChapters,
         showSize: this.showUploadSize,
-        choice: this.uploadChoice
+        choice: this.uploadChoice,
+        hiddenGroups: this.groupList(STATE_KEYS.HIDDEN_GROUPS),
+        preferredGroups: this.groupList(STATE_KEYS.PREFERRED_GROUPS)
       });
     }
     async getPages(chapter) {
