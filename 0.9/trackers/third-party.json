@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-24T16:09:21.262Z",
+  "generated": "2026-11-25T15:56:43.782Z",
   "appVersion": "0.9",
   "languages": {},
   "hosts": {
@@ -535,7 +535,7 @@
           "why": "in the Stable repository"
         }
       ],
-      "commit": "da9f1e7389d7c704e25a0d46f5916d5ca6772f7b"
+      "commit": "0bab8e8add0632b0a7cc2bdd5701e610b3846e0f"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -767,11 +767,11 @@
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "Chikari",
+          "id": "Cocomic",
           "why": "18+ (in the NSFW repository)"
         },
         {
-          "id": "Cocomic",
+          "id": "Chikari",
           "why": "18+ (in the NSFW repository)"
         },
         {
@@ -863,7 +863,7 @@
           "why": "18+ (in the NSFW repository)"
         }
       ],
-      "commit": "9f9f4e1f161d57387244d01b1ba6854b39e5df39"
+      "commit": "666ea90b57f1b16f7ebfe1ed61d98f25d002491d"
     },
     {
       "repo": "timkuel/PaperBackExtension",
