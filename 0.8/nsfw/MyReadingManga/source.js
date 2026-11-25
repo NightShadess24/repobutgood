@@ -2103,12 +2103,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   }));
 
   // src/MyReadingManga/network.ts
-  var CHALLENGE_PROMPT_INTERVAL = 6e4;
   var MyReadingMangaInterceptor = class extends PaperbackInterceptor {
-    constructor() {
-      super(...arguments);
-      this.lastChallengeAt = 0;
-    }
     async interceptRequest(request) {
       return {
         ...request,
@@ -2123,11 +2118,6 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
       const contentType = headerValue(response.headers, "content-type") ?? "";
       const text = request.url.startsWith(DOMAIN) && contentType.includes("text/html") ? body.text : "";
       if (isCloudflareChallenge(response.status, response.headers, text)) {
-        const now = Date.now();
-        if (now - this.lastChallengeAt < CHALLENGE_PROMPT_INTERVAL) {
-          throw new Error("A Cloudflare challenge is already open. Solve it, then refresh.");
-        }
-        this.lastChallengeAt = now;
         throw new CloudflareError(
           Application.createRequest({
             url: `${DOMAIN}/`,
@@ -2395,7 +2385,7 @@ Please go to the homepage of <${hostOf(request.url)}> and press the cloud icon.`
   var MyReadingMangaInfo = sourceInfo({
     name: "MyReadingManga",
     description: "Extension that pulls content from myreadingmanga.info.",
-    version: "1.0.4",
+    version: "1.0.5",
     icon: "icon.png",
     language: "English",
     websiteBaseURL: DOMAIN,
