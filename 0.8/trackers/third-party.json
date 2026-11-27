@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-26T16:03:01.962Z",
+  "generated": "2026-11-27T15:38:17.947Z",
   "appVersion": "0.8",
   "languages": {},
   "hosts": {
@@ -54,7 +54,7 @@
           "why": "not English (in the Languages repository)"
         }
       ],
-      "commit": "a79a41f9b35ea980866b14daa36820f3facfe96e"
+      "commit": "bc6bf8a64bb61151f91bbfa73c4aeed55912e7aa"
     },
     {
       "repo": "PoppingMangoSources/popmango-paperback-sources",
@@ -2085,7 +2085,7 @@
           "why": "not English (in the Languages repository)"
         }
       ],
-      "commit": "2a3c74cce21e33067326d2cc77c0a1e1f256a120"
+      "commit": "bbf6e0638cb905f212ec65daee9fdaa70cba4d1d"
     },
     {
       "repo": "kittycatgit/kitty-extensions-0.9",
@@ -2174,7 +2174,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "21edf3f7de498ed808563d50803608235d86a190"
+      "commit": "9d794f0c7a6f72eeeb48f3785250e397ed369474"
     },
     {
       "repo": "feliivk/felii-extensions",
@@ -2232,7 +2232,7 @@
           "why": "already from Felii"
         }
       ],
-      "commit": "a79a41f9b35ea980866b14daa36820f3facfe96e"
+      "commit": "bc6bf8a64bb61151f91bbfa73c4aeed55912e7aa"
     },
     {
       "repo": "xdKinso/kinso-extensions-v0.8",
