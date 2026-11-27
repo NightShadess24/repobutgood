@@ -21590,7 +21590,7 @@ const FALLBACK_COVER = "https://placehold.co/400x600.png?text=No+Cover";
 const SERIES_CACHE_TTL = 60000; // 1 min
 const SERIES_CACHE_MAX = 30;
 exports.ZonaTMOInfo = {
-    version: '1.5.0',
+    version: '1.6.0',
     name: 'ZonaTMO',
     icon: 'icon.png',
     author: 'Felii',
@@ -21749,21 +21749,64 @@ class ZonaTMO extends types_1.Source {
     async getMangaDetails(mangaId) {
         const html = await this.getSeriesHTML(mangaId);
         const $ = cheerio.load(html);
-        const titleEl = $("h1.element-title").first();
+        // Nov 2026: la ficha se rediseñó (cabecera .zt-hd__*); se conservan los
+        // selectores antiguos (element-title, book-thumbnail...) como respaldo.
+        const titleEl = $("h1.zt-hd__title, h1.element-title").first();
+        const ogTitle = ($('meta[property="og:title"]').attr("content") || "")
+            .replace(/^Ver\s+/i, "")
+            .replace(/\s+Online Gratis\s*\|.*$/i, "")
+            .trim();
         const title = titleEl.contents().filter((_i, el) => el.type === "text").text().trim() ||
             titleEl.text().trim() ||
+            ogTitle ||
             mangaId;
-        const image = $("img.book-thumbnail").attr("src") || FALLBACK_COVER;
-        const desc = $("p.element-description").text().trim() || "Sin descripción disponible.";
-        const status = this.mapStatus($("span.book-status").text());
+        const altTitles = $(".zt-hd__alts li")
+            .map((_i, el) => $(el).text().trim())
+            .get()
+            .filter(Boolean);
+        if (altTitles.length === 0) {
+            const alt = $(".zt-hd__alt").first().text().trim();
+            if (alt)
+                altTitles.push(alt);
+        }
+        const imageCandidates = [
+            $(".zt-hd__cover img").first().attr("src"),
+            $("img.book-thumbnail").attr("src"),
+            $('meta[property="og:image"]').attr("content"),
+        ];
+        const image = imageCandidates.find((u) => typeof u === "string" && u.startsWith("https://")) || FALLBACK_COVER;
+        const rawDesc = ($(".zt-hd__syn").first().text() || $("p.element-description").text()).trim();
+        const desc = /[\p{L}\p{N}]/u.test(rawDesc) ? rawDesc : "Sin descripción disponible.";
+        // Estado: el modificador de clase (--publishing/--ended/...) es más estable que el texto
+        const stateEl = $("[class*='zt-hd__state--']").first();
+        const stateClass = stateEl.attr("class") || "";
+        const status = stateClass.includes("--ended")
+            ? 1
+            : stateClass.includes("--hiatus")
+                ? 2
+                : stateClass.includes("--cancelled")
+                    ? 3
+                    : this.mapStatus(stateEl.text() || $("span.book-status").text());
         // Autor: enlace con filter_by=author
         const author = $('a[href*="filter_by=author"]').first().text().trim() || "Desconocido";
-        // Géneros: badges (enlaces a genders[])
+        // Géneros: enlaces /tag/<slug> (antes badges a genders[])
         const tags = [];
-        $("h6 a.badge.badge-primary").each((_i, el) => {
+        const seenTags = new Set();
+        $("a.zt-hd__genre, h6 a.badge.badge-primary").each((_i, el) => {
             const label = $(el).text().trim();
-            if (label)
-                tags.push(createTag({ id: label.toLowerCase().replace(/\s+/g, "-"), label, type: 'blue' }));
+            if (!label)
+                return;
+            const slug = ($(el).attr("href") || "").match(/\/tag\/([a-z0-9-]+)/i)?.[1];
+            const id = slug ||
+                label
+                    .normalize("NFD")
+                    .replace(/[̀-ͯ]/g, "")
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, "-");
+            if (seenTags.has(id))
+                return;
+            seenTags.add(id);
+            tags.push(createTag({ id, label, type: 'blue' }));
         });
         // Tipo (manga/manhwa/...) desde el propio ID
         const type = mangaId.match(/^([a-z_]+)\//)?.[1];
@@ -21771,7 +21814,7 @@ class ZonaTMO extends types_1.Source {
             tags.push(createTag({ id: type, label: type.toUpperCase(), type: 'default' }));
         return createManga({
             id: mangaId,
-            titles: [title],
+            titles: [title, ...altTitles],
             image: image,
             rating: 0,
             status: status,

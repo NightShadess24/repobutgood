@@ -468,12 +468,12 @@ const types_1 = require("@paperback/types");
 const API_URL = "https://api.manhwaweb.com";
 const WEB_URL = "https://manhwaweb.com";
 // Constantes reutilizables
-const FALLBACK_COVER = "https://placehold.co/400x600?text=No+Cover";
+const FALLBACK_COVER = "https://placehold.co/400x600.png?text=No+Cover";
 const USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1";
 const SEE_CACHE_TTL = 60000; // 1 min
 const SEE_CACHE_MAX = 50;
 exports.ManhwaWebInfo = {
-    version: '1.2.2',
+    version: '1.3.0',
     name: 'ManhwaWeb',
     icon: 'icon.png',
     author: 'Felii',
@@ -650,7 +650,7 @@ class ManhwaWeb extends types_1.Source {
                 id: chId,
                 mangaId: mangaId,
                 name: isRaw ? `Capítulo ${ch.chapter} (Raw)` : `Capítulo ${ch.chapter}`,
-                chapNum: parseFloat(String(ch.chapter)) || 0, // Soporta decimales (ej. 51.2)
+                chapNum: parseFloat(String(ch.chapter)) || 0,
                 time: created ? new Date(created) : new Date(),
                 langCode: isRaw ? "ko" : "es",
             }));
@@ -660,8 +660,17 @@ class ManhwaWeb extends types_1.Source {
     }
     // 3. Páginas del capítulo
     async getChapterDetails(mangaId, chapterId) {
-        const data = await this.fetchJson(`${API_URL}/chapters/see/${chapterId}`);
-        const pages = Array.isArray(data.chapter?.img) ? data.chapter.img : [];
+        let data;
+        try {
+            data = await this.fetchJson(`${API_URL}/chapters/see_new/${chapterId}`);
+        }
+        catch {
+            data = await this.fetchJson(`${API_URL}/chapters/see/${chapterId}`);
+        }
+        const legacy = typeof data.chapter === "object" ? data.chapter?.img : undefined;
+        const raw = Array.isArray(data.img) ? data.img : Array.isArray(legacy) ? legacy : [];
+        // Solo URLs https: descarta cualquier esquema raro que traiga la API
+        const pages = raw.filter((p) => typeof p === "string" && p.startsWith("https://"));
         return createChapterDetails({
             id: chapterId,
             mangaId: mangaId,
@@ -694,6 +703,16 @@ class ManhwaWeb extends types_1.Source {
         sectionCallback(newSection);
         newSection.items = (data.utimos_mangas_creados ?? []).map((item) => this.buildTile(this.getIdFromItem(item), item));
         sectionCallback(newSection);
+        // Nuevas Obras +18 (el sitio las separa ahora en utimos_mangas_creados_18)
+        const new18Section = createHomeSection({
+            id: 'new_works_18',
+            title: 'Nuevas Obras +18',
+            type: types_1.HomeSectionType.singleRowNormal,
+            view_more: false
+        });
+        sectionCallback(new18Section);
+        new18Section.items = (data.utimos_mangas_creados_18 ?? []).map((item) => this.buildTile(this.getIdFromItem(item), item));
+        sectionCallback(new18Section);
         // Lo más leído
         const popularSection = createHomeSection({
             id: 'popular',
